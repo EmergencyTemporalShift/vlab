@@ -41,12 +41,12 @@ int version_minor() { return 1; }
 int version_minor_minor() { return 0; }
 
 int build_number() {
-  return 3614; // this build number is changed manually 
+  return 3615; // this build number is changed manually 
 }
 
 std::string build_date_string() {
   // Date of build is set manually
-  return "August 12th, 2025";
+  return "October 10th, 2025";
 }
 
 std::string version_string() {

@@ -20,7 +20,7 @@
 #ifndef __WINPARAMS_H__
 #define __WINPARAMS_H__
 
-#include <string>
+#include <QString>
 
 #include "vector3d.h"
 #include "volume.h"

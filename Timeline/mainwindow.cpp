@@ -22,7 +22,8 @@
 #include <QScreen>
 #include <QMenu>
 #include <QMenuBar>
-#include <QDesktopWidget>
+#include <QScreen>
+#include <QGuiApplication>
 #include <QTimer>
 #include <QMessageBox>
 #include <fstream>
@@ -457,7 +458,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event) {
 
 void MainWindow::wheelEvent(QWheelEvent *event) {
     if (Qt::ShiftModifier != QApplication::keyboardModifiers()) {
-      timeline->yMin += event->delta() / 10;
+      timeline->yMin += event->angleDelta().y() / 10;
       if (timeline->yMin < -timeline->yMax + 100)
 	timeline->yMin = -timeline->yMax + 100;
       if (timeline->yMin > 0)
@@ -471,7 +472,7 @@ void MainWindow::wheelEvent(QWheelEvent *event) {
       range /= 10.0;
       counter++;
     }
-    timeline->xMax += (event->delta() / 120) * (int)std::pow(10., int(counter));
+    timeline->xMax += (event->angleDelta().y() / 120) * (int)std::pow(10., int(counter));
     timeline->createAxis();
   }
 }
@@ -665,7 +666,7 @@ void MainWindow::deselectTimelines() {
 
 void MainWindow::moveEventUp() {
   timeline->swapEvents(1);
-  if (_selectedIndex < timeline->events.size()-1)
+  if (static_cast<size_t>(_selectedIndex) < timeline->events.size() - 1)
     _selectedIndex++;
 }
 
@@ -854,12 +855,12 @@ void MainWindow::createEditMenu(){
   newEditMenu = new QMenu("Edit",this);
   newEditMenu->addAction(addEventAct);
   newEditMenu->addSeparator();
-  moveEventUpAct = newEditMenu->addAction(tr("&Move selected timeline up"),this,SLOT(moveEventDown()),Qt::Key_Up);
+  moveEventUpAct = newEditMenu->addAction(tr("&Move selected timeline up"), QKeySequence(Qt::Key_Up), this, SLOT(moveEventDown()));
   addAction(moveEventUpAct);
   moveEventUpAct->setEnabled(false);
   moveEventUpAct->setShortcutVisibleInContextMenu(true);
 
-  moveEventDownAct = newEditMenu->addAction(tr("&Move selected timeline down"),this,SLOT(moveEventUp()),QKeySequence(Qt::Key_Down));
+  moveEventDownAct = newEditMenu->addAction(tr("&Move selected timeline down"), QKeySequence(Qt::Key_Down), this, SLOT(moveEventUp()));
   addAction(moveEventDownAct);
   moveEventDownAct->setEnabled(false);
   moveEventDownAct->setShortcutVisibleInContextMenu(true);

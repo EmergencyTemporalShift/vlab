@@ -41,8 +41,8 @@
 #ifndef _GLIBCXX_PARALLEL_MULTISEQ_SELECTION_H
 #define _GLIBCXX_PARALLEL_MULTISEQ_SELECTION_H 1
 
-#include <vector>
-#include <queue>
+#include <QVector>
+#include <QQueue>
 
 #include <bits/stl_algo.h>
 

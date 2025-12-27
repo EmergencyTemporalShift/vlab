@@ -25,8 +25,8 @@
 #include <QTextStream>
 #include <cstdlib>
 #include <iostream>
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 
 namespace Vlab {
 #ifdef ___PRETEND_TO_CLOSE_THIS_NAMESPACE_TO_FOOL_EMACS_INDENTATION___LOL___

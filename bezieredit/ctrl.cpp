@@ -22,14 +22,14 @@
 
 #include <cstdlib>
 
-#include <qapplication.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <QApplication>
+#include <QLabel>
+#include <QLayout>
 #include <QFileDialog>
-#include <qbitmap.h>
-#include <qimage.h>
-#include <qmessagebox.h>
-#include <qsizepolicy.h>
+#include <QBitmap>
+#include <QImage>
+#include <QMessageBox>
+#include <QSizePolicy>
 #include <QBoxLayout>
 #include <QCloseEvent>
 #include <QHBoxLayout>
@@ -89,7 +89,7 @@ Ctrl::Ctrl(int argc, char **argv)
 
   _pEditMode = new QGroupBox();
   QBoxLayout *modelayout = new QVBoxLayout();
-  modelayout->setMargin(5);
+  modelayout->setContentsMargins(5, 5, 5, 5);
 
   _pMovePointBtn = new QRadioButton("Move Point");
   modelayout->addWidget(_pMovePointBtn);
@@ -111,7 +111,7 @@ Ctrl::Ctrl(int argc, char **argv)
 
    _pCMode = new QGroupBox();
   QBoxLayout *cmodelayout = new QVBoxLayout();
-  cmodelayout->setMargin(5);
+  cmodelayout->setContentsMargins(5, 5, 5, 5);
 
   _pCOffBtn = new QRadioButton("No Continuity");
   cmodelayout->addWidget(_pCOffBtn);
@@ -306,9 +306,8 @@ bool Ctrl::quitCB() {
   int ret = QMessageBox::No;
 
   if (_pModel->hasChanged()) {
-    ret = QMessageBox::warning(this, "Save At Exit",
-                               "Save changes before exit?", QMessageBox::Yes,
-                               QMessageBox::No, QMessageBox::Cancel);
+    ret = QMessageBox::warning(this, "Save At Exit", "Save changes?",
+                               QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
   }
 
   switch (ret) {

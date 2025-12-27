@@ -1,8 +1,8 @@
 #include <cassert>
 #include <cmath>
 
-#include <string>
-#include <locale>
+#include <QString>
+#include <QLocale>
 
 #include <windows.h>
 #include <tchar.h>

@@ -2,7 +2,7 @@
 #define __TGUID_H__
 
 
-#include <ostream>
+#include <QOstream>
 
 namespace VLB
 {

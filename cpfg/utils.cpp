@@ -17,7 +17,7 @@
 
 
 
-#include <string>
+#include <QString>
 
 #include <cstdarg>
 #include <cstdio>

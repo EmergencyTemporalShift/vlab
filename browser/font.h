@@ -21,7 +21,7 @@
 #ifndef __font_h__
 #define __font_h__
 
-#include <string>
+#include <QString>
 
 int strWidth( const std::string & s );
 void getFontMaxSize( int * width, int * height );

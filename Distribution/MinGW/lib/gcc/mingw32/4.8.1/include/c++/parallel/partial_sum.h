@@ -34,7 +34,7 @@
 #define _GLIBCXX_PARALLEL_PARTIAL_SUM_H 1
 
 #include <omp.h>
-#include <new>
+#include <QNew>
 #include <bits/stl_algobase.h>
 #include <parallel/parallel.h>
 #include <parallel/numericfwd.h>

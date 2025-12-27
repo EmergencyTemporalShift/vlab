@@ -38,7 +38,7 @@
 
 #pragma GCC system_header
 
-#include <clocale>
+#include <QClocale>
 
 #define _GLIBCXX_NUM_CATEGORIES 0
 

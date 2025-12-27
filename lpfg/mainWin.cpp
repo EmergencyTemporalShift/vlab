@@ -19,9 +19,9 @@
 
 #include <cassert>
 #include <cmath>
-#include <stack>
+#include <QStack>
 #include <iostream>
-#include <vector>
+#include <QVector>
 
 #ifdef _WINDOWS
 #include <io.h>

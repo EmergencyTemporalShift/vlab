@@ -1,0 +1,7 @@
+QMAKE_PRL_BUILD_DIR = /home/rodin/Apps/vlab-main/Rayshade/libray/libtext
+QMAKE_PRO_INPUT = libtext.pro
+QMAKE_PRL_TARGET = libraytext.a
+QMAKE_PRL_CONFIG = lex yacc exceptions depend_includepath testcase_targets import_plugins import_qpa_plugin file_copies qmake_use warn_on release link_prl incremental plugin_manifest intelcet glibc_fortify_source trivial_auto_var_init_pattern stack_protector stack_clash_protection libstdcpp_assertions relro_now_linker linux unix posix gcc staticlib create_prl link_prl warn_on release have_target static staticlib
+QMAKE_PRL_VERSION = 1.0.0
+QMAKE_PRL_LIBS = -lGLU
+QMAKE_PRL_LIBS_FOR_CMAKE = -lGLU;;;

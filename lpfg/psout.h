@@ -20,9 +20,9 @@
 #ifndef __PSOUT_H__
 #define __PSOUT_H__
 
-#include <vector>
+#include <QVector>
 #include <fstream>
-#include <string>
+#include <QString>
 #include <iostream>
 
 /// The PsOutputStore class is meant to be used with Postscript output.

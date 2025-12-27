@@ -20,7 +20,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
-#include <vector>
+#include <QVector>
 
 #include <QPainter>
 #include "QTGLbrowser.h"

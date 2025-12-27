@@ -19,7 +19,7 @@ MY_BASE = ..
 MY_LIBS = misc
 include( $${MY_BASE}/common.pri )
 # The following line was inserted by qt3to4
-QT += opengl 
+QT += opengl  widgets openglwidgets
 #    qt3support
 macx:{
 # 

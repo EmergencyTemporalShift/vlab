@@ -20,7 +20,7 @@
 #ifndef __TROPISMDATA_H__
 #define __TROPISMDATA_H__
 
-#include <vector>
+#include <QVector>
 
 #include "vector3d.h"
 

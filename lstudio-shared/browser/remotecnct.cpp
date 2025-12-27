@@ -1,5 +1,5 @@
-#include <locale>
-#include <vector>
+#include <QLocale>
+#include <QVector>
 #include <sstream>
 #include <fstream>
 

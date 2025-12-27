@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <string>
+#include <QString>
 
 #include <windows.h>
 #include <commctrl.h>

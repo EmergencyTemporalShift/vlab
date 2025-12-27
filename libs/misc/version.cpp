@@ -22,7 +22,7 @@
 
 #include "version.h"
 #include <sstream>
-#include <string>
+#include <QString>
 #ifdef __APPLE__
 #include <QCoreApplication>
 #include <QDate>

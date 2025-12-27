@@ -21,7 +21,7 @@
 #include "contour.h"
 #include <cstdlib>
 #include <fstream>
-#include <list>
+#include <QList>
 #include <unistd.h>
 
 using namespace std;

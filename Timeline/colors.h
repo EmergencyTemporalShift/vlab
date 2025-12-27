@@ -1,8 +1,9 @@
 #ifndef __COLORS_H__
 #define __COLORS_H__
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 #include <QColor>
-#include <string>
+#include <QString>
 enum ColorEntry {
   Background = 0,
   Points,

@@ -31,7 +31,9 @@ typedef struct Image {
   struct Image *next;  /* Next image in list. */
 } Image;
 
-Image *ImageCreate(), *ImageFind(), *ImageRead();
-void ImageIndex();
+Image *ImageCreate(const char *filename);
+Image *ImageFind(const char *name);
+Image *ImageRead(const char *filename);
+void ImageIndex(Image *img, int ix, int iy, double fx, double fy, int smooth, float *outval);
 
 #endif /* IMAGE_H */

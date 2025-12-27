@@ -1,3 +1,7 @@
+#include <stddef.h>
+#include <math.h>
+#include <stddef.h>
+#include <math.h>
 /*
  * atmosphere.c
  *

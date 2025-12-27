@@ -11,5 +11,5 @@
 void ResetMC(void);
 void FreeMC(void);
 double *MC(void);
-int InitMC();
-double NextDimMC();
+int InitMC(UINT param_dim);
+double NextDimMC(int);

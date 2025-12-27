@@ -23,7 +23,8 @@
 #include <cmath>
 #include <iostream>
 
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 
 #define UNDEFINED -1
 #define PI 3.1415927

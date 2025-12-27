@@ -20,10 +20,10 @@
 #include <cassert>
 #include <cstdio>
 #include <cstdarg>
-#include <string>
+#include <QString>
 #include <iostream>
-#include <regex>
-#include <iterator>
+#include <QRegularExpression>
+#include <QIterator>
 
 
 #include "file.h"
@@ -34,7 +34,7 @@
 
 std::string do_replace( std::string const & in, std::string const & from, std::string const & to )
 {
-  return std::regex_replace( in, std::regex(from), to );
+  return QString::fromStdString(in).replace(QRegularExpression(QString::fromStdString(from)), QString::fromStdString(to)).toStdString();
 }
 
 

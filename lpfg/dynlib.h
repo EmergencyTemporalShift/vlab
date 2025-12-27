@@ -20,7 +20,7 @@
 #ifndef __DYNLIB_H__
 #define __DYNLIB_H__
 
-#include <string>
+#include <QString>
 
 #ifdef _WINDOWS
 #include <windows.h>

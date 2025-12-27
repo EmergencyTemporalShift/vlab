@@ -21,7 +21,8 @@
 #include <cstdlib>
 #include <cassert>
 
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 
 #include "geometry.h"
 #include "glutils.h"

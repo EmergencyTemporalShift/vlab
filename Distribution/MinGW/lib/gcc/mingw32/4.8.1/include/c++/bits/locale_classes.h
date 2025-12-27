@@ -37,7 +37,7 @@
 #pragma GCC system_header
 
 #include <bits/localefwd.h>
-#include <string>
+#include <QString>
 #include <ext/atomicity.h>
 
 namespace std _GLIBCXX_VISIBILITY(default)

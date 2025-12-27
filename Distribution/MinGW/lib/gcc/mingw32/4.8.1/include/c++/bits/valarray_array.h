@@ -37,7 +37,7 @@
 #include <bits/c++config.h>
 #include <bits/cpp_type_traits.h>
 #include <cstdlib>
-#include <new>
+#include <QNew>
 
 namespace std _GLIBCXX_VISIBILITY(default)
 {

@@ -8,19 +8,19 @@
 
 #pragma once
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QMouseEvent>
 #include <QImage>
 #include "Colour.h"
 #include "Point.h"
 #include <stdlib.h>
 #include <math.h>
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 #include <iostream>
 using namespace std;
 
-class PointPicker : public QGLWidget {
+class PointPicker : public QOpenGLWidget {
   Q_OBJECT
 public:
   PointPicker(QWidget *parent = 0);

@@ -20,9 +20,9 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QOpenGLFunctions>
-#include <QTime>
+#include <QElapsedTimer>
 #include <QPushButton>
 #include <QContextMenuEvent>
 #include <QMenu>

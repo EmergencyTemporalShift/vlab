@@ -22,8 +22,8 @@
 #define __OBJECT_H__
 
 #include <QApplication>
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 #include <QMessageBox>
 #include "QTGLObject.h"
 #include "RA.h"

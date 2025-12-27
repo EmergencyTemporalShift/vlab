@@ -20,7 +20,7 @@
 #include <algorithm>
 #include <assert.h>
 #include <cstdlib>
-#include <list>
+#include <QList>
 #include <stdio.h>
 
 #include "xmemory.h"

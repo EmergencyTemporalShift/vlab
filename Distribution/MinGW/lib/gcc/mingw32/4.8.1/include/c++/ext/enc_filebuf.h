@@ -30,7 +30,7 @@
 #define _EXT_ENC_FILEBUF_H 1
 
 #include <fstream>
-#include <locale>
+#include <QLocale>
 #include <ext/codecvt_specializations.h>
 
 namespace __gnu_cxx _GLIBCXX_VISIBILITY(default)

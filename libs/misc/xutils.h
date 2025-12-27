@@ -21,8 +21,8 @@
 #define __xutils_h__
 
 #include "QTStringDialog.h"
-#include <qmessagebox.h>
-#include <string>
+#include <QMessageBox>
+#include <QString>
 
 namespace vlabxutils {
 #ifdef _DUMMY_IFDEF____

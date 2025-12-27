@@ -21,7 +21,7 @@
 #define __POLYGON_H__
 #define GL_SILENCE_DEPRECATION
 
-#include <vector>
+#include <QVector>
 
 #include "vector3d.h"
 
@@ -31,8 +31,8 @@
 #ifdef WIN32
 #include <GL/glew.h>
 #include <Windows.h>
-#include <gl/GL.h>
-#include <gl/GLU.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #else
 #include <GL/glut.h>
 #endif

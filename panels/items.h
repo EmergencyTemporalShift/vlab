@@ -24,9 +24,9 @@
 #include <QString>
 #include <QRect>
 #include <QFontMetrics>
-#include <vector>
+#include <QVector>
 #include <cstdio>
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QOpenGLFunctions_4_3_Core>
 

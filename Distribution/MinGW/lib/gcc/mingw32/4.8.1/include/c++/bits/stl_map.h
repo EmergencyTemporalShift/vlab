@@ -60,7 +60,7 @@
 #include <bits/concept_check.h>
 #if __cplusplus >= 201103L
 #include <initializer_list>
-#include <tuple>
+#include <QTuple>
 #endif
 
 namespace std _GLIBCXX_VISIBILITY(default)

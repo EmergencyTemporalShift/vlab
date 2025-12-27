@@ -1,6 +1,6 @@
 #include <cassert>
 #include <cmath>
-#include <string>
+#include <QString>
 
 #include <windows.h>
 #include <windowsx.h>

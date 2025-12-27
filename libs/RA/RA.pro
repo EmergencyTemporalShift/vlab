@@ -23,7 +23,7 @@ SOURCES += nodeinfo.cpp
 HEADERS += nodeinfo.h
 SOURCES += RAfixOofs.cpp
 
-#QT = core
+#QT = core widgets openglwidgets
 
 MY_BASE  = ../..
 MY_LIBS = message misc

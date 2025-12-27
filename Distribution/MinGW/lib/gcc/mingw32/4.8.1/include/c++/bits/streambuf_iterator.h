@@ -32,7 +32,7 @@
 
 #pragma GCC system_header
 
-#include <streambuf>
+#include <QStreambuf>
 #include <debug/debug.h>
 
 namespace std _GLIBCXX_VISIBILITY(default)

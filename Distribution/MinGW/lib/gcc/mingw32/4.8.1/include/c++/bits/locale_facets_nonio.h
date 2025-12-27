@@ -36,7 +36,7 @@
 
 #pragma GCC system_header
 
-#include <ctime>	// For struct tm
+#include <QElapsedTimer>	// For struct tm
 
 namespace std _GLIBCXX_VISIBILITY(default)
 {

@@ -2726,7 +2726,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
    *
    *  Stores characters from @a __is into @a __str until whitespace is
    *  found, the end of the stream is encountered, or str.max_size()
-   *  is reached.  If is.width() is non-zero, that is the limit on the
+   *  is reached.  If is.horizontalAdvance() is non-zero, that is the limit on the
    *  number of characters stored into @a __str.  Any previous
    *  contents of @a __str are erased.
    */

@@ -30,7 +30,7 @@
 #define _MALLOC_ALLOCATOR_H 1
 
 #include <cstdlib>
-#include <new>
+#include <QNew>
 #include <bits/functexcept.h>
 #include <bits/move.h>
 #if __cplusplus >= 201103L

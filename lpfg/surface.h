@@ -20,8 +20,8 @@
 #ifndef __SURFACE_H__
 #define __SURFACE_H__
 
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 
 #include "patch.h"
 #include "volume.h"

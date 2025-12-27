@@ -20,8 +20,8 @@
 #ifndef __COMLINEPARAM_H__
 #define __COMLINEPARAM_H__
 
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 
 #include "asrt.h"
 #include "maxpath.h"

@@ -34,7 +34,7 @@
 
 #include <parallel/types.h>
 #include <tr1/random>
-#include <limits>
+#include <QLimits>
 
 namespace __gnu_parallel
 {

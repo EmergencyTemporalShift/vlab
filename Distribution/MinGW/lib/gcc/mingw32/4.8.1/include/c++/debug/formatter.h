@@ -31,7 +31,7 @@
 
 #include <bits/c++config.h>
 #include <bits/cpp_type_traits.h>
-#include <typeinfo>
+#include <QTypeinfo>
 
 namespace __gnu_debug
 {

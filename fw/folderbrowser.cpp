@@ -1,6 +1,6 @@
 #include <cassert>
 
-#include <string>
+#include <QString>
 
 #include <windows.h>
 #include <shlobj.h>

@@ -17,7 +17,7 @@
 
 
 
-#include <stack>
+#include <QStack>
 #include <iomanip>
 
 #include <sstream>
@@ -37,6 +37,7 @@
 #include "turtle.h"
 #include "succstor.h"
 #include "BsurfaceObj.h"
+#include <stack>
 #include "terrain.h"
 
 const __lc_ModuleData *aModuleData = 0;

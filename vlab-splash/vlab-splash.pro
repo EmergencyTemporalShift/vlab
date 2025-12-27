@@ -2,7 +2,7 @@ TEMPLATE = app
 CONFIG	+= qt
 SOURCES	 = splash.cpp
 TARGET   = vlab-splash
-QT += widgets
+QT += widgets openglwidgets
 #macx:IMAGES  += Mac-logo/logo.png
 #!macx:IMAGES += Linux-logo/logo.png
 

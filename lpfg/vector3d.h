@@ -44,6 +44,7 @@ private:
 
 class Vector3d {
 public:
+  Vector3d(const Vector3d&) = default;
   Vector3d() { _arr[0] = _arr[1] = _arr[2] = 0.0f; }
   Vector3d(float x, float y, float z) {
     _arr[0] = x;

@@ -42,7 +42,7 @@ bison_impl.output = yacc.c
 QMAKE_EXTRA_COMPILERS += bison_impl
 
 MY_LIBS =  rayimage raycommon raysurf raytext rayobj raylight misc
-#QT = core
+#QT = core widgets openglwidgets
 macx {
   DEFINES += MACX_OPENGL_HEADERS
   LIBS += -framework Carbon

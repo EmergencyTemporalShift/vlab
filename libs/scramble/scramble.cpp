@@ -1,6 +1,6 @@
 #include <cassert>
 #include <fstream>
-#include <string>
+#include <QString>
 
 #include "scramble.h"
 

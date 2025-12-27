@@ -51,7 +51,8 @@
 #include <QString>
 #include <QApplication>
 #include <QCloseEvent>
-#include <QDesktopWidget>
+#include <QScreen>
+#include <QGuiApplication>
 #include <QMenu>
 #include <QMouseEvent>
 #include <QOpenGLShaderProgram>
@@ -88,8 +89,9 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
   int ypos = 100;
   int xsize = 300;
   int ysize = 240;
-  QDesktopWidget widget;
-  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
+  // Get the primary screen from the GUI application
+  QScreen *screen = QGuiApplication::primaryScreen();
+  QRect mainScreenSize = screen->availableGeometry();
 
   int wscr = mainScreenSize.width();
   int hscr = mainScreenSize.height();
@@ -579,8 +581,8 @@ void Ctrl::wheelEvent(QWheelEvent *pEv) {
   const int retinaScale = devicePixelRatio();
 
   makeCurrent();
-  if (pEv->orientation() == Qt::Vertical) {
-    float d = pEv->delta();
+  if (pEv->angleDelta().y() != 0) {
+    float d = pEv->angleDelta().y();
     Zoom(-d*retinaScale);
     update();
   }
@@ -603,7 +605,7 @@ void Ctrl::mousePressEvent(QMouseEvent *pEv) {
       _pTask = &_DragPointTask;
     }
   }
-  if (pEv->button() == Qt::MidButton) {
+  if (pEv->button() == Qt::MiddleButton) {
     _pTask = &_ZoomTask;
   }
 
@@ -885,7 +887,7 @@ void Ctrl::renderText(double x, double y, double z, const QString &str,
 
   int fontSize = font.pointSize()*retinaScale;
   QFontMetrics metrics(font);
-  int text_width = metrics.width(QString(str)) + 10;
+  int text_width = metrics.horizontalAdvance(QString(str)) + 10;
 
   int text_height = fontSize;
   QPixmap textimg(text_width, text_height + text_height / 3 + 1);
@@ -894,9 +896,9 @@ void Ctrl::renderText(double x, double y, double z, const QString &str,
   QPainter painter(&textimg);
   //painter.scale(1./retinaScale,1./retinaScale);
   /*
-    painter.setRenderHints(QPainter::HighQualityAntialiasing |
+    painter.setRenderHints(QPainter::Antialiasing |
                          QPainter::TextAntialiasing |
-                         QPainter::NonCosmeticDefaultPen);
+                         );
   */
   painter.setRenderHints(QPainter::Antialiasing);
 

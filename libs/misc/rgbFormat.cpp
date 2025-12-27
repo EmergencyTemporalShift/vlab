@@ -67,7 +67,7 @@ public:
     device->peek(mag, 2);
     if (mag[0] == '\001' and mag[1] == '\332')
       return QImageIOPlugin::CanRead | QImageIOPlugin::CanWrite;
-    return 0;
+    return {};
   }
 
   QImageIOHandler *create(QIODevice *device,

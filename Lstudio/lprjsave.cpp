@@ -1,4 +1,4 @@
-#include <vector>
+#include <QVector>
 #include <fstream>
 
 #include <fw.h>

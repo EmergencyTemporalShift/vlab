@@ -30,7 +30,7 @@
 #define _NEW_ALLOCATOR_H 1
 
 #include <bits/c++config.h>
-#include <new>
+#include <QNew>
 #include <bits/functexcept.h>
 #include <bits/move.h>
 #if __cplusplus >= 201103L

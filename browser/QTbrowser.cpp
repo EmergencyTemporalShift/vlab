@@ -27,16 +27,17 @@
 #include <QCursor>
 #include <QLayout>
 #include <QMenuBar>
-#include <stack>
+#include <QStack>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <string>
+#include <QString>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <QFrame>
 #include <QFontDialog>
 #include <QStatusBar>
+#include <stack>
 
 #include <QCloseEvent>
 #include <QDateTime>
@@ -56,7 +57,7 @@
 #include <QResizeEvent>
 #include <QShortcut>
 #include <QTextStream>
-#include <QTimer>
+#include <QElapsedTimer>
 #include <QUrl>
 #include <QtGui> // lazy
 #include <QTextBrowser>
@@ -154,10 +155,10 @@ QTbrowser::QTbrowser(QWidget *parent)
   // Create file menu
   QMenu *fileMenu = new QMenu(this);
   fileMenu->addAction("New browser ...", this, SLOT(newBrowserCB()),
-                      CTRL + Key_N);
+                      Qt::ControlModifier | Qt::Key_N);
   sysInfo.newShellButtonP = fileMenu;
   sysInfo.newShellButtonID = fileMenu->addAction(
-      "Open shell", this, SLOT(openShellCB()), Qt::CTRL + Qt::Key_S);
+      "Open shell", this, SLOT(openShellCB()), Qt::ControlModifier | Qt::Key_S);
   sysInfo.fileOpenButtonP = fileMenu;
   sysInfo.fileOpenButtonID =
       fileMenu->addAction("Open file", this, SLOT(fileopenCB()));
@@ -172,10 +173,10 @@ QTbrowser::QTbrowser(QWidget *parent)
   fileMenu->addSeparator();
   sysInfo.importButtonP = fileMenu;
   sysInfo.importButtonID =
-      fileMenu->addAction("Import", this, SLOT(importObject()), CTRL + Key_I);
+      fileMenu->addAction("Import", this, SLOT(importObject()), Qt::ControlModifier | Key_I);
   sysInfo.exportButtonP = fileMenu;
   sysInfo.exportButtonID =
-      fileMenu->addAction("Export", this, SLOT(exportObject()), CTRL + Key_E);
+      fileMenu->addAction("Export", this, SLOT(exportObject()), Qt::ControlModifier | Key_E);
 
   sysInfo.customizeButtonP = fileMenu;
   sysInfo.customizeButtonID =
@@ -183,7 +184,7 @@ QTbrowser::QTbrowser(QWidget *parent)
   fileMenu->addSeparator();
   //  fileMenu->addAction("Update database", this, SLOT(checkDatabaseCB()));
   //  fileMenu->addSeparator();
-  fileMenu->addAction("Exit", this, SLOT(close()), CTRL + Key_Q);
+  fileMenu->addAction("Exit", this, SLOT(close()), Qt::ControlModifier | Key_Q);
 
   // Create view menu
   QMenu *viewMenu = new QMenu(this);
@@ -211,7 +212,7 @@ QTbrowser::QTbrowser(QWidget *parent)
   sysInfo.centreHyperlinkTargetButtonP = viewMenu;
   sysInfo.centreHyperlinkTargetButtonID = viewMenu->addAction(
       "Show hyperlink target", this, SLOT(centreHyperlinkTargetCB()),
-      Qt::CTRL + Qt::Key_P);
+      Qt::ControlModifier | Qt::Key_P);
   sysInfo.begTreeButtonP = viewMenu;
   sysInfo.begTreeButtonID =
       viewMenu->addAction("Begin tree here", this, SLOT(beginTreeCB()));
@@ -230,28 +231,28 @@ QTbrowser::QTbrowser(QWidget *parent)
   sysInfo.getButtonID = objectMenu->addAction("Get", this, SLOT(getObjectCB()));
   sysInfo.renameButtonP = objectMenu;
   sysInfo.renameButtonID =
-      objectMenu->addAction("Rename", this, SLOT(rename_cb()), CTRL + Key_R);
+      objectMenu->addAction("Rename", this, SLOT(rename_cb()), Qt::ControlModifier | Key_R);
   sysInfo.cutButtonP = objectMenu;
   sysInfo.cutButtonID = objectMenu->addAction("Cut", this, SLOT(cut_menu_cb()));
   sysInfo.copyNodeButtonP = objectMenu;
   sysInfo.copyNodeButtonID = objectMenu->addAction(
-      "Copy object", this, SLOT(copy_node_menu_cb()), CTRL + Key_C);
+      "Copy object", this, SLOT(copy_node_menu_cb()), Qt::ControlModifier | Key_C);
   sysInfo.hypercopyNodeButtonP = objectMenu;
   sysInfo.hypercopyNodeButtonID = objectMenu->addAction(
-      "Hypercopy object", this, SLOT(hypercopy_node_cb()), CTRL + Key_H);
+      "Hypercopy object", this, SLOT(hypercopy_node_cb()), Qt::ControlModifier | Key_H);
   sysInfo.copySubtreeButtonP = objectMenu;
   sysInfo.copySubtreeButtonID = objectMenu->addAction(
-      "Copy subtree", this, SLOT(copy_subtree_menu_cb()), SHIFT + CTRL + Key_C);
+      "Copy subtree", this, SLOT(copy_subtree_menu_cb()), Qt::SHIFT | Qt::ControlModifier | Key_C);
   //  sysInfo.hypercopySubtreeButtonP = objectMenu;
   // sysInfo.hypercopySubtreeButtonID =
   //    objectMenu->addAction("Hypercopy subtree", this,
-  //                          SLOT(hypercopy_subtree_cb()), SHIFT + CTRL + Key_H);
+  //                          SLOT(hypercopy_subtree_cb()), Qt::SHIFT | Qt::ControlModifier | Key_H);
   sysInfo.pasteButtonP = objectMenu;
   sysInfo.pasteButtonID =
-      objectMenu->addAction("Paste", this, SLOT(paste_menu_cb()), CTRL + Key_V);
+      objectMenu->addAction("Paste", this, SLOT(paste_menu_cb()), Qt::ControlModifier | Key_V);
   sysInfo.deleteButtonP = objectMenu;
   sysInfo.deleteButtonID = objectMenu->addAction(
-      "Delete", this, SLOT(delete_menu_cb()), CTRL + Key_K);
+      "Delete", this, SLOT(delete_menu_cb()), Qt::ControlModifier | Key_K);
   objectMenu->addSeparator();
   sysInfo.links_buttonP = objectMenu;
   sysInfo.links_buttonID =
@@ -264,7 +265,7 @@ QTbrowser::QTbrowser(QWidget *parent)
   // int keyID;
 
   QMenu *searchMenu = new QMenu(this);
-  searchMenu->addAction("Find", this, SLOT(find_menu_cb()), CTRL + Key_F);
+  searchMenu->addAction("Find", this, SLOT(find_menu_cb()), Qt::ControlModifier | Key_F);
   QShortcut *keyBind = new QShortcut(QKeySequence(tr("\\")), this);
   connect(keyBind, SIGNAL(activated()), this, SLOT(find_menu_cb()));
 
@@ -836,7 +837,7 @@ void QTbrowser::getObjectCB() {
     // send the request to the vlabd - to invoke an object
     sysInfo.vlabd->va_send_message(
         GETOBJECT, "-rootdir %s -p '%s' -posx %d -posy %d %s@%s:%s",
-        sysInfo.oofs_dir, sysInfo.password == QString::null ? "" : pwd,
+        sysInfo.oofs_dir, sysInfo.password == QString() ? "" : pwd,
         sysInfo.obj_posx, sysInfo.obj_posy, login, sysInfo.host_name,
         sysInfo.selNode->name);
   } else if (sysInfo.selNode->isHObj == 1) {
@@ -847,7 +848,7 @@ void QTbrowser::getObjectCB() {
     // send the request to the vlabd - to invoke an object
     sysInfo.vlabd->va_send_message(
         GETOBJECT, "-rootdir %s -p '%s'  -posx %d -posy %d %s@%s:%s",
-        sysInfo.oofs_dir, sysInfo.password == QString::null ? "" : pwd,
+        sysInfo.oofs_dir, sysInfo.password == QString() ? "" : pwd,
         sysInfo.obj_posx, sysInfo.obj_posy, login, sysInfo.host_name,
         sysInfo.selNode->object_name);
   }
@@ -2245,7 +2246,7 @@ const BrowserSettings &QTbrowser::browserSettings() {
 void QTbrowser::applySettings(const BrowserSettings &bset) {
   // get info about the font
   QFontMetrics fm(bset.get(BrowserSettings::TextFont).value<QFont>());
-  sysInfo.fontWidth = fm.width("W");
+  sysInfo.fontWidth = fm.horizontalAdvance("W");
   sysInfo.fontHeight = fm.height();
 
   build_set_compacting(bset.get(BrowserSettings::Compacting).toBool());
@@ -2377,8 +2378,8 @@ void QTbrowser::idleIconLoader()
   // allow idle icon loader to be installed again
   _idleIconLoaderInstalled = false;
 
-  QTime t;
-  t.restart();
+  QElapsedTimer t;
+  t.start();
 
   // get the current view
 

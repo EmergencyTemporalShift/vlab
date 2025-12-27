@@ -27,7 +27,7 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include "ui_FindDialog.h"
-#include <vector>
+#include <QVector>
 #include <iostream>
 
 class FindDialog : public QDialog, public Ui::UI_FindDialog

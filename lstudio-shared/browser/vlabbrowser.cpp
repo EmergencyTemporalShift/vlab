@@ -1,7 +1,7 @@
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 #include <fstream>
-#include <strstream>
+#include <QStrstream>
 
 #include <fw.h>
 

@@ -247,7 +247,7 @@ int *EstablishSocket(field_type *env_field,char *hostname) {
   count = 1;
   setsockopt(s[0], SOL_SOCKET, SO_REUSEADDR, &count, sizeof count);
 
-  if (bind(s[0], &sa, sizeof sa) < 0) { /* bind address to socket */
+  if (bind(s[0], (struct sockaddr *)&sa, sizeof sa) < 0) { /* bind address to socket */
     /* try to close the socket and create it again */
     close(s[0]);
 
@@ -267,7 +267,7 @@ int *EstablishSocket(field_type *env_field,char *hostname) {
     count = 1;
     setsockopt(s[0], SOL_SOCKET, SO_REUSEADDR, &count, sizeof count);
 
-    if (bind(s[0], &sa, sizeof sa) < 0) { /* bind address to socket */
+    if (bind(s[0], (struct sockaddr *)&sa, sizeof sa) < 0) { /* bind address to socket */
       Message("%s - cannot bind socket 1.\n", process_name);
       close(s[0]);
       return NULL;
@@ -289,7 +289,7 @@ int *EstablishSocket(field_type *env_field,char *hostname) {
   count = 1;
   setsockopt(s[1], SOL_SOCKET, SO_REUSEADDR, &count, sizeof count);
 
-  if (bind(s[1], &sa, sizeof sa) < 0) { /* bind address to socket */
+  if (bind(s[1], (struct sockaddr *)&sa, sizeof sa) < 0) { /* bind address to socket */
     /* try to close the socket and create it again */
     close(s[1]);
 
@@ -308,7 +308,7 @@ int *EstablishSocket(field_type *env_field,char *hostname) {
     count = 1;
     setsockopt(s[1], SOL_SOCKET, SO_REUSEADDR, &count, sizeof count);
 
-    if (bind(s[1], &sa, sizeof sa) < 0) { /* bind address to socket */
+    if (bind(s[1], (struct sockaddr *)&sa, sizeof sa) < 0) { /* bind address to socket */
       Message("%s - cannot bind socket 2.\n", process_name);
       close(s[1]);
       return NULL;
@@ -345,9 +345,9 @@ int GetSocketConnection(int s) /* socket created with EstablishSocket() */
   int t;                  /* socket of connection */
 
   i = sizeof(isa);          /* find socket's address */
-  getsockname(s, &isa, &i); /* for accept() */
+  getsockname(s, (struct sockaddr *)&isa, &i); /* for accept() */
 
-  if ((t = accept(s, &isa, &i)) < 0) { /* accept connection if there is one */
+  if ((t = accept(s, (struct sockaddr *)&isa, &i)) < 0) { /* accept connection if there is one */
     Message("%s - socket connection was not accepted!\n", process_name);
     return -1;
   }
@@ -386,7 +386,7 @@ int CallSocket(char *hostname,u_short portnum) {
     return -1;
   }
 
-  if (connect(s, &sa, sizeof sa) < 0) { /* connect */
+  if (connect(s, (struct sockaddr *)&sa, sizeof sa) < 0) { /* connect */
     Message("%s - cannot connect the socket.\n", process_name);
     close(s);
     return -1;

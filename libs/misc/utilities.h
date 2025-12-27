@@ -20,7 +20,7 @@
 #ifndef __utilities_h__
 #define __utilities_h__
 
-#include <string>
+#include <QString>
 
 void remove_trailing_slashes(char *name);
 char *getBaseName(char *fname);

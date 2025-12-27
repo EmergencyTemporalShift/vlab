@@ -5,7 +5,7 @@
 
 #include <QPainter>
 #include <QTimer>
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QOpenGLFunctions>
 
 #include <iostream>

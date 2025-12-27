@@ -1,5 +1,5 @@
-#include <vector>
-#include <string>
+#include <QVector>
+#include <QString>
 
 #include <fw.h>
 #include <glfw.h>

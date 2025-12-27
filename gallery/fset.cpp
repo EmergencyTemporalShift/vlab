@@ -22,7 +22,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
-#include <list>
+#include <QList>
 #include <unistd.h>
 
 using namespace std;

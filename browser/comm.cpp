@@ -20,7 +20,7 @@
 #include <iostream>
 #include <netdb.h>
 #include <netinet/in.h>
-#include <qcursor.h>
+#include <QCursor>
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>

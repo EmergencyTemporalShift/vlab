@@ -23,7 +23,7 @@
 #ifdef _WINDOWS
 #include <windows.h>
 #else
-#include <qrect.h>
+#include <QRect>
 #endif
 
 struct Rect {

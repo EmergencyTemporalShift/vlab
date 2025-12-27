@@ -231,7 +231,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
        *  @code
        *  #include <iostream>
        *  #include <fstream>
-       *  #include <exception>
+       *  #include <QException>
        *
        *  int main()
        *  {

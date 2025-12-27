@@ -31,13 +31,13 @@
 
 #pragma GCC system_header
 
-#include <streambuf>
+#include <QStreambuf>
 #include <unistd.h>
 #include <cstdio>
 #include <bits/c++io.h>  // For __c_file
 
 #ifdef _GLIBCXX_USE_WCHAR_T
-#include <cwchar>
+#include <QCwchar>
 #endif
 
 namespace __gnu_cxx _GLIBCXX_VISIBILITY(default)

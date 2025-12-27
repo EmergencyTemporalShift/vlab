@@ -1,5 +1,5 @@
 
-#include <string>
+#include <QString>
 #include <cassert>
 
 #include <windows.h>

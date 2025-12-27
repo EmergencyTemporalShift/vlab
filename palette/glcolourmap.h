@@ -35,9 +35,10 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include <QOpenGLWidget>
-#include <qthread.h>
-//#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QThread>
+//#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else

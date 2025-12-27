@@ -18,11 +18,11 @@
 
 
 #include <QMessageBox>
-#include <qcursor.h>
+#include <QCursor>
 
 #include <assert.h>
 #include <iostream>
-#include <qapplication.h>
+#include <QApplication>
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>

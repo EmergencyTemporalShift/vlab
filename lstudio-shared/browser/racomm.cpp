@@ -1,5 +1,5 @@
 
-#include <memory>
+#include <QMemory>
 
 #include <fw.h>
 #include <winsock2.h>

@@ -24,7 +24,8 @@
 #include <set>
 #include <string>
 #include <list>
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 
 #include "geometry.h"
 #include "dynarray.h"

@@ -15,7 +15,7 @@
 
 #pragma warning (push, 3)
 
-#include <vector>
+#include <QVector>
 
 #include <windows.h>
 

@@ -32,7 +32,7 @@
 
 #pragma GCC system_header
 
-#include <memory>
+#include <QMemory>
 #if __cplusplus >= 201103L
 #include <initializer_list>
 #endif

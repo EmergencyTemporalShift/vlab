@@ -25,9 +25,9 @@
 #include <QImageWriter>
 #include <QTemporaryFile>
 #include <iostream>
-#include <qimage.h>
-#include <qpainter.h>
-#include <qpixmap.h>
+#include <QImage>
+#include <QPainter>
+#include <QPixmap>
 
 #include <QFileInfo>
 #include <QImage>

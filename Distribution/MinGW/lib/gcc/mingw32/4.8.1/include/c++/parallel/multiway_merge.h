@@ -39,7 +39,7 @@
 #ifndef _GLIBCXX_PARALLEL_MULTIWAY_MERGE_H
 #define _GLIBCXX_PARALLEL_MULTIWAY_MERGE_H
 
-#include <vector>
+#include <QVector>
 
 #include <bits/stl_algo.h>
 #include <parallel/features.h>

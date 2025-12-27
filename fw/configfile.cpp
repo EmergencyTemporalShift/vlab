@@ -1,7 +1,7 @@
 #include <cassert>
 #include <cctype>
 #include <cstring>
-#include <string>
+#include <QString>
 
 #include "warningset.h"
 

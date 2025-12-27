@@ -1,5 +1,5 @@
 #include <fstream>
-#include <strstream>
+#include <QStrstream>
 
 #include <fw.h>
 

@@ -26,6 +26,7 @@
 
 #include <QHash>
 #include <QTextCharFormat>
+#include <QRegularExpression>
 
 QT_BEGIN_NAMESPACE
 class QTextDocument;
@@ -43,13 +44,13 @@ protected:
 
 private:
   struct HighlightingRule {
-    QRegExp pattern;
+    QRegularExpression pattern;
     QTextCharFormat format;
   };
   QVector<HighlightingRule> highlightingRules;
 
-  QRegExp commentStartExpression;
-  QRegExp commentEndExpression;
+  QRegularExpression commentStartExpression;
+  QRegularExpression commentEndExpression;
 
   QTextCharFormat keywordFormat;
   QTextCharFormat keywordTypeFormat;

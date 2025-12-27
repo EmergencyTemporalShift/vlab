@@ -18,7 +18,7 @@
 
 
 #include <cassert>
-#include <qmessagebox.h>
+#include <QMessageBox>
 #include "ctrl.h"
 #include "view.h"
 #include <QApplication>
@@ -32,7 +32,7 @@
 using namespace Qt;
 
 View::View(Ctrl *pCtrl, Model *pModel)
-    : QGLWidget(pCtrl), _pCtrl(pCtrl), _pModel(pModel),
+    : QOpenGLWidget(pCtrl), _pCtrl(pCtrl), _pModel(pModel),
       _idleTask(IdleViewTask(this)), _translateTask(TranslateViewTask(this)),
       _zoomTask(ZoomViewTask(this)), _pCurrentTask(&_idleTask),
       _pContextMenu(new QMenu(this)), _upp(0.0), _gridRange(1.0), _mode() {
@@ -84,7 +84,7 @@ View::~View() {}
 void View::update() {
   makeCurrent();
   _setView();
-  updateGL();
+  update();
 }
 
 void View::closeEvent(QCloseEvent *pEv) {
@@ -194,7 +194,7 @@ void View::mousePressEvent(QMouseEvent *pEv) {
   if (topWidget != nullptr)
     topWidget->raise();
   switch (pEv->button()) {
-  case RightButton:
+  case Qt::RightButton:
     _pContextMenu->exec(QCursor::pos());
     break;
   case Qt::LeftButton:
@@ -205,7 +205,7 @@ void View::mousePressEvent(QMouseEvent *pEv) {
       _pCurrentTask = &_zoomTask;
     }
     break;
-  case MidButton:
+  case Qt::MiddleButton:
     _pCurrentTask = &_zoomTask;
   default:
     break;

@@ -20,7 +20,7 @@
 #ifndef __CONTOUR_H__
 #define __CONTOUR_H__
 
-#include <vector>
+#include <QVector>
 
 #include "include/lparams.h"
 #include "include/lintrfc.h"

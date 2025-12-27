@@ -8,4 +8,4 @@ MY_BASE  = ../..
 MY_LIBS  = comm image
 include( $${MY_BASE}/common.pri )
 
-QT +=  opengl 
+QT +=  opengl  widgets openglwidgets

@@ -17,7 +17,7 @@
 
 
 
-#include <string>
+#include <QString>
 
 #include "drawparam.h"
 #include "exception.h"

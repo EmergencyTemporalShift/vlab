@@ -32,7 +32,7 @@
 
 #pragma GCC system_header
 
-#include <iosfwd>
+#include <QIosfwd>
 #include <bits/cxxabi_forced.h>
 
 namespace std _GLIBCXX_VISIBILITY(default)
@@ -84,7 +84,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	{
 	  __try
 	    {
-	      const streamsize __w = __out.width();
+	      const streamsize __w = __out.horizontalAdvance();
 	      if (__w > __n)
 		{
 		  const bool __left = ((__out.flags()
@@ -99,7 +99,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 		}
 	      else
 		__ostream_write(__out, __s, __n);
-	      __out.width(0);
+	      __out.horizontalAdvance(0);
 	    }
 	  __catch(__cxxabiv1::__forced_unwind&)
 	    {

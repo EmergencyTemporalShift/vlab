@@ -21,8 +21,8 @@
 #ifndef __MODEL_H__
 #define __MODEL_H__
 
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 #include "dynarray.h"
 
 class ReadTextFile;

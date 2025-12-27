@@ -91,7 +91,7 @@ extern char *rindex();
 #endif
 
 #ifdef NEED_DECLARATION_GETENV
-extern char *getenv();
+/* extern char *getenv(); */
 #endif
 
 #if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 7)
@@ -225,7 +225,7 @@ extern char *update_path PROTO((char *, char *));
 extern int sys_nerr;
 extern char *sys_errlist[];
 #else /* HAVE_STRERROR */
-char *strerror();
+/* char *strerror(); */
 #endif
 #else /* VMS */
 char *strerror(int, ...);

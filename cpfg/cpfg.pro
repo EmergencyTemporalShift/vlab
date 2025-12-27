@@ -1,6 +1,6 @@
 TARGET   = cpfg
 TEMPLATE = app
-QT +=  opengl printsupport widgets core
+QT +=  opengl printsupport widgets core widgets openglwidgets
 CONFIG += qt opengl core
 
 SOURCES  = background.c \
@@ -148,3 +148,8 @@ PRE_TARGETDEPS +=   copyhelp info_list doc_info_list
 #QMAKE_EXTRA_TARGETS +=  copyhelp info_list doc_info_list
 #PRE_TARGETDEPS +=   copyhelp info_list doc_info_list
 #}
+
+unix:!macx {
+    # This tells the compiler where to find the libraries on your Linux system
+    LIBS += -lGLEW -lGL
+}

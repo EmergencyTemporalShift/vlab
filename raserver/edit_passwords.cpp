@@ -52,7 +52,7 @@
 #include <cerrno>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <vector>
+#include <QVector>
 #include <iostream>
 
 #include "edit_passwords.h"

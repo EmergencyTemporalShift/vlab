@@ -23,7 +23,8 @@
 #include <windows.h>
 #include <GL/gl.h>
 #else
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 #endif
 #include <cmath>
 #include <iostream>

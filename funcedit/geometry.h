@@ -29,6 +29,7 @@ class WorldPoint
 {
 friend double Distance(const WorldPoint&, const WorldPoint&);
 public:
+  WorldPoint(const WorldPoint& other) = default;
   WorldPoint() : _x(0), _y(0), _z(0), _multiplicity(1) {}
   WorldPoint(double x, double y, double z) : _x(x), _y(y), _z(z), _multiplicity(1) {}
   WorldPoint(double x, double y, double z,int mult) : _x(x), _y(y), _z(z), _multiplicity(mult) {}

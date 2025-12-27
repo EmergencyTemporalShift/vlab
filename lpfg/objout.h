@@ -20,9 +20,9 @@
 #ifndef __OBJOUTPUT_H__
 #define __OBJOUTPUT_H__
 
-#include <vector>
+#include <QVector>
 #include <fstream>
-#include <utility>
+#include "utils.h"
 
 #include "volume.h"
 #include "glenv.h"

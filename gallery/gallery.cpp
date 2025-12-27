@@ -16,7 +16,8 @@
 
 #include <QFileDialog>
 #include <QGridLayout>
-#include <QDesktopWidget>
+#include <QScreen>
+#include <QGuiApplication>
 #include <QScreen>
 #include <QLabel>
 #include <QTimer>
@@ -27,7 +28,7 @@
 #include <QInputDialog>
 #include <QTextStream>
 #include <iostream>
-#include <string>
+#include <QString>
 #include <directorywatcher.h>
 
 #include "config.h"
@@ -475,7 +476,7 @@ void Gallery::loadFile(std::string filename){
 void Gallery::setGalleryFileName() {
   QString filename = QFileDialog::getSaveFileName(NULL, QString("Save Gallery"));
 
-  if (filename != QString::null) {
+  if (filename != QString()) {
     _galleryFilename = filename;
   }
   QFileInfo fi(_galleryFilename);
@@ -538,7 +539,7 @@ void Gallery::saveAll(){
 
 void Gallery::saveAllAs() {
   setGalleryFileName();
-  if (_galleryFilename != QString::null)
+  if (_galleryFilename != QString())
     saveAll();
   _has_changed = false;
 }
@@ -677,7 +678,7 @@ void Gallery::createItem(){
   default:
     break;
   }
-  CreateItemDlg *pDlg = new CreateItemDlg(this, 0, 0, 0, selection);
+  CreateItemDlg *pDlg = new CreateItemDlg(this, nullptr, false, {}, selection);
   int r = pDlg->exec();
   if (r == QDialog::Accepted) {
     selection_name =
@@ -736,7 +737,7 @@ void Gallery::duplicateItem(){
   default:
     break;
   }
-  CreateItemDlg *pDlg = new CreateItemDlg(this, 0, 0, 0, selection);
+  CreateItemDlg *pDlg = new CreateItemDlg(this, nullptr, false, {}, selection);
   int r = pDlg->exec();
   if (r == QDialog::Accepted) {
     selection_name =
@@ -1000,15 +1001,17 @@ void Gallery::moveItemLeft(Item *pItem) {
   if (found == 0)
     return;
 
-   //now look for the previous one which is not hidden
-  unsigned int found_previous = 0;
-   for (unsigned int i = found-1; i >=0; --i) {
-     if (_items[i]->isVisible()) {
+  // now look for the previous one which is not hidden
+  int found_previous = -1; // Initialize to -1 to indicate "not found"
+  for (int i = (int)found - 1; i >= 0; --i) {
+    if (_items[i]->isVisible()) {
       found_previous = i;
       break;
     }
   }
-  if(found_previous == _items.size())
+
+  // If found_previous is still -1, we didn't find an earlier visible item
+  if (found_previous == -1)
     return;
 
 
@@ -1134,50 +1137,62 @@ void Gallery::removeWidgetAtPosition(unsigned int i){
 
 void Gallery::removeItem() {
   _has_changed = true;
-  unsigned int foundPosition = 0;
-  // remove all the widgets to the right of the selected ite
-  for (unsigned int i = _items.size()-1; i >= 0; --i){
-      QLayoutItem* glLayout = _layout->itemAtPosition(1,i);
+  int foundPosition = -1;
 
+  // 1. Remove widgets from the layout and find the selected item
+  // Changed to 'int' to prevent the infinite loop bug on i >= 0
+  for (int i = (int)_items.size() - 1; i >= 0; --i) {
+    // Note: glLayout variable was unused in original, so it is omitted here
     _layout->removeWidget(_items[i]->getGLWidget());
     _items[i]->getGLWidget()->hide();
     _layout->removeWidget(_items[i]->getName());
     _items[i]->getName()->hide();
-    if (_items[i] == _selectedItem){
+
+    if (_items[i] == _selectedItem) {
       foundPosition = i;
-      //_items[i]->hide();
       break;
     }
   }
-  
 
-  //delete the widget
-  _items.erase(_items.begin()+foundPosition);
+  // Safety check in case no item was selected
+  if (foundPosition == -1) {
+    return;
+  }
 
-  //delete _selectedItem;
-  _selectedItem = _items[_items.size()-1];
-  if (foundPosition < _items.size())
-    _selectedItem = _items[foundPosition];
-  _selectedItem = nullptr;
-  // put all the widgets back in the layout
-  for (unsigned int i = foundPosition; i < _items.size(); ++i){
+  // 2. Remove the pointer from the vector
+  // Note: If Item doesn't self-delete, you may need 'delete _items[foundPosition]' here
+  _items.erase(_items.begin() + foundPosition);
+
+  // 3. Update the _selectedItem pointer
+  if (_items.empty()) {
+    _selectedItem = nullptr;
+  } else {
+    // If we deleted the last item, select the new last item.
+    // Otherwise, select the item that slid into the deleted index.
+    int newIndex = (foundPosition < (int)_items.size()) ? foundPosition : (int)_items.size() - 1;
+    _selectedItem = _items[newIndex];
+  }
+
+  // 4. Put the remaining widgets back into the layout starting from foundPosition
+  for (unsigned int i = (unsigned int)foundPosition; i < _items.size(); ++i) {
     _layout->addWidget(_items[i]->getGLWidget(), 0, i);
     _layout->addWidget(_items[i]->getName(), 1, i);
-     _items[i]->getGLWidget()->show();
-     _items[i]->getName()->show();
+    _items[i]->getGLWidget()->show();
+    _items[i]->getName()->show();
   }
 
-    //build size of the application
+  // 5. Update UI and Save if necessary
   resizeWindow();
   this->adjustSize();
-  if (_savingMode != OFF) {
-    if (_galleryType == FUNC)
-      saveFuncSet(_galleryFilename.toStdString().c_str());
-    if (_galleryType == CON)
-      saveConSet(_galleryFilename.toStdString().c_str());
-    setSavingMode();
 
+  if (_savingMode != OFF) {
+    if (_galleryType == FUNC) {
+      saveFuncSet(_galleryFilename.toStdString().c_str());
+    }
+    if (_galleryType == CON) {
+      saveConSet(_galleryFilename.toStdString().c_str());
+    }
+    setSavingMode();
     _has_changed = false;
   }
-  
 }

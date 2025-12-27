@@ -64,7 +64,7 @@ void ResetMC() { return; }
 
 // ------------------------------------------------------------------
 
-double NextDimMC()
+double NextDimMC(int)
 // returns the value for the nextdim
 {
 #ifdef MRG

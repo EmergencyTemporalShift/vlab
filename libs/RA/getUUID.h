@@ -22,7 +22,7 @@
 #define __GET_UUID_H_VLAB__
 
 #include "quuid.h"
-#include <string>
+#include <QString>
 
 QUuid getUUID(
     const std::string oofs_dir, // root of oofs

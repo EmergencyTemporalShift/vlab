@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QMouseEvent>
-#include <QGLFramebufferObject>
+#include <QOpenGLFramebufferObject>
 #include <QImage>
 #include "Globals.h"
 #include "Triangle.h"
@@ -22,8 +22,8 @@
 #include "Globals.h"
 #include <stdlib.h>
 #include <math.h>
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 #include <iostream>
 
 #ifdef __APPLE__
@@ -46,7 +46,7 @@ using namespace std;
 
 class TextureWindow;
 
-class TextureEditor : public QGLWidget {
+class TextureEditor : public QOpenGLWidget {
   Q_OBJECT
 public:
   TextureEditor(QWidget *parent = 0);
@@ -156,7 +156,7 @@ private:
   bool linearInterpolation; // Specifies whether or not to use linear
                             // interpolation when displaying textures
 
-  QGLFramebufferObject *fbo;
+  QOpenGLFramebufferObject *fbo;
 
   QSize resizeResult;
   bool resized;

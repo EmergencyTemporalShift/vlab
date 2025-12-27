@@ -23,6 +23,10 @@
 #include <image.h>
 #include <iostream>
 
+#include <QPageLayout>
+#include <QPageSize>
+#include <QMarginsF>
+
 #include "control.h"
 #include "glcanvas.h"
 #include "drawparam.h"
@@ -36,12 +40,13 @@
 #include "generate.h"
 #include "SaveAs.h"
 #include "utils.h"
-#include <QGLFormat>
+#include <QSurfaceFormat>
 #include <QPrinter>
 #include <QPainter>
 #include <directorywatcher.h>
 
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 #include <QApplication>
 #include <QFileDialog>
 #include <QInputDialog>
@@ -415,20 +420,20 @@ glcanvas::glcanvas(QWidget *parent)
   /*******************************************/
   secondaryPop->addSeparator();
   _stepAction = secondaryPop->addAction("Step", this, SLOT(Step()),
-                                        QKeySequence(Qt::CTRL + Qt::Key_F));
+                                        QKeySequence(Qt::CTRL | Qt::Key_F));
   this->addAction(_stepAction);
   _runAction =
-      secondaryPop->addAction("Run", this, SLOT(Run()), Qt::CTRL + Qt::Key_R);
+      secondaryPop->addAction("Run", this, SLOT(Run()), Qt::CTRL | Qt::Key_R);
   this->addAction(_runAction);
   _foreverAction = secondaryPop->addAction("Forever", this, SLOT(Forever()),
-                                           Qt::CTRL + Qt::Key_V);
+                                           Qt::CTRL | Qt::Key_V);
   this->addAction(_foreverAction);
   _stopAction =
-      secondaryPop->addAction("Stop", this, SLOT(Stop()), Qt::CTRL + Qt::Key_S);
+      secondaryPop->addAction("Stop", this, SLOT(Stop()), Qt::CTRL | Qt::Key_S);
   this->addAction(_stopAction);
 
   this->addAction(secondaryPop->addAction("Rewind", this, SLOT(Rewind()),
-                                          Qt::CTRL + Qt::Key_W));
+                                          Qt::CTRL | Qt::Key_W));
 
   _clearAction = new QAction("Clear", this);
   connect(_clearAction, SIGNAL(triggered()), this, SLOT(Clear()));
@@ -589,7 +594,7 @@ void glcanvas::Repaint() {
 
     // MC - Oct. 2015 - support for shadow mapping using shaders from GLSL 1.2
     // check if shaders and framebuffers are supported
-    if (!QGLShaderProgram::hasOpenGLShaderPrograms() ||
+    if (!QOpenGLShaderProgram::hasOpenGLShaderPrograms() ||
         !hasOpenGLFeature(QOpenGLFunctions::Framebuffers)) {
       Utils::Warning("Warning! the 'render mode: shadows' view option will not work.\n");
       Utils::Warning("OpenGL Shading Language or Framebuffers are not supported ");
@@ -712,7 +717,7 @@ void glcanvas::mousePressEvent(QMouseEvent *mouse) {
   int pos_x = mouse->pos().x();
   int pos_y = mouse->pos().y();
   // bring up popup menus
-  if (RightButton == mouse->button()) {
+  if (Qt::RightButton == mouse->button()) {
     mevent = true;
 
     // display the main popup menu wherever the mouse
@@ -730,7 +735,7 @@ void glcanvas::mousePressEvent(QMouseEvent *mouse) {
   }
 
   // scale the image
-  else if ((MidButton == mouse->button()) || ((LeftButton == mouse->button() && (_keyPressed == Qt::Key_Z))))
+  else if ((Qt::MiddleButton == mouse->button()) || ((Qt::LeftButton == mouse->button() && (_keyPressed == Qt::Key_Z))))
       
  {
    //roll 
@@ -748,7 +753,7 @@ void glcanvas::mousePressEvent(QMouseEvent *mouse) {
   }
 
   // rotate the image
-  else if (LeftButton == mouse->button()) {
+  else if (Qt::LeftButton == mouse->button()) {
     if ((Qt::ShiftModifier & mouse->modifiers()) &&
         (Qt::ControlModifier & mouse->modifiers())) {
       // InsertX //
@@ -2245,13 +2250,18 @@ void glcanvas::SavePDF() {
     }
 
     QPrinter printer(QPrinter::HighResolution);
-    printer.setOutputFormat(QPrinter::NativeFormat);
+    printer.setOutputFormat(QPrinter::PdfFormat); // Use PdfFormat for PDF output
     printer.setColorMode(QPrinter::Color);
     printer.setOutputFileName(QString::fromStdString(_filename + ".pdf"));
-    printer.setPaperSize(QSizeF(image.size()), QPrinter::DevicePixel);
-    printer.setPageMargins(0, 0, 0, 0, QPrinter::Millimeter);
+
+    // In Qt 6, we use QPageLayout to handle size, margins, and orientation
+    QPageLayout layout = printer.pageLayout();
+    layout.setPageSize(QPageSize(image.size(), QPageSize::Point));
+    layout.setMargins(QMarginsF(0, 0, 0, 0));
+    layout.setOrientation(QPageLayout::Portrait);
+
+    printer.setPageLayout(layout);
     printer.setFullPage(true);
-    printer.setOrientation(QPrinter::Portrait);
 
     QPainter painter(&printer);
     painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing |
@@ -3055,7 +3065,7 @@ void glcanvas::renderText(double x, double y, double z, const QString &str,
   int fontSize = font.pointSize();
 
   QFontMetrics metrics(font);
-  int text_width = metrics.width(QString(str)) + 10;
+  int text_width = metrics.horizontalAdvance(QString(str)) + 10;
   int text_height = fontSize;// + 5;
   QPixmap textimg(text_width, fontSize + fontSize / 3 + 1);//text_height);
   textimg.fill(Qt::transparent);
@@ -3075,9 +3085,8 @@ void glcanvas::renderText(double x, double y, double z, const QString &str,
         QColor((int)(255 * mat->emissive[0]), (int)(255 * mat->emissive[1]),
                (int)(255 * mat->emissive[2]));
   }
-  painter.setRenderHints(QPainter::HighQualityAntialiasing |
-                         QPainter::TextAntialiasing |
-                         QPainter::NonCosmeticDefaultPen);
+  painter.setRenderHints(QPainter::Antialiasing |
+                         QPainter::TextAntialiasing);
 
   painter.setBrush(color);
   painter.setPen(color);

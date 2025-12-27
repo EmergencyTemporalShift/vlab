@@ -20,10 +20,10 @@
 #ifndef __CTRL_H__
 #define __CTRL_H__
 
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QOpenGLFunctions>
 
-#include <qstring.h>
+#include <QString>
 #include <QMenu>
 #include <QMouseEvent>
 #include <QCloseEvent>

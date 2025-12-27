@@ -23,7 +23,7 @@
 #include <QMouseEvent>
 #include <QCloseEvent>
 #include <QApplication>
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QOpenGLFunctions_4_3_Core>
 
@@ -51,13 +51,12 @@ using namespace Qt;
 
 Panel::Panel(int ac, char **av, SavingMode savingMode)
     : QMainWindow(), currpage(NULL), menu(NULL), pagemenu(NULL), messmenu(NULL),
-      editmenu(NULL), filemenu(NULL), desktop(NULL), file(NULL),
+      editmenu(NULL), filemenu(NULL), file(NULL),
       mainWindowSize(NULL), mainWindowLocation(NULL) {
   _savingMode = savingMode;
 
   mode = "EXEC";
 
-  desktop = QApplication::desktop();
   first = true;
   menufirst = false;
   modified = false;
@@ -98,8 +97,8 @@ bool Panel::parseargs(int argc, char **argv) {
 
   //int wscr = getDesktopWidth();
   //int hscr = getDesktopHeight();
-  QDesktopWidget widget;
-  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
+  
+  QRect mainScreenSize = QGuiApplication::primaryScreen()->availableGeometry();
   int wscr = mainScreenSize.width();
   int hscr = mainScreenSize.height();
 
@@ -197,7 +196,7 @@ void Panel::loadconfig() {
 void Panel::saveconfig() {
   if (configfile->open(QIODevice::WriteOnly | QIODevice::Truncate)) {
     QTextStream data(configfile);
-    data << "font: " << font.rawName() << "\n";
+    data << "font: " << font.family() << "\n";
     configfile->close();
   }
 }
@@ -260,7 +259,7 @@ QString Panel::read() {
       // build our format of panel
       s = data.readLine();
       QStringList split =
-          s.split(":", QString::SkipEmptyParts, Qt::CaseInsensitive);
+          s.split(":", Qt::SkipEmptyParts, Qt::CaseInsensitive);
       if (split.size() < 1)
         return "Expecting first line to read \"target: <target>\", not \"" + s +
                "\"";
@@ -278,7 +277,7 @@ QString Panel::read() {
         QString rgbdecoder;
         data >> rgbdecoder;
         QStringList decoded =
-            rgbdecoder.split(",", QString::SkipEmptyParts, Qt::CaseInsensitive);
+            rgbdecoder.split(",", Qt::SkipEmptyParts, Qt::CaseInsensitive);
         bgColour[0] = decoded.at(0).toFloat() / 255.0;
         bgColour[1] = decoded.at(1).toFloat() / 255.0;
         bgColour[2] = decoded.at(2).toFloat() / 255.0;
@@ -378,7 +377,7 @@ QString Panel::read() {
           if (loadwindowsformat) {
             QString rgbdecoder;
             data >> rgbdecoder;
-            QStringList decoded = rgbdecoder.split(",", QString::SkipEmptyParts,
+            QStringList decoded = rgbdecoder.split(",", Qt::SkipEmptyParts,
                                                    Qt::CaseInsensitive);
             col1[0] = decoded.at(0).toFloat() / 255.0;
             col1[1] = decoded.at(1).toFloat() / 255.0;
@@ -417,13 +416,13 @@ QString Panel::read() {
           if (loadwindowsformat) {
             QString rgbdecoder;
             data >> rgbdecoder;
-            QStringList decoded = rgbdecoder.split(",", QString::SkipEmptyParts,
+            QStringList decoded = rgbdecoder.split(",", Qt::SkipEmptyParts,
                                                    Qt::CaseInsensitive);
             col1[0] = decoded.at(0).toFloat() / 255.0;
             col1[1] = decoded.at(1).toFloat() / 255.0;
             col1[2] = decoded.at(2).toFloat() / 255.0;
             data >> rgbdecoder;
-            decoded = rgbdecoder.split(",", QString::SkipEmptyParts,
+            decoded = rgbdecoder.split(",", Qt::SkipEmptyParts,
                                        Qt::CaseInsensitive);
             col2[0] = decoded.at(0).toFloat() / 255.0;
             col2[1] = decoded.at(1).toFloat() / 255.0;
@@ -484,13 +483,13 @@ QString Panel::read() {
           if (loadwindowsformat) {
             QString rgbdecoder;
             data >> rgbdecoder;
-            QStringList decoded = rgbdecoder.split(",", QString::SkipEmptyParts,
+            QStringList decoded = rgbdecoder.split(",", Qt::SkipEmptyParts,
                                                    Qt::CaseInsensitive);
             col1[0] = decoded.at(0).toFloat() / 255.0;
             col1[1] = decoded.at(1).toFloat() / 255.0;
             col1[2] = decoded.at(2).toFloat() / 255.0;
             data >> rgbdecoder;
-            decoded = rgbdecoder.split(",", QString::SkipEmptyParts,
+            decoded = rgbdecoder.split(",", Qt::SkipEmptyParts,
                                        Qt::CaseInsensitive);
             col2[0] = decoded.at(0).toFloat() / 255.0;
             col2[1] = decoded.at(1).toFloat() / 255.0;
@@ -513,19 +512,19 @@ QString Panel::read() {
           if (loadwindowsformat) {
             QString rgbdecoder;
             data >> rgbdecoder;
-            QStringList decoded = rgbdecoder.split(",", QString::SkipEmptyParts,
+            QStringList decoded = rgbdecoder.split(",", Qt::SkipEmptyParts,
                                                    Qt::CaseInsensitive);
             col1[0] = decoded.at(0).toFloat() / 255.0;
             col1[1] = decoded.at(1).toFloat() / 255.0;
             col1[2] = decoded.at(2).toFloat() / 255.0;
             data >> rgbdecoder;
-            decoded = rgbdecoder.split(",", QString::SkipEmptyParts,
+            decoded = rgbdecoder.split(",", Qt::SkipEmptyParts,
                                        Qt::CaseInsensitive);
             col2[0] = decoded.at(0).toFloat() / 255.0;
             col2[1] = decoded.at(1).toFloat() / 255.0;
             col2[2] = decoded.at(2).toFloat() / 255.0;
             data >> rgbdecoder;
-            decoded = rgbdecoder.split(",", QString::SkipEmptyParts,
+            decoded = rgbdecoder.split(",", Qt::SkipEmptyParts,
                                        Qt::CaseInsensitive);
             col3[0] = decoded.at(0).toFloat() / 255.0;
             col3[1] = decoded.at(1).toFloat() / 255.0;
@@ -568,9 +567,9 @@ QString Panel::read() {
         if (heading.indexOf("color: ") == 0) {
           if (loadwindowsformat) {
             QString rgbdecoder =
-                heading.split(" ", QString::SkipEmptyParts, Qt::CaseInsensitive)
+                heading.split(" ", Qt::SkipEmptyParts, Qt::CaseInsensitive)
                     .at(1);
-            QStringList decoded = rgbdecoder.split(",", QString::SkipEmptyParts,
+            QStringList decoded = rgbdecoder.split(",", Qt::SkipEmptyParts,
                                                    Qt::CaseInsensitive);
             col1[0] = decoded.at(0).toFloat() / 255.0;
             col1[1] = decoded.at(1).toFloat() / 255.0;
@@ -609,7 +608,7 @@ QString Panel::read() {
           if (loadwindowsformat) {
             QString rgbdecoder;
             data >> rgbdecoder;
-            QStringList decoded = rgbdecoder.split(",", QString::SkipEmptyParts,
+            QStringList decoded = rgbdecoder.split(",", Qt::SkipEmptyParts,
                                                    Qt::CaseInsensitive);
             col1[0] = decoded.at(0).toFloat() / 255.0;
             col1[1] = decoded.at(1).toFloat() / 255.0;
@@ -662,7 +661,7 @@ QString Panel::read() {
 
   // set window size and location
   QWidget::window()->setMinimumSize(QSize(0, 0));
-  QWidget::window()->setMaximumSize(desktop->size());
+  QWidget::window()->setMaximumSize(QGuiApplication::primaryScreen()->availableGeometry().size());
   // size comes form command line prompts
   if (mainWindowSize != NULL) {
     QWidget::window()->resize(*mainWindowSize);
@@ -1182,7 +1181,7 @@ void Panel::updateColourScheme() {
   // grid colour
   QColor C = QColor((int)(bgColour[0] * 255.0), (int)(bgColour[1] * 255.0),
                     (int)(bgColour[2] * 255.0));
-  // set background colour for mainWindow so that it matches the QGLWidget's
+  // set background colour for mainWindow so that it matches the QOpenGLWidget's
   // (the panel) background colour
   QString qss = QString("QMainWindow {background:rgb(%1,%2,%3);};")
                     .arg(C.red())
@@ -1485,9 +1484,9 @@ void Panel::editPanel() {
   }
   setupMenu();
   setMinimumSize(QSize(10, 10));
-  setMaximumSize(desktop->size());
+  setMaximumSize(QGuiApplication::primaryScreen()->availableGeometry().size());
   QWidget::window()->setMinimumSize(QSize(10, 10));
-  QWidget::window()->setMaximumSize(desktop->size());
+  QWidget::window()->setMaximumSize(QGuiApplication::primaryScreen()->availableGeometry().size());
   editor->editPanel();
   _glWidget->update();
 }
@@ -1735,7 +1734,7 @@ int Panel::scrap() {
 
 void Panel::load() {
   QString fn = QFileDialog::getOpenFileName(
-      this, QString::null, "Panel Files (panel.*);;All Files (*.*)");
+      this, QString(), "Panel Files (panel.*);;All Files (*.*)");
   if (!fn.isEmpty()) {
     QString tempmode = mode;
     if (!scrap())
@@ -1938,7 +1937,7 @@ bool Panel::isWindowsLoadFormat() {
 
     QString s = data.readLine();
     QStringList split =
-        s.split(":", QString::SkipEmptyParts, Qt::CaseInsensitive);
+        s.split(":", Qt::SkipEmptyParts, Qt::CaseInsensitive);
 
     if (split.size() < 1) {
       file->close();
@@ -2690,7 +2689,7 @@ void Panel::keyPressed(QKeyEvent *me) {
 }
 
 void Panel::mouseClicked(QMouseEvent *me) {
-  if (LeftButton == me->button()) {
+  if (Qt::LeftButton == me->button()) {
     if (me->modifiers() & Qt::ShiftModifier) {
       currpage->shiftMousePress(QPoint(me->x(), me->y()));
     } else {
@@ -2716,7 +2715,7 @@ void Panel::mouseClicked(QMouseEvent *me) {
     _glWidget->update();
   }
 
-  if (RightButton == me->button()) {
+  if (Qt::RightButton == me->button()) {
     menu->exec(QCursor::pos());
   }
 }
@@ -2789,7 +2788,7 @@ bool Panel::eventFilter(QObject *obj, QEvent *event) {
       QWidget::window()->setFixedSize(QWidget::window()->size());
     else {
       QWidget::window()->setMinimumSize(QSize(0, 0));
-      QWidget::window()->setMaximumSize(desktop->size());
+      QWidget::window()->setMaximumSize(QGuiApplication::primaryScreen()->availableGeometry().size());
     }
   }
   if (event->type() == QEvent::KeyPress) {

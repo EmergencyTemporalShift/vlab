@@ -19,7 +19,7 @@
 
 #include <QLabel>
 #include <QLayout>
-#include <qpushbutton.h>
+#include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 

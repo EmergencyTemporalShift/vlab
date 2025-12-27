@@ -18,7 +18,7 @@
 
 
 #include <sstream>
-#include <string>
+#include <QString>
 
 #include "povray.h"
 

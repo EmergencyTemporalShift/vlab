@@ -20,7 +20,7 @@
 #ifndef __MODEL_H__
 #define __MODEL_H__
 
-#include <string>
+#include <QString>
 
 class ReadTextFile;
 class WriteTextFile;

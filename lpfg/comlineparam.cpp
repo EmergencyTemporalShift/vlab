@@ -1,3 +1,5 @@
+#include <QScreen>
+#include <QGuiApplication>
 /* ******************************************************************** *
    Copyright (C) 1990-2022 University of Calgary
   
@@ -37,7 +39,8 @@ const int eDefaultSize =
     ;
 
 #ifdef LINUX
-#include <QDesktopWidget>
+#include <QScreen>
+#include <QGuiApplication>
 #endif
 
 ComndLineParam comlineparam;
@@ -293,8 +296,8 @@ void ComndLineParam::_SetWindowRelPosition(int &i, char **argv) {
       static_cast<int>(atof(argv[i]) * GetSystemMetrics(SM_CXSCREEN));
 #endif
 #ifdef LINUX
-  QDesktopWidget widget;
-  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
+  
+  QRect mainScreenSize = QGuiApplication::primaryScreen()->availableGeometry();
   _initRect.left = static_cast<int>(atof(argv[i]) * mainScreenSize.width());
 #endif
 
@@ -325,8 +328,8 @@ void ComndLineParam::_SetWindowRelSize(int &i, char **argv) {
       static_cast<int>(atof(argv[i]) * GetSystemMetrics(SM_CXSCREEN));
 #endif
 #ifdef LINUX
-  QDesktopWidget widget;
-  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
+  
+  QRect mainScreenSize = QGuiApplication::primaryScreen()->availableGeometry();
   _initRect.right = static_cast<int>(atof(argv[i]) * mainScreenSize.width());
 #endif
   ++i;

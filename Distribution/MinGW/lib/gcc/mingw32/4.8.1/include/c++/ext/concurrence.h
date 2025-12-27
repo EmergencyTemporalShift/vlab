@@ -31,7 +31,7 @@
 
 #pragma GCC system_header
 
-#include <exception>
+#include <QException>
 #include <bits/gthr.h> 
 #include <bits/functexcept.h>
 #include <bits/cpp_type_traits.h>

@@ -23,6 +23,7 @@
 
 #include <string>
 #include <list>
+
 #include "delete_recursive.h"
 
 class Gallery;

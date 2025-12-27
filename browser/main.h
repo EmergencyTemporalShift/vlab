@@ -23,7 +23,7 @@
 
 /* This is the utlity definitions for the X11/Motif  template */
 
-#include <string>
+#include <QString>
 #include <QLabel>
 #include "QTbrowser.h"
 #include "tree.h"

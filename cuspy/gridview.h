@@ -20,7 +20,7 @@
 #ifndef __GRIDVIEW_H__
 #define __GRIDVIEW_H__
 
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include "scrpnt.h"
 #include "gridtask.h"
 #include "geometry.h"

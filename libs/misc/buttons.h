@@ -21,7 +21,8 @@
 #define __buttons_h__
 
 #include <stdlib.h>
-// #include <qgl.h>
+// #include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 
 typedef enum {
   B1DOWN,

@@ -26,12 +26,12 @@
 
 Image *image_list = NULL; /* Linked list of images */
 
-Image *ImageCreate(filename)const char *filename;
+Image *ImageCreate(const char *filename)
 {
   Image *new;
 
   new = (Image *)Malloc(sizeof(Image));
-  new->filename = strsave(filename);
+  new->filename = strsave((char *)filename);
   new->width = 0;
   new->height = 0;
   new->chan = 0;
@@ -41,7 +41,7 @@ Image *ImageCreate(filename)const char *filename;
   return new;
 }
 
-Image *ImageFind(name) const char *name;
+Image *ImageFind(const char *name)
 {
   Image *im;
 
@@ -383,10 +383,7 @@ Image *ImageRead(filename) char *filename;
 }
 #endif
 
-void ImageIndex(img, ix, iy, fx, fy, smooth, outval) Image *img;
-int ix, iy, smooth;
-Float fx, fy;
-Float outval[4];
+void ImageIndex(Image *img, int ix, int iy, double fx, double fy, int smooth, float *outval)
 {
   int xplus, yplus, chan, offset;
   Float x0y0, x1y0, x0y1, x1y1;

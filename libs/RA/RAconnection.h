@@ -22,7 +22,7 @@
 #define __RA_CONNECTION_H__
 
 #include "MessagePipe.h"
-#include <string>
+#include <QString>
 
 // connection class for the Remote Access library
 

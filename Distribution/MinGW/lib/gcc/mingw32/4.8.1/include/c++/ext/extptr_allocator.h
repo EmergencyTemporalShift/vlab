@@ -36,7 +36,7 @@
 #ifndef _EXTPTR_ALLOCATOR_H
 #define _EXTPTR_ALLOCATOR_H 1
 
-#include <memory>
+#include <QMemory>
 #include <ext/numeric_traits.h>
 #include <ext/pointer.h>
 

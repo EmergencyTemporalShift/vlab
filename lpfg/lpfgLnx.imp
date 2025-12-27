@@ -248,14 +248,18 @@ void LPFG::StartTimer() { _mainWindow->StartTimer(); }
 void LPFG::StopTimer() { _mainWindow->StopTimer(); }
 
 void LPFG::HandleTabletEvent(QTabletEvent *event) {
-  if (_lastTabletEvent == NULL)
-    _lastTabletEvent = new QTabletEvent(*event);
+    // Delete the previous stored event to avoid memory leaks
+    if (_lastTabletEvent != nullptr) {
+        delete _lastTabletEvent;
+    }
 
-  *_lastTabletEvent = *event;
-  if (comlineparam.TabletMode())
-    event->accept();
-  else
-    event->ignore(); // send back to be interpreted as mouse
+    // Use clone() to create a deep copy of the current event
+    _lastTabletEvent = static_cast<QTabletEvent*>(event->clone());
+
+    if (comlineparam.TabletMode())
+        event->accept();
+    else
+        event->ignore(); // send back to be interpreted as mouse
 }
 
 MouseStatus LPFG::GetMouseStatus(void) {

@@ -13,7 +13,12 @@
 #include <QFileInfo>
 
 TextureEditor::TextureEditor(QWidget *parent)
-    : QGLWidget(QGLFormat(QGL::AlphaChannel), parent) {
+: QOpenGLWidget(parent) { // Removed the QGLFormat argument
+
+  // Enable Alpha Channel support for the widget
+  QSurfaceFormat format;
+  format.setAlphaBufferSize(8);
+  setFormat(format);
 
   showLines = true;
   showPoints = true;
@@ -49,7 +54,7 @@ QSize TextureEditor::minimumSizeHint() const { return QSize(100, 100); }
 QSize TextureEditor::sizeHint() const { return QSize(600, 600); }
 
 void TextureEditor::paintGL() {  
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   glMatrixMode(GL_MODELVIEW);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -142,7 +147,7 @@ void TextureEditor::paintGL() {
 }
 
 void TextureEditor::initializeGL() {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 
   glClearColor(bgColour.r, bgColour.g, bgColour.b,
                0); // Clear to the background colour
@@ -161,7 +166,7 @@ void TextureEditor::initializeGL() {
 }
 
 void TextureEditor::resizeGL(int w, int h) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 
   editorWidth = w;
   editorHeight = h;
@@ -245,7 +250,7 @@ void TextureEditor::mousePressEvent(QMouseEvent *event) {
                     // point is actually moved. This will be thrown away if the
                     // point is not moved
   }
-  updateGL();
+  update();
 }
 
 void TextureEditor::mouseReleaseEvent(QMouseEvent *event) {
@@ -262,7 +267,7 @@ void TextureEditor::mouseReleaseEvent(QMouseEvent *event) {
       emit continuousSave();
     }
 
-    updateGL();
+    update();
   }
 }
 
@@ -304,13 +309,13 @@ void TextureEditor::mouseMoveEvent(QMouseEvent *event) {
       emit continuousSave();
     }
 
-    updateGL();
+    update();
   }
 }
 
 // Loads a texture with the given filename into the given GL texture
 void TextureEditor::loadImage(const char *filename) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   QImage image;
 
   bool success = image.load(filename);
@@ -321,8 +326,8 @@ void TextureEditor::loadImage(const char *filename) {
   }
 
 
-  fbo = new QGLFramebufferObject(image.width(), image.height(),
-                                 QGLFramebufferObject::Depth);
+  fbo = new QOpenGLFramebufferObject(image.width(), image.height(),
+                                 QOpenGLFramebufferObject::Depth);
   resized = false;
   captured = false;
 
@@ -333,7 +338,7 @@ void TextureEditor::loadImage(const char *filename) {
   image = image.transformed(QMatrix().scale(-1, 1));
   image = image.transformed(QMatrix().rotate(-90));
   */
-  image = QGLWidget::convertToGLFormat(image);
+  image = image.convertToFormat(QImage::Format_RGBA8888);
   glBindTexture(GL_TEXTURE_2D, tex);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0,
                GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
@@ -375,7 +380,7 @@ void TextureEditor::init() {
 
 // Resets the list of points and triangles to their initial state
 void TextureEditor::reset() {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   init();
 
   undoStackPoints
@@ -390,7 +395,7 @@ void TextureEditor::reset() {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 
 // Loads a texture on startup
@@ -414,7 +419,7 @@ void TextureEditor::preload(string filename) {
 
 // Loads a new texture
 void TextureEditor::load(string filename) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 
   /*
   bool supported =
@@ -443,7 +448,7 @@ void TextureEditor::load(string filename) {
 
 // Loads a new texture
 void TextureEditor::load(QImage image) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 
   clearFilename(); // Clear the filenames so that nothing will be overwritten on
                    // saving
@@ -454,10 +459,10 @@ void TextureEditor::load(QImage image) {
   image = image.transformed(QMatrix().scale(-1, 1));
   image = image.transformed(QMatrix().rotate(-90));
   */
-  image = QGLWidget::convertToGLFormat(image);
+  image = image.convertToFormat(QImage::Format_RGBA8888);
 
-  fbo = new QGLFramebufferObject(image.width(), image.height(),
-                                 QGLFramebufferObject::Depth);
+  fbo = new QOpenGLFramebufferObject(image.width(), image.height(),
+                                 QOpenGLFramebufferObject::Depth);
   resized = false;
   captured = false;
 
@@ -644,7 +649,7 @@ QImage TextureEditor::getFrameBuffer() {
 // changes can be made
 void TextureEditor::capture() {
   if (fbo != 0) {
-    QGLWidget::makeCurrent();
+    QOpenGLWidget::makeCurrent();
 
     QImage image = getFrameBuffer();
     /*
@@ -652,7 +657,7 @@ void TextureEditor::capture() {
     image = image.transformed(QMatrix().scale(-1, 1));
     image = image.transformed(QMatrix().rotate(-90));
     */
-    image = QGLWidget::convertToGLFormat(image);
+    image = image.convertToFormat(QImage::Format_RGBA8888);
     // Make this the new texture
     glBindTexture(GL_TEXTURE_2D, tex);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0,
@@ -678,7 +683,7 @@ void TextureEditor::saveTexture() {
 
 void TextureEditor::saveTexture(string filename) {
   if (fbo != 0) {
-    QGLWidget::makeCurrent();
+    QOpenGLWidget::makeCurrent();
 
     unsavedChanges = false; // No unsaved changes if you just saved
 
@@ -692,7 +697,7 @@ void TextureEditor::saveTexture(string filename) {
       image = image.scaled(resizeResult);
     image.save(filename.c_str()); // Save the image with the given filename
 
-    updateGL();
+    update();
   }
 }
 
@@ -741,7 +746,7 @@ void TextureEditor::resizeTexture() {
 // Returns a capture as a QImage so that it can be passed to the bezier editor
 QImage TextureEditor::getImage() {
   if (fbo != 0) {
-    QGLWidget::makeCurrent();
+    QOpenGLWidget::makeCurrent();
 
     QImage image = getFrameBuffer();
 
@@ -833,7 +838,7 @@ void TextureEditor::saveProject(string filename) {
 }
 
 void TextureEditor::loadProject(string filename) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   QFileInfo fi(QString(filename.c_str()));
   QString suf = fi.suffix();
   int supported = suf.compare(QString("dtx"));
@@ -915,7 +920,7 @@ void TextureEditor::loadProject(string filename) {
   inFile.close();
 
   emit(sendTexture(getImage()));
-  updateGL();
+  update();
 }
 
 // Load the most recently loaded project again to revert it to its most recently
@@ -971,7 +976,7 @@ void TextureEditor::undo() {
       saveTexture();
       emit continuousSave();
     }
-    updateGL();
+    update();
   }
 }
 
@@ -1028,7 +1033,7 @@ void TextureEditor::redo() {
       saveTexture();
       emit continuousSave();
     }
-    updateGL();
+    update();
   }
 }
 
@@ -1129,31 +1134,31 @@ Colour TextureEditor::getLineColour() { return lineColour; }
 void TextureEditor::resetBgColour() { changeBgColour(defBgColour); }
 
 void TextureEditor::changeBgColour(Colour colour) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 
   bgColour = colour;
   glClearColor(bgColour.r, bgColour.g, bgColour.b, 0);
-  updateGL();
+  update();
 }
 
 void TextureEditor::changePointColour(Colour colour) {
   pointColour = colour;
-  updateGL();
+  update();
 }
 
 void TextureEditor::changeLineColour(Colour colour) {
   lineColour = colour;
-  updateGL();
+  update();
 }
 
 void TextureEditor::showHidePoints(bool value) {
   showPoints = value;
-  updateGL();
+  update();
 }
 
 void TextureEditor::showHideLines(bool value) {
   showLines = value;
-  updateGL();
+  update();
 }
 
 // Clears the filename so that the program won't save over anything
@@ -1182,7 +1187,7 @@ string TextureEditor::getDir(string fileStr) {
 void TextureEditor::changed() {
   unsavedChanges = true;
   emit(sendTexture(getImage()));
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 
   if (!noProjectFilename())
     emit(canRevert(true));
@@ -1196,18 +1201,18 @@ double TextureEditor::getLineWidth() { return lineWidth; }
 
 void TextureEditor::setPointSize(int size) {
   pointSize = size;
-  updateGL();
+  update();
 }
 
 void TextureEditor::setLineWidth(int width) {
   lineWidth = width;
-  updateGL();
+  update();
 }
 
 void TextureEditor::resetView() {
   showPoints = true;
   showLines = true;
-  updateGL();
+  update();
 }
 
 void TextureEditor::setLinearInterpolation(bool value) {
@@ -1228,7 +1233,7 @@ void TextureEditor::setLinearInterpolation(bool value) {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 
 QString TextureEditor::getFilename() { return QString(filename.c_str()); }
@@ -1256,7 +1261,7 @@ void TextureEditor::rotateCW() {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 
 void TextureEditor::rotateCCW() {
@@ -1282,7 +1287,7 @@ void TextureEditor::rotateCCW() {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 
 void TextureEditor::flipH() {
@@ -1298,7 +1303,7 @@ void TextureEditor::flipH() {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 
 void TextureEditor::flipV() {
@@ -1314,6 +1319,6 @@ void TextureEditor::flipV() {
     emit continuousSave();
   }
 
-  updateGL();
+  update();
 }
 

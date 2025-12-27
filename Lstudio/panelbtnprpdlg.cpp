@@ -1,4 +1,4 @@
-#include <string>
+#include <QString>
 
 #include <fw.h>
 #include <glfw.h>

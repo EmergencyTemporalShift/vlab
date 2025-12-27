@@ -1,6 +1,6 @@
 
-#include <vector>
-#include <string>
+#include <QVector>
+#include <QString>
 
 #include <process.h>
 #include <fw.h>

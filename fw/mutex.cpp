@@ -9,8 +9,8 @@
 
 **************************************************************************/
 
-#include <strstream>
-#include <string>
+#include <QStrstream>
+#include <QString>
 #include <cassert>
 //#include <stdio.h>
 #include <tchar.h>

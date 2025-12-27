@@ -24,7 +24,7 @@
 #include "utils.h"
 #include "terrain.h"
 
-#include <string>
+#include <QString>
 #include <stdio.h>
 #include <stdlib.h>
 

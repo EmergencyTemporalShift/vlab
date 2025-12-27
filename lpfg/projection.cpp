@@ -20,7 +20,8 @@
 #define GL_SILENCE_DEPRECATION
 #ifdef __APPLE__
 #include <OpenGL/glu.h>
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 #else
 #ifdef WIN32
 #include <GL/glew.h>

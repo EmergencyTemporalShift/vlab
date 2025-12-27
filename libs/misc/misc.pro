@@ -1,6 +1,6 @@
 TEMPLATE = lib
 CONFIG += staticlib
-QT += widgets
+QT += widgets openglwidgets
 TARGET = misc
 SOURCES = buttons.cpp \
     xmemory.cpp \

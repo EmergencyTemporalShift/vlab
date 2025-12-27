@@ -20,8 +20,8 @@
 #ifndef __ENVIRONMENT_H__
 #define __ENVIRONMENT_H__
 
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 
 #include <cstdio>
 

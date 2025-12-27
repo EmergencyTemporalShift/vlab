@@ -24,7 +24,8 @@
 #include <cstdlib>
 #include <iostream>
 
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 
 #include "geometry.h"
 #include "gridview.h"
@@ -44,7 +45,7 @@ GridView::GridView(QOpenGLWidget *w)
 void GridView::GInit() {
   QFontMetrics fm(_oglwidget->font());
   _charHeight = fm.height();
-  _minusWidth = fm.width("-");
+  _minusWidth = fm.horizontalAdvance("-");
   // Initialize a clear colour
   const GLdouble *clcl = GetColor(Background);
   glClearColor(clcl[0], clcl[1], clcl[2], clcl[3]);

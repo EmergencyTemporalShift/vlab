@@ -31,19 +31,19 @@
 
 #include <iostream>
 
-#include <qwidget.h>
-#include <qapplication.h>
-#include <QOpenGLWidget>
+#include <QWidget>
+#include <QApplication>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QMessageBox>
-#include <qlayout.h>
-#include <qmenubar.h>
-#include <qfile.h>
-#include <qstatusbar.h>
+#include <QLayout>
+#include <QMenuBar>
+#include <QFile>
+#include <QStatusBar>
 #include <QByteArray>
-#include <qcolor.h>
-#include <qlabel.h>
-#include <qdialog.h>
-#include <qpushbutton.h>
+#include <QColor>
+#include <QLabel>
+#include <QDialog>
+#include <QPushButton>
 #include <QCloseEvent>
 #include <QMouseEvent>
 

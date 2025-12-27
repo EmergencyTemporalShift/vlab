@@ -23,7 +23,7 @@
 #ifdef WIN32
 #include <windows.h>
 
-#include <string>
+#include <QString>
 #else
 #include <sys/types.h>
 #endif

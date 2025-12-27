@@ -31,7 +31,7 @@
 #define _GLIBCXX_PROFILE_PROFILER_TRACE_H 1
 
 #include <cstdio>  // fopen, fclose, fprintf, FILE
-#include <cerrno>
+#include <QCerrno>
 #include <cstdlib> // atof, atoi, strtol, getenv, atexit, abort
 
 #if __cplusplus >= 201103L
@@ -44,9 +44,9 @@
 
 #include <ext/concurrence.h>
 #include <fstream>
-#include <string>
-#include <utility>
-#include <vector>
+#include <QString>
+#include <QUtility>
+#include <QVector>
 
 #include "profile/impl/profiler_algos.h"
 #include "profile/impl/profiler_state.h"

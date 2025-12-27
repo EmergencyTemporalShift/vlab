@@ -21,7 +21,7 @@
 #define CALLPREFIX *
 #endif
 
-#include <string>
+#include <QString>
 using std::string;
 
 #define MAXMODULE 500 

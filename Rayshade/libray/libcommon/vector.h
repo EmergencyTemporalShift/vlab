@@ -82,7 +82,7 @@ typedef struct PointList {
   (r)->z = (v1).z + (s) * (v2).z
 
 extern void VecCross(), VecCoordSys(), MakeBump();
-extern Float VecNormCross(), VecNormalize();
+extern Float VecNormCross(), VecNormalize(Vector *v);
 extern int Refract();
 
 #endif /* VECTOR_H */

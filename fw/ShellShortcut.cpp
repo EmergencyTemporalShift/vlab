@@ -3,7 +3,7 @@
 #include <ShlObj.h>
 #include <ObjBase.h>
 
-#include <string>
+#include <QString>
 
 #include "exception.h"
 #include "ShellShortcut.h"

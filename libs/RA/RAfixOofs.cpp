@@ -19,7 +19,7 @@
 
 // LINUX includes
 #include <cassert>
-#include <string>
+#include <QString>
 
 // VLAB includes
 #include "Mem.h"

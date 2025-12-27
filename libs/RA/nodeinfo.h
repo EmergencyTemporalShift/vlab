@@ -22,7 +22,7 @@
 #define __NODE_INFO_H__
 
 #include "quuid.h"
-#include <string>
+#include <QString>
 #include "RA.h"
 
 class NodeInfo

@@ -29,6 +29,8 @@
 #include <time.h>
 #include <unistd.h>
 #include <vector>
+#include <list>
+#include <string>
 //#include <QTemporaryFile>
 //#include <QTextStream>
 //#include <QFile>

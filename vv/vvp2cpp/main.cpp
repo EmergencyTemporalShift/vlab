@@ -168,7 +168,7 @@ void EndMProp() {
     "     delete write_edges;"
     "  }"
     "};"
-    "\n#include <set>\n"
+    "\n#include <QSet>\n"
     "std::set<mesh*> ___meshes;"
     "mesh::mesh() {"
     "  pParser = new Parser(this);"

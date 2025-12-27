@@ -1,4 +1,4 @@
-#include <memory>
+#include <QMemory>
 
 #include <fw.h>
 #include <glfw.h>

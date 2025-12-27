@@ -32,7 +32,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include <vector>
+#include <QVector>
 
 #include "archive.h"
 #include "buildTree.h"

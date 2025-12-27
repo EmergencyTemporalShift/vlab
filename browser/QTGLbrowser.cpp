@@ -39,7 +39,7 @@ using namespace Qt;
 #include "nodeinfo.h"
 #include "qtsupport.h"
 #include "xutils.h"
-#include <qpainter.h>
+#include <QPainter>
 
 // Constructor
 QTGLbrowser::QTGLbrowser(QWidget *parent, QScrollArea *s, const char *)
@@ -72,7 +72,7 @@ QTGLbrowser::QTGLbrowser(QWidget *parent, QScrollArea *s, const char *)
   drag_node = NULL;
   QColor backgroundColor(Qt::black);
   QPalette pal(palette());
-  pal.setColor(QPalette::Background, backgroundColor);
+  pal.setColor(QPalette::Window, backgroundColor);
   setAutoFillBackground(true);
   setPalette(pal);
 
@@ -101,7 +101,7 @@ void QTGLbrowser::drawContents(QPainter *p, int x, int y, int w, int h)
   QColor backgroundColor(sysInfo.mainForm->browserSettings().getColor(
       BrowserSettings::BackgroundColor));
   QPalette pal(palette());
-  pal.setColor(QPalette::Background, backgroundColor);
+  pal.setColor(QPalette::Window, backgroundColor);
   setAutoFillBackground(true);
   setPalette(pal);
 
@@ -159,7 +159,7 @@ void QTGLbrowser::resizeEvent(QResizeEvent *) {
 }
 
 QMouseEvent QTGLbrowser::translateMouseEvent(const QMouseEvent &ev) {
-  return QMouseEvent(ev.type(), ev.pos() - topLeft, ev.globalPos(), ev.button(),
+  return QMouseEvent(ev.type(), ev.position().toPoint() - topLeft, ev.globalPosition().toPoint(), ev.button(),
                      ev.buttons() & Qt::MouseButtonMask, Qt::NoModifier);
 }
 
@@ -168,7 +168,7 @@ void QTGLbrowser::mousePressEvent(QMouseEvent *ev)
 {
 
   QPoint pos = ev->pos() - topLeft;
-  if (ev->button() == LeftButton) {
+  if (ev->button() == Qt::LeftButton) {
     if (ev->buttons() & Qt::ShiftModifier) {
       // shift left click starts panning
       isPanView = true;
@@ -192,9 +192,9 @@ void QTGLbrowser::mousePressEvent(QMouseEvent *ev)
         }
       }
     }
-  } else if (ev->button() == MidButton) {
+  } else if (ev->button() == Qt::MiddleButton) {
     checkMouseClickButton(&sysInfo.buttons, pos.x(), pos.y(), B2DOWN);
-  } else if (ev->button() == RightButton) {
+  } else if (ev->button() == Qt::RightButton) {
     checkMouseClickButton(&sysInfo.buttons, pos.x(), pos.y(), B3DOWN);
   }
   if (isPanView)
@@ -205,7 +205,7 @@ void QTGLbrowser::mousePressEvent(QMouseEvent *ev)
 
 // Mouse release event handling
 void QTGLbrowser::mouseReleaseEvent(QMouseEvent *ev) {
-  if (ev->button() == LeftButton) {
+  if (ev->button() == Qt::LeftButton) {
     isPanView = false;
     unsetCursor();
   }
@@ -216,10 +216,10 @@ void QTGLbrowser::mouseReleaseEvent(QMouseEvent *ev) {
 void QTGLbrowser::mouseDoubleClickEvent(QMouseEvent *ev) {
   QPoint pos = ev->pos() - topLeft;
 
-  if (ev->button() == LeftButton) {
+  if (ev->button() == Qt::LeftButton) {
     checkMouseClickButton(&sysInfo.buttons, pos.x(), pos.y(), B1CLICK2);
 
-  } else if (ev->button() == RightButton) {
+  } else if (ev->button() == Qt::RightButton) {
     checkMouseClickButton(&sysInfo.buttons, pos.x(), pos.y(), B3CLICK2);
   }
 }

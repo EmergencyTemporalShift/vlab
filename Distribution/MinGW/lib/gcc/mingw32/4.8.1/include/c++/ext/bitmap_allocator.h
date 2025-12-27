@@ -29,10 +29,10 @@
 #ifndef _BITMAP_ALLOCATOR_H
 #define _BITMAP_ALLOCATOR_H 1
 
-#include <utility> // For std::pair.
+#include <QUtility> // For std::pair.
 #include <bits/functexcept.h> // For __throw_bad_alloc().
-#include <functional> // For greater_equal, and less_equal.
-#include <new> // For operator new.
+#include <QFunctional> // For greater_equal, and less_equal.
+#include <QNew> // For operator new.
 #include <debug/debug.h> // _GLIBCXX_DEBUG_ASSERT
 #include <ext/concurrence.h>
 #include <bits/move.h>

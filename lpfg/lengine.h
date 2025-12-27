@@ -18,7 +18,7 @@
 #include <fstream>
 #include <memory>
 #include <algorithm>
-#include <stack>
+#include <QStack>
 
 #include <stdlib.h>
 
@@ -120,7 +120,7 @@ public:
   bool Considered(__lc_ModuleIdType, int iConsiderGroup) const;
 
 #ifdef LINUX
-  // MC June 2014 - changed so there is a pointer to QGLWidget for each View
+  // MC June 2014 - changed so there is a pointer to QOpenGLWidget for each View
   std::vector<GLWidget *> _glview;
 
 #endif // LINUX

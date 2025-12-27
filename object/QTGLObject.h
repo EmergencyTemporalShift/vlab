@@ -21,20 +21,21 @@
 #ifndef __QTGLOBJECT_H
 #define __QTGLOBJECT_H
 
-#include <string>
+#include <QString>
 #include <QLabel>
-#include <qsocketnotifier.h>
+#include <QSocketNotifier>
 #include <QMouseEvent>
 #include <QCloseEvent>
 #include <QImage>
 #include <QMenu>
-#include <QTime>
+#include <QElapsedTimer>
 #include <QTimer>
 #include <iostream>
 #include "icon.h"
-#include <QGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QOpenGLFunctions>
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QElapsedTimer>
 
 class QMenuBar;
 
@@ -54,7 +55,7 @@ public:
     bool _show, _effectiveShow; // caller request show status, effective status
     void render(); // renders itself
     QTGLObject & _qtglobject; // pointer to the GL window
-    QTime _time; // measure the time from when show was called
+    QElapsedTimer _time; // measure the time from when show was called
     int  _hideRequestTime; // when was the hide called since show
     int _operationTimeThreshold;
 };
@@ -62,7 +63,7 @@ public:
 class QTGLObject : public QOpenGLWidget, public QOpenGLFunctions {
     Q_OBJECT
 public:
-    QTGLObject(QWidget* parent=0, Qt::WindowFlags f=0);
+    QTGLObject(QWidget* parent = nullptr, Qt::WindowFlags f = {});
     ~QTGLObject();
     void loadIcon();
     void MakeMenu();

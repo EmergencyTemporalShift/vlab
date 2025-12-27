@@ -1,8 +1,8 @@
 #include <cstdlib>
 #include <iostream>
-#include <string>
+#include <QString>
 #include <QApplication>
-//#include <qdesktopwidget.h>
+//#include <QDesktopwidget>
 #include <util/clamp.hpp>
 #include "vvpapp.hpp"
 
@@ -59,11 +59,11 @@ QString findQtPath()
       proc.waitForFinished();
       QString result = QString::fromLocal8Bit(proc.readAllStandardOutput());
       QStringList lines = result.split("\n");
-      QStringList qtcore = lines.filter(QRegExp(".*QtCore.*"));
+      QStringList qtcore = lines.filter(QRegularExpression(".*QtCore.*"));
       if(!qtcore.empty())
       {
         QString lib = qtcore[0].split(" ")[0].trimmed();
-        QRegExp findPath = QRegExp("(.*)/QtCore\\.framework.*");
+        QRegularExpression findPath = QRegularExpression("(.*)/QtCore\\.framework.*");
         if(findPath.exactMatch(lib))
         {
           QString pth = findPath.capturedTexts()[1];
@@ -177,11 +177,11 @@ QString findQtPath()
   proc.waitForFinished();
   QString result = QString::fromLocal8Bit(proc.readAllStandardOutput());
   QStringList lines = result.split("\n");
-  QStringList qtcore = lines.filter(QRegExp(".*QtCore.*"));
+  QStringList qtcore = lines.filter(QRegularExpression(".*QtCore.*"));
   if(!qtcore.empty())
   {
     QString lib = qtcore[0].split(" ")[0].trimmed();
-    QRegExp findPath = QRegExp("=> (.*)/libQtCore.* \\(0x.*\\)");
+    QRegularExpression findPath = QRegularExpression("=> (.*)/libQtCore.* \\(0x.*\\)");
     if(findPath.exactMatch(lib))
     {
       QString pth = findPath.capturedTexts()[1];

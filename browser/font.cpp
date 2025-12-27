@@ -25,14 +25,14 @@ int strWidth(const std::string &s) {
   return QFontMetrics(sysInfo.mainForm->browserSettings()
                           .get(BrowserSettings::TextFont)
                           .value<QFont>())
-      .width(QString(s.c_str()));
+      .horizontalAdvance(QString::fromStdString(s));
 }
 
 void getFontMaxSize(int *width, int *height) {
   QFontMetrics fm(sysInfo.mainForm->browserSettings()
                       .get(BrowserSettings::TextFont)
                       .value<QFont>());
-  *width = fm.width("W");
+  *width = fm.horizontalAdvance(QLatin1Char('W'));
   *height = fm.height();
 }
 

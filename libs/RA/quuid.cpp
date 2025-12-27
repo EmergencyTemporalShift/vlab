@@ -45,7 +45,7 @@
 #include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string>
+#include <QString>
 
 #include "quuid.h"
 

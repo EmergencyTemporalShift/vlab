@@ -38,7 +38,7 @@
 
 #pragma GCC system_header
 
-#include <iosfwd>
+#include <QIosfwd>
 #include <bits/stl_iterator_base_types.h>
 #include <ext/cast.h>
 #include <ext/type_traits.h>

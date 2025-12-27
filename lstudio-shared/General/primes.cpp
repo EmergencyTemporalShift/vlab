@@ -1,5 +1,5 @@
 #include <cassert>
-#include <vector>
+#include <QVector>
 
 #include <warningset.h>
 

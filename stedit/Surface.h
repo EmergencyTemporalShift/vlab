@@ -21,8 +21,8 @@
 #include "Patch.h"
 #include <fstream>
 #include <sstream>
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 
 using namespace std;
 #include "Point.h"

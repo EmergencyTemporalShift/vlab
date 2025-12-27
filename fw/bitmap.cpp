@@ -15,7 +15,7 @@
 #include <cstdlib>
 #include <fstream>
 
-#include <string>
+#include <QString>
 
 #include <windows.h>
 #include <tchar.h>

@@ -13,7 +13,7 @@
 #ifndef __GDIOBJECTS_H__
 #define __GDIOBJECTS_H__
 
-#include <string>
+#include <QString>
 
 class GDIObject
 {

@@ -39,9 +39,9 @@
 #include <ext/numeric_traits.h>
 #include <bits/functexcept.h>
 #include <cstdlib>
-#include <cwchar>
+#include <QCwchar>
 #include <cstdio>
-#include <cerrno>
+#include <QCerrno>
 
 namespace __gnu_cxx _GLIBCXX_VISIBILITY(default)
 {

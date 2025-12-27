@@ -32,7 +32,7 @@
 #ifndef _GLIBCXX_PARALLEL_RANDOM_SHUFFLE_H
 #define _GLIBCXX_PARALLEL_RANDOM_SHUFFLE_H 1
 
-#include <limits>
+#include <QLimits>
 #include <bits/stl_numeric.h>
 #include <parallel/parallel.h>
 #include <parallel/random_number.h>

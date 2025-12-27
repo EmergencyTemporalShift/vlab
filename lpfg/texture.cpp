@@ -24,13 +24,14 @@
 #include <windows.h>
 #include <GL/gl.h>
 #else
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 #include "lodepng.h"
 #include "lodepng_util.h"
 #endif
 
 #include <image/image.h>
-#include <string>
+#include <QString>
 
 #include "texture.h"
 #include "exception.h"

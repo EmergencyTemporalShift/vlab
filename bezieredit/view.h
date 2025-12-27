@@ -21,7 +21,8 @@
 #ifndef __VIEW_H__
 #define __VIEW_H__
 
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 #include <QMenu>
 #include <QShowEvent>
 #include <QHideEvent>
@@ -33,7 +34,7 @@
 class Ctrl;
 class Model;
 
-class View : public QGLWidget {
+class View : public QOpenGLWidget {
   Q_OBJECT
 
  public:

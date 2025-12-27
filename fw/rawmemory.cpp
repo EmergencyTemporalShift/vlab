@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <cstdlib>
 
-#include <string>
+#include <QString>
 
 #include <windows.h>
 #include <tchar.h>

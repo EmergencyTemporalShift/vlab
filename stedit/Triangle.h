@@ -10,7 +10,7 @@
 
 #include "Vector3.h"
 #include <math.h>
-#include <vector>
+#include <QVector>
 using namespace std;
 #include "Point.h"
 #include "Edge.h"

@@ -22,7 +22,7 @@
 #endif
 
 #include <cassert>
-#include <string>
+#include <QString>
 
 #ifdef _WINDOWS_
 	#error Do not include windows.h file

@@ -20,8 +20,8 @@
 #ifndef __TEXTUREARR_H__
 #define __TEXTUREARR_H__
 
-#include <vector>
-#include <string>
+#include <QVector>
+#include <QString>
 
 #include "texture.h"
 

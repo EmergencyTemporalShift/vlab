@@ -21,8 +21,8 @@
 #ifndef __FSET_H__
 #define __FSET_H__
 
-#include <string>
-#include <list>
+#include <QString>
+#include <QList>
 
 #include "set.h"
 #include "gallery.h"

@@ -32,7 +32,7 @@
 
 #include <cstdio> // FILE, fprintf
 
-#include <vector>
+#include <QVector>
 #if defined _GLIBCXX_HAVE_EXECINFO_H
 #include <execinfo.h>
 #endif

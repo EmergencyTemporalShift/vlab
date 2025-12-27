@@ -21,8 +21,8 @@
 #ifndef __VLAB_REPORT_H__
 #define __VLAB_REPORT_H__
 
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 
 namespace Vlab {
 

@@ -20,8 +20,8 @@
 #ifndef __DIR_LIST_H__
 #define __DIR_LIST_H__
 
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 
 /* dirList(dirname, dlist)
  *	- uses scandir to get a listing of the directory 'dirname'

@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include <string>
+#include <QString>
 #include <vector>
 
 // will 'fix' oofs database

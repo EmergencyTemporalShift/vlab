@@ -20,7 +20,7 @@
 #ifndef LPFG_BUNDLE_H
 #define LPFG_BUNDLE_H
 
-#include <string>
+#include <QString>
 
 std::string findBundlePath();
 

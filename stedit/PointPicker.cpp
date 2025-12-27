@@ -9,8 +9,14 @@
 #include "PointPicker.h"
 
 PointPicker::PointPicker(QWidget *parent)
-    : QGLWidget(QGLFormat(QGL::AlphaChannel), parent) {
+: QOpenGLWidget(parent) { // Change this from the QGLFormat version
 
+  // Add this block to maintain the Alpha Channel logic
+  QSurfaceFormat format;
+  format.setAlphaBufferSize(8);
+  setFormat(format);
+
+  // ... rest of your constructor code (selection, ratio, etc.)
   ratio = 1.0;
   editorWidth = 150;
   editorHeight = 150;
@@ -30,7 +36,7 @@ QSize PointPicker::sizeHint() const { return QSize(150, 150); }
 // Selects the point with the given indices in the control point array
 void PointPicker::selectPoint(int index, int jndex) {
   selectedPoint = controlPoints.at(index).at(jndex);
-  updateGL();
+  update();
 }
 
 void PointPicker::paintGL() {
@@ -53,7 +59,7 @@ void PointPicker::paintGL() {
 }
 
 void PointPicker::initializeGL() {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 
   glClearColor(bgColour.r, bgColour.g, bgColour.b,
                0); // Clear to the background colour
@@ -112,7 +118,7 @@ void PointPicker::mousePressEvent(QMouseEvent *event) {
       }
     }
   }
-  updateGL();
+  update();
 }
 
 void PointPicker::mouseReleaseEvent(QMouseEvent *) {}

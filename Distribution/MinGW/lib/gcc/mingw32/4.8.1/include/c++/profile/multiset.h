@@ -29,7 +29,7 @@
 #ifndef _GLIBCXX_PROFILE_MULTISET_H
 #define _GLIBCXX_PROFILE_MULTISET_H 1
 
-#include <utility>
+#include <QUtility>
 
 namespace std _GLIBCXX_VISIBILITY(default)
 {

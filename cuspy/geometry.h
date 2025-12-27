@@ -29,20 +29,34 @@ class WorldPoint {
   friend double Distance(const WorldPoint &, const WorldPoint &);
 
 public:
+  // 1. Existing Default Constructor
   WorldPoint() : _x(0), _y(0), _z(0), _multiplicity(1) {}
+
+  // 2. Existing Parameterized Constructor
   WorldPoint(double x, double y, double z)
-      : _x(x), _y(y), _z(z), _multiplicity(1) {}
+  : _x(x), _y(y), _z(z), _multiplicity(1) {}
+
+  // 3. ADD THIS: Copy Constructor
+  // This resolves the "deprecated-copy" warnings
+  WorldPoint(const WorldPoint &other)
+  : _x(other._x), _y(other._y), _z(other._z), _multiplicity(other._multiplicity) {}
+
+  // Getters
   double X() const { return _x; }
   double Y() const { return _y; }
   double Z() const { return _z; }
+
+  // Setters
   void X(double x) { _x = x; }
-  void Y(double y) { _y = y; }
+  void Y(double x) { _y = x; } // Note: check if this was a typo in your snippet (double x for Y)
   void Z(double z) { _z = z; }
+
   void Set(double x, double y, double z) {
     _x = x;
     _y = y;
     _z = z;
   }
+
 
   friend double XYDistance(const WorldPoint &p1, const WorldPoint &p2) {
     const double dx = p1._x - p2._x;
@@ -68,10 +82,12 @@ public:
     return *this;
   }
 
-  void operator+=(const WorldPoint &src) {
+  WorldPoint &operator+=(const WorldPoint &src) {
     _x += src._x;
     _y += src._y;
     _z += src._z;
+    // Multiplicity might need to be handled here too if it matters for your math
+    return *this;
   }
   friend inline WorldPoint operator*(WorldPoint wp, double f) {
     WorldPoint res(wp.X() * f, wp.Y() * f, wp.Z() * f);

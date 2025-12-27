@@ -59,8 +59,8 @@
 // Hashtable class, used to implement the hashed associative containers
 // hash_set, hash_map, hash_multiset, and hash_multimap.
 
-#include <vector>
-#include <iterator>
+#include <QVector>
+#include <QIterator>
 #include <algorithm>
 #include <bits/stl_function.h>
 #include <backward/hash_fun.h>

@@ -20,7 +20,7 @@
 #ifndef __LSYSDLL_H__
 #define __LSYSDLL_H__
 
-#include <vector>
+#include <QVector>
 
 #include "include/lparams.h"
 #include "include/lintrfc.h"

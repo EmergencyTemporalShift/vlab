@@ -20,7 +20,7 @@
 #ifndef __GLOB_MATCH_H__
 #define __GLOB_MATCH_H__
 
-#include <string>
+#include <QString>
 
 bool globMatch(const std::string &pattern, const std::string &str);
 

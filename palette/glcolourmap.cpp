@@ -37,8 +37,8 @@
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <chrono>
-#include <ctime>
-#include <qcursor.h>
+#include <QElapsedTimer>
+#include <QCursor>
 
 using namespace Qt;
 #include "glcolourmap.h"
@@ -447,11 +447,11 @@ void GLColourMap::mousePressEvent(QMouseEvent *me) {
   if (topWidget != nullptr)
     topWidget->raise();
 
-  if (RightButton == me->button()) {
+  if (Qt::RightButton == me->button()) {
     popmenu->exec(QCursor::pos());
   }
 
-  if (Qt::MidButton == me->button()) {
+  if (Qt::MiddleButton == me->button()) {
     if (selectable) {
       if (!selectall) {
         interindex = selection_test();
@@ -472,7 +472,7 @@ void GLColourMap::mousePressEvent(QMouseEvent *me) {
       emit CONFIRM("Selection disabled for tuning.");
   }
 
-  if (LeftButton == me->button()) {
+  if (Qt::LeftButton == me->button()) {
     SELECTINDEX(selection_test());
     if (selectable)
       emit INDEX(selectindex);

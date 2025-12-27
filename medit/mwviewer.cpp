@@ -23,7 +23,7 @@
 
   */
 
-#include <qcursor.h>
+#include <QCursor>
 #include "mwviewer.h"
 #include <QApplication>
 #include <QMenu>
@@ -1099,13 +1099,13 @@ void MWViewer::mousePressEvent(QMouseEvent *me) {
   if (topWidget != nullptr)
     topWidget->raise();
 
-  if (LeftButton == me->button()) {
+  if (Qt::LeftButton == me->button()) {
     if (selectable) {
       selecting = true;
       selectrange(selection_test(me->x(), me->y()), 1);
       emit setselect(selectindex, materials[selectindex]);
     }
-  } else if (me->button() == RightButton)
+  } else if (me->button() == Qt::RightButton)
     menu->exec(QCursor::pos());
 }
 

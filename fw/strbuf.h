@@ -1,7 +1,7 @@
 #ifndef __STRBUF_H__
 #define __STRBUF_H__
 
-#include <vector>
+#include <QVector>
 
 class string_buffer
 {

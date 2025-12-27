@@ -10,7 +10,7 @@
 **************************************************************************/
 
 
-#include <vector>
+#include <QVector>
 
 #include <fw.h>
 #include <gl\gl.h>

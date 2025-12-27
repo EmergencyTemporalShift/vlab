@@ -21,7 +21,10 @@
 
 #include "BezierEditor.h"
 #include <QDebug>
-BezierEditor::BezierEditor(QWidget *parent) : QGLWidget(parent) {
+
+#include <QPainter>
+#include <QColor>
+BezierEditor::BezierEditor(QWidget *parent) : QOpenGLWidget(parent) {
   //setFocusPolicy(Qt::StrongFocus);
 
   // Set the default camera positioning
@@ -115,7 +118,7 @@ bool BezierEditor::initTextureFilename(string filename) {
 void BezierEditor::paintGL() {
   const int retinaScale = devicePixelRatio();
 
-  QGLWidget::makeCurrent(); // This is the real GL!
+  QOpenGLWidget::makeCurrent(); // This is the real GL!
   glMatrixMode(GL_MODELVIEW);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -235,61 +238,62 @@ void BezierEditor::numberPoints() {
   glGetDoublev(GL_PROJECTION_MATRIX, proj);
   glGetIntegerv(GL_VIEWPORT, view);
 
-  glDisable(GL_ALPHA_TEST); // Disable the stuff we don't want to use when
-                            // drawing lines and points
+  // Disable OpenGL features that interfere with 2D overlays
+  glDisable(GL_ALPHA_TEST);
   glDisable(GL_LIGHTING);
   glDisable(GL_BLEND);
   glDisable(GL_TEXTURE_2D);
   glDisable(GL_DEPTH_TEST);
-  for (int k = 0; k < surface.numPatches(); k++) { // Number the points
+
+  for (int k = 0; k < surface.numPatches(); k++) {
     Patch *patch = surface.getPatch(k);
     if (!patch->isVisible())
       continue;
+
     for (int i = 0; i < surface.numRows(); i++) {
       for (int j = 0; j < surface.numColumns(); j++) {
-        if (!contactSelected &&
-            (surface.getPatch(surface.getSelectedPatch()) == patch) &&
-            ((patch->getPoint(i, j) ==
-              patch->getPoint(surface.selectedPointI,
-                              surface.selectedPointJ)) ||
-             ((symmetrical14Y || symmetrical14X) &&
-              patch->getPoint(i, j) ==
-                  patch->getPoint(surface.numRows() - surface.selectedPointI -
-                                      1,
-                                  surface.selectedPointJ)) ||
-             ((symmetrical113X || symmetrical113Y) &&
-              patch->getPoint(i, j) ==
-                  patch->getPoint(surface.selectedPointI,
-                                  surface.numColumns() -
-                                      surface.selectedPointJ - 1)) ||
-             ((symmetrical14Y || symmetrical14X) &&
-              (symmetrical113X || symmetrical113Y) &&
-              patch->getPoint(i, j) ==
-                  patch->getPoint(
-                      surface.numRows() - surface.selectedPointI - 1,
-                      surface.numColumns() - surface.selectedPointJ - 1)))){
-          glColor3f(selectedPointColour.r, selectedPointColour.g, selectedPointColour.b);
-	}
-        else{
-          glColor3f(pointColour.r, pointColour.g, pointColour.b);
-	}
         Point *p = patch->getPoint(i, j);
-	double x,y,z;
-        gluProject(p->X(), p->Y(), p->Z(), model, proj, view, &x,&y,&z);
+        double x, y, z;
 
-	Point winP(x,y,x);
-	// [PASCAL] I don't know why there is the following test
-        //if (winP.Z() < 1) {
-	renderText(winP.X()/retinaScale - 3, (view[3] - winP.Y())/retinaScale + 3,
-                     "+"); // Mark the point's actual location with a plus if
-                           // you can't actually see the point in front
-	renderText((winP.X() + 8)/retinaScale, (view[3] - winP.Y() - 8)/retinaScale,
-                     QString::number(i + j * surface.numRows() + 1));
-	  //}
+        // Project 3D point to 2D screen coordinates
+        gluProject(p->X(), p->Y(), p->Z(), model, proj, view, &x, &y, &z);
+
+        // Initialize Painter for this widget
+        QPainter painter(this);
+
+        // Selection Logic: Check if this point is the currently selected one
+        bool isSelected = (!contactSelected &&
+        (surface.getPatch(surface.getSelectedPatch()) == patch) &&
+        (patch->getPoint(i, j) == patch->getPoint(surface.selectedPointI, surface.selectedPointJ)));
+
+        if (isSelected) {
+          painter.setPen(QColor(selectedPointColour.r * 255,
+                                selectedPointColour.g * 255,
+                                selectedPointColour.b * 255));
+        } else {
+          painter.setPen(QColor(pointColour.r * 255,
+                                pointColour.g * 255,
+                                pointColour.b * 255));
+        }
+
+        // Coordinate conversion: OpenGL (0,0) is bottom-left, Qt is top-left
+        float screenX = x / retinaScale;
+        float screenY = (view[3] - y) / retinaScale;
+
+        // Draw the "+" marker
+        painter.drawText(screenX - 3, screenY + 3, "+");
+
+        // Draw the point index number
+        painter.drawText(screenX + 8, screenY - 8,
+                         QString::number(i + j * surface.numRows() + 1));
+
+        painter.end();
       }
     }
   }
-  glEnable(GL_LIGHTING); // Reenable stuff
+
+  // Re-enable OpenGL features
+  glEnable(GL_LIGHTING);
   glEnable(GL_BLEND);
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_DEPTH_TEST);
@@ -297,8 +301,7 @@ void BezierEditor::numberPoints() {
 }
 
 void BezierEditor::drawAxes() {
-  glDisable(GL_ALPHA_TEST); // Disable the stuff we don't want to use when
-                            // drawing lines and points
+  glDisable(GL_ALPHA_TEST);
   glDisable(GL_LIGHTING);
   glDisable(GL_BLEND);
   glDisable(GL_TEXTURE_2D);
@@ -315,39 +318,40 @@ void BezierEditor::drawAxes() {
     glMatrixMode(GL_MODELVIEW);
   }
   glTranslatef(-0.4 * ratio, -0.4, 0);
-  // Rotate the surface by the
-  // trackball's rotation matrix
   glRotated(xrot, 1, 0, 0);
   glRotated(yrot, 0, 1, 0);
+
+  // Draw the actual lines
   glBegin(GL_LINES);
-  glColor3f(0, 0, 1);  // Blue
-  glVertex3f(0, 0, 0); // X axis
-  glVertex3f(0.05, 0, 0);
+  glColor3f(0, 0, 1); glVertex3f(0, 0, 0); glVertex3f(0.05, 0, 0); // X
+  glColor3f(0, 1, 0); glVertex3f(0, 0, 0); glVertex3f(0, 0.05, 0); // Y
+  glColor3f(1, 0, 0); glVertex3f(0, 0, 0); glVertex3f(0, 0, 0.05); // Z
   glEnd();
-  renderText(0.06, 0, 0, "X");
-  glBegin(GL_LINES);
-  glColor3f(0, 1, 0);  // Green
-  glVertex3f(0, 0, 0); // Y axis
-  glVertex3f(0, 0.05, 0);
-  glEnd();
-  renderText(0, 0.06, 0, "Y");
-  glBegin(GL_LINES);
-  glColor3f(1, 0, 0);  // Red
-  glVertex3f(0, 0, 0); // Z axis
-  glVertex3f(0, 0, 0.05);
-  glEnd();
-  renderText(0, 0, 0.06, "Z");
   glPopMatrix();
 
-  glEnable(GL_LIGHTING); // Reenable stuff
+  glEnable(GL_LIGHTING);
   glEnable(GL_BLEND);
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_ALPHA_TEST);
-}
+
+  // Now use QPainter for the text overlay
+  QPainter painter(this);
+  painter.setPen(Qt::white);
+  painter.setFont(QFont("Arial", 10, QFont::Bold));
+
+  int h = height();
+  int w = width();
+
+  // Draw 2D labels in the bottom left
+  painter.drawText(w * 0.05, h - 60, "Z (Red)");
+  painter.drawText(w * 0.05, h - 40, "Y (Green)");
+  painter.drawText(w * 0.05, h - 20, "X (Blue)");
+  painter.end();
+} // Only one closing brace here
 
 void BezierEditor::initializeGL() {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 
   glClearColor(bgColour.r, bgColour.g, bgColour.b,
                0); // Clear to the background colour
@@ -396,11 +400,11 @@ void BezierEditor::reset() {
 
   centerPoint = Point(); // Reset the center to the origin
   camPos.setZ(5); // Reset the zoom to an appropriate level for the default surface
-  updateGL();
+  update();
 }
 
 void BezierEditor::resizeGL(int w, int h) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   editorWidth = w;
   editorHeight = h;
   ratio = (double)editorWidth / (double)editorHeight;
@@ -423,9 +427,9 @@ void BezierEditor::resizeGL(int w, int h) {
 
 void BezierEditor::mousePressEvent(QMouseEvent *event) {
 #ifndef __APPLE__
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 #endif
-  updateMousePosition(event->x(), event->y());
+  updateMousePosition(event->position().x(), event->position().y());
   // Allow point selection if ctrl is held, or if rotation is locked
   if (event->buttons() & Qt::LeftButton &&
       (event->modifiers() & Qt::ControlModifier || rotationLocked)) {
@@ -510,12 +514,12 @@ void BezierEditor::mousePressEvent(QMouseEvent *event) {
   if (dragContact) {
     selectContactPoint();
   }
-  updateGL();
+  update();
 }
 
 void BezierEditor::mouseReleaseEvent(QMouseEvent *event) {
 #ifndef __APPLE__
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 #endif
   if (event->button() == Qt::LeftButton) {
     // Release the trackball on left mouse button
@@ -524,7 +528,7 @@ void BezierEditor::mouseReleaseEvent(QMouseEvent *event) {
       if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
 	emit continuousSave();
       
-      updateGL();
+      update();
     }
   }
   dragPoint = false;
@@ -534,18 +538,18 @@ void BezierEditor::mouseReleaseEvent(QMouseEvent *event) {
 
 void BezierEditor::mouseMoveEvent(QMouseEvent *event) {
 #ifndef __APPLE__
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 #endif
   if (event->buttons() & Qt::LeftButton &&
       event->modifiers() &
           Qt::AltModifier) {
     //zoom
 #ifndef __APPLE__
-    QGLWidget::makeCurrent();
+    QOpenGLWidget::makeCurrent();
 #endif
     int oldMouseX = mouseX;    // Remember where the mouse was
     int oldMouseY = mouseY;
-    updateMousePosition(event->x(), event->y());
+    updateMousePosition(event->position().x(), event->position().y());
     int deltaX = oldMouseX - mouseX; // Find the difference in the mouse position
     int deltaY = mouseY - oldMouseY;
     // Zoom in and out with the mouse wheel
@@ -554,7 +558,7 @@ void BezierEditor::mouseMoveEvent(QMouseEvent *event) {
     } else if (deltaY > 0) {
       camPos.setZ(camPos.Z() + ((camPos.Z()) / 10.0));
     }
-    updateGL();
+    update();
     
   }
   else if (event->buttons() & Qt::LeftButton &&
@@ -562,7 +566,7 @@ void BezierEditor::mouseMoveEvent(QMouseEvent *event) {
           Qt::ShiftModifier) { // Pan the camera on right mouse button drag
     int oldMouseX = mouseX;    // Remember where the mouse was
     int oldMouseY = mouseY;
-    updateMousePosition(event->x(), event->y());
+    updateMousePosition(event->position().x(), event->position().y());
     int diffX = oldMouseX - mouseX; // Find the difference in the mouse position
     int diffY = mouseY - oldMouseY;
     if (parallelProjection) {
@@ -580,13 +584,13 @@ void BezierEditor::mouseMoveEvent(QMouseEvent *event) {
                               (double)min(editorWidth, editorHeight);
     }
 
-    updateGL();
+    update();
   } else if (dragPoint && event->buttons() & Qt::LeftButton &&
              (event->modifiers() & Qt::ControlModifier ||
               rotationLocked)) { // Allow point dragging if shift is held, or if
                                  // rotation is locked
     if (surface.getSelectedPoint() != 0) {
-      updateMousePosition(event->x(), event->y());
+      updateMousePosition(event->position().x(), event->position().y());
       double x,y,z;
       gluUnProject(mouseX, editorHeight - mouseY, mouseZ, model, proj,
                    view,&x,&y,&z); // Unproject the mouse position into the editor
@@ -608,12 +612,12 @@ void BezierEditor::mouseMoveEvent(QMouseEvent *event) {
       emit continuousSave();
     }
 
-    updateGL();
+    update();
   } else if (dragContact && event->buttons() & Qt::LeftButton &&
              (event->modifiers() & Qt::ControlModifier ||
               rotationLocked)) { // Allow point dragging if shift is held, or if
                                  // rotation is locked
-    updateMousePosition(event->x(), event->y());
+    updateMousePosition(event->position().x(), event->position().y());
     Point contactPoint = surface.getContactPoint();
     double xc = contactPoint.X();
     double yc = contactPoint.Y();
@@ -634,13 +638,13 @@ void BezierEditor::mouseMoveEvent(QMouseEvent *event) {
     if (_savingMode == CONTINUOUS)
       emit continuousSave();
 
-    updateGL();
+    update();
   } else if (event->buttons() & Qt::LeftButton && !rotationLocked) {
     // Rotate the
     // trackball on left mouse button drag
     int oldMouseX = mouseX; // Remember where the mouse was
     int oldMouseY = mouseY;
-    updateMousePosition(event->x(), event->y());
+    updateMousePosition(event->position().x(), event->position().y());
     int diffX = oldMouseX - mouseX; // Find the difference in the mouse position
     int diffY = mouseY - oldMouseY;
     yrot -= (double)diffX / 4.0;
@@ -653,33 +657,40 @@ void BezierEditor::mouseMoveEvent(QMouseEvent *event) {
       yrot -= 360; // Clamp to within 360 degrees
     while (yrot < 0)
       yrot += 360;
-    updateGL();
-  } else if (event->buttons() & Qt::MidButton) {
+    update();
+  } else if (event->buttons() & Qt::MiddleButton) {
     int oldMouseY = mouseY;
-    updateMousePosition(event->x(), event->y());
+    updateMousePosition(event->position().x(), event->position().y());
     int diffY = mouseY - oldMouseY;
     double camposz = camPos.Z() + ((camPos.Z()) / 50.0) * diffY;
     camPos.setZ(camposz);
     if (_savingMode == CONTINUOUS)
       emit continuousSave();
 
-    updateGL();
+    update();
   }
 }
 
 void BezierEditor::wheelEvent(QWheelEvent *event) {
-#ifndef __APPLE__
-  QGLWidget::makeCurrent();
-#endif
-  if (event->orientation() ==
-      Qt::Vertical) { // Zoom in and out with the mouse wheel
-    if (event->delta() > 0) {
+  #ifndef __APPLE__
+  makeCurrent(); // Note: QOpenGLWidget::makeCurrent() is fine, but makeCurrent() is usually enough
+  #endif
+
+  // In Qt 6, we check the y-component of angleDelta for vertical scrolling
+  QPoint numPixels = event->pixelDelta();
+  QPoint numDegrees = event->angleDelta() / 8;
+
+  if (!numDegrees.isNull()) {
+    int yDelta = numDegrees.y(); // This replaces event->delta()
+
+    if (yDelta > 0) {
       camPos.setZ(camPos.Z() - ((camPos.Z()) / 10.0));
-    } else if (event->delta() < 0) {
+    } else if (yDelta < 0) {
       camPos.setZ(camPos.Z() + ((camPos.Z()) / 10.0));
     }
-    updateGL();
+    update();
   }
+  event->accept();
 }
 
 // Updates the mouse position in screen coordinates as well as recalculating the
@@ -740,7 +751,7 @@ void BezierEditor::saveRedoData() {
 // Returns the editor to the state saved on the top of the undo stack
 void BezierEditor::undo() {
   if (undoStack.size() > 0) {
-    QGLWidget::makeCurrent();
+    QOpenGLWidget::makeCurrent();
     saveRedoData(); // Save the current state so that it can be redone
     surface = undoStack.back(); // Restore the state
     undoStack.pop_back(); // Pop the stack so that the next undo state is on top
@@ -757,14 +768,14 @@ void BezierEditor::undo() {
     if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
       emit continuousSave();
 
-    updateGL();
+    update();
   }
 }
 
 // Returns the editor to the state saved on the top of the redo stack
 void BezierEditor::redo() {
   if (redoStack.size() > 0) {
-    QGLWidget::makeCurrent();
+    QOpenGLWidget::makeCurrent();
     saveUndoData(); // Save the current state so that the redo can be undone
     surface = redoStack.back(); // Restore the state
     redoStack.pop_back(); // Pop the stack so that the next redo state is on top
@@ -780,14 +791,14 @@ void BezierEditor::redo() {
     }
     if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
       emit continuousSave();
-    updateGL();
+    update();
   }
 }
 
 // Loads a texture with the given filename into the given GL texture
 bool BezierEditor::loadImage(const char *filename) {
 #ifndef __APPLE__
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 #endif
   QImage image;
   if (string(filename).empty())
@@ -814,16 +825,16 @@ bool BezierEditor::loadImage(const char *filename) {
   }
 
   if (textureFlippedH)
-    image = image.transformed(QMatrix().scale(-1, 1));
+    image = image.transformed(QTransform().scale(-1, 1));
   if (textureFlippedV)
-    image = image.transformed(QMatrix().scale(1, -1));
+    image = image.transformed(QTransform().scale(1, -1));
   //PASCAL: For some reason the image is flipped and rotated, so we flip adn rotate it back
   /*
-  image = image.transformed(QMatrix().scale(1, -1));
-  image = image.transformed(QMatrix().scale(-1, 1));
-  image = image.transformed(QMatrix().rotate(textureRotation));
+  image = image.transformed(QTransform().scale(1, -1));
+  image = image.transformed(QTransform().scale(-1, 1));
+  image = image.transformed(QTransform().rotate(textureRotation));
   */
-  image = QGLWidget::convertToGLFormat(image);
+  image = image.convertToFormat(QImage::Format_RGBA8888);
   glBindTexture(GL_TEXTURE_2D, tex);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0,
                GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
@@ -834,25 +845,25 @@ bool BezierEditor::loadImage(const char *filename) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
   }
-  //	updateGL();
+  //	update();
   return true;
 }
 
 // Reloads the texture that was saved as the current texture
 void BezierEditor::reloadCurrentTexture() {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   QImage image = currentTexture;
   if (textureFlippedH)
-    image = image.transformed(QMatrix().scale(-1, 1));
+    image = image.transformed(QTransform().scale(-1, 1));
   if (textureFlippedV)
-    image = image.transformed(QMatrix().scale(1, -1));
+    image = image.transformed(QTransform().scale(1, -1));
   //PASCAL: For some reason the image is flipped and rotated, so we flip adn rotate it back
   /*
-  image = image.transformed(QMatrix().scale(1, -1));
-  image = image.transformed(QMatrix().scale(-1, 1));
-  image = image.transformed(QMatrix().rotate(textureRotation));
+  image = image.transformed(QTransform().scale(1, -1));
+  image = image.transformed(QTransform().scale(-1, 1));
+  image = image.transformed(QTransform().rotate(textureRotation));
   */
-  image = QGLWidget::convertToGLFormat(image);
+  image = image.convertToFormat(QImage::Format_RGBA8888);
   glBindTexture(GL_TEXTURE_2D, tex);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0,
                GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
@@ -867,20 +878,20 @@ void BezierEditor::reloadCurrentTexture() {
 
 // Loads a new texture to show on the surface
 bool BezierEditor::loadTexture(string filename) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   hasCurrentTexture = false;
   bool success = loadImage(filename.c_str());
   if (!success)
     return false;
   textureName = filename; // Remember what texture is loaded so that it can be
                             // used in the texture editor
-  updateGL();
+  update();
   return true;
 }
 
 // Loads a .s file for editing
 bool BezierEditor::load(string filename) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   emit(newSurface());
   std::string extension = filename.substr(filename.find_last_of(".") + 1);
   bool supported = (extension.compare("s") == 0);
@@ -920,7 +931,7 @@ bool BezierEditor::load(string filename) {
   emit(canRevert(false));
 
   emit(updatePatchSelection(0));
-  updateGL();
+  update();
   return true;
 }
 
@@ -972,84 +983,84 @@ void BezierEditor::resetBgColour() { changeBgColour(defBgColour); }
 
 // Changes the background colour to the given colour
 void BezierEditor::changeBgColour(Colour colour) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   bgColour = colour;
   glClearColor(bgColour.r, bgColour.g, bgColour.b, 0);
   changed();
-  updateGL();
+  update();
 }
 
 // Changes the point colour to the given colour
 void BezierEditor::changePointColour(Colour colour) {
   pointColour = colour;
   changed();
-  updateGL();
+  update();
 }
 
 // Changes the selected point colour to the given colour
 void BezierEditor::changeSelectedPointColour(Colour colour) {
   selectedPointColour = colour;
   changed();
-  updateGL();
+  update();
 }
 
 // Changes the line colour to the given colour
 void BezierEditor::changeLineColour(Colour colour) {
   lineColour = colour;
   changed();
-  updateGL();
+  update();
 }
 
 // Changes the wireframe colour to the given colour
 void BezierEditor::changeWireframeColour(Colour colour) {
   wireframeColour = colour;
   changed();
-  updateGL();
+  update();
 }
 
 // Changes the vector colour to the given colour
 void BezierEditor::changeVectorColour(Colour colour) {
   vectorColour = colour;
   changed();
-  updateGL();
+  update();
 }
 
 // Changes the patch to the given colour
 void BezierEditor::changePatchColour(Colour colour) {
   patchColour = colour;
   changed();
-  updateGL();
+  update();
 }
 
 // Changes the selected patch to the given colour
 void BezierEditor::changeSelectedPatchColour(Colour colour) {
   selectedPatchColour = colour;
   changed();
-  updateGL();
+  update();
 }
 
 // Sets the visibility of the points to the given boolean value
 void BezierEditor::showHidePoints(bool value) {
   showPoints = value;
-  updateGL();
+  update();
 }
 
 // Sets the visibility of the lines to the given boolean value
 void BezierEditor::showHideLines(bool value) {
   showLines = value;
-  updateGL();
+  update();
 }
 
 // Sets the visibility of the surface to the given boolean value
 void BezierEditor::showHideSurface(bool value) {
   showSurface = value;
-  updateGL();
+  update();
 }
 
 // Sets the visibility of the vectors to the given boolean value
 void BezierEditor::showHideVectors(bool value) {
   showVectors = value;
-  updateGL();
+  update();
 }
 
 // Centers the camera and zooms to fit the surface's current position
@@ -1096,7 +1107,7 @@ void BezierEditor::centerCamera() {
   camLook = Point(); // Look at the origin
   centerContact = false;
   emit(contactCenteredChanged(false));
-  updateGL();
+  update();
 }
 
 // Centers the camera at the surface's contact point
@@ -1104,7 +1115,7 @@ void BezierEditor::centerAtContact(bool value) {
   if (value) {
     centerPoint = surface.getContactPoint();
     centerContact = true;
-    updateGL();
+    update();
   } else {
     centerContact = false;
   }
@@ -1116,13 +1127,13 @@ void BezierEditor::resetView() {
   xrot = 0;
   yrot = 0;
   centerCamera();
-  updateGL();
+  update();
 }
 
 // Enables or disables wireframe mode
 void BezierEditor::setWireframe(bool value) {
   wireframe = value;
-  updateGL();
+  update();
 }
 
 // Selects the point with the given coordinates in the array of control points
@@ -1137,7 +1148,7 @@ void BezierEditor::selectPoint(int index, int jndex) {
     emit(selectedPointZ(surface.getSelectedPoint()->Z()));
     emit(pointSelected(index, jndex));
   }
-  updateGL();
+  update();
 }
 
 // Marks the contact point as selected so that it can be manipulated
@@ -1149,7 +1160,7 @@ void BezierEditor::selectContactPoint() {
   emit(selectedPointY(surface.getContactPoint().Y()));
   emit(selectedPointZ(surface.getContactPoint().Z()));
   emit(contactPointSelected());
-  updateGL();
+  update();
 }
 
 void BezierEditor::saveXYZValue() {
@@ -1166,7 +1177,7 @@ void BezierEditor::setXValue(double value) {
     if(_savingMode == CONTINUOUS)
       emit continuousSave();
 
-    updateGL();
+    update();
   } else if (surface.getSelectedPoint() != 0) {
     surface.getSelectedPoint()->setX(value);
     // Move the point symmetrically about the x line going through the surface's
@@ -1195,7 +1206,7 @@ void BezierEditor::setXValue(double value) {
     if (_savingMode == CONTINUOUS)
       emit continuousSave();
 
-    updateGL();
+    update();
   }
 }
 
@@ -1210,7 +1221,7 @@ void BezierEditor::setYValue(double value) {
     if  (_savingMode == CONTINUOUS)
       emit continuousSave();
 
-    updateGL();
+    update();
   } else if (surface.getSelectedPoint() != 0) {
     surface.getSelectedPoint()->setY(value);
     if (symmetrical14Y)
@@ -1237,7 +1248,7 @@ void BezierEditor::setYValue(double value) {
     if (_savingMode == CONTINUOUS)
       emit continuousSave();
 
-    updateGL();
+    update();
   }
 }
 
@@ -1252,7 +1263,7 @@ void BezierEditor::setZValue(double value) {
     if  (_savingMode == CONTINUOUS)
       emit continuousSave();
 
-    updateGL();
+    update();
   } else if (surface.getSelectedPoint() != 0) {
     surface.getSelectedPoint()->setZ(value);
     if (symmetrical14Y || symmetrical14X)
@@ -1270,7 +1281,7 @@ void BezierEditor::setZValue(double value) {
     surface.subdivide(subdivisionSamples); // Subdivide the surface appropreatly
     if (_savingMode == CONTINUOUS)
       emit continuousSave();
-    updateGL();
+    update();
   }
 }
 
@@ -1305,13 +1316,13 @@ void BezierEditor::setWireframeWidth(double value) { wireframeWidth = value; }
 
 // Sets the level of bezier subdivision to the given value
 void BezierEditor::setSubdivisionSamples(int value) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   subdivisionSamples = value;
   surface.subdivide(subdivisionSamples); // Subdivide the surface appropreatly
   if (_savingMode == CONTINUOUS)
     emit continuousSave();
 
-  updateGL();
+  update();
 }
 
 // Gets the name of the currently loaded texture, so that it can be passed to
@@ -1330,24 +1341,24 @@ bool BezierEditor::noCurrentTexture() { return !hasCurrentTexture; }
 // Updates the currently shown texture to the QImage passed
 void BezierEditor::updateTexture(QImage image) {
   currentTexture = image;
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
 
   if (textureFlippedH)
-    currentTexture = currentTexture.transformed(QMatrix().scale(-1, 1));
+    currentTexture = currentTexture.transformed(QTransform().scale(-1, 1));
   if (textureFlippedV)
-    currentTexture = currentTexture.transformed(QMatrix().scale(1, -1));
+    currentTexture = currentTexture.transformed(QTransform().scale(1, -1));
   
   //currentTexture =
-  //    currentTexture.transformed(QMatrix().rotate(textureRotation));
+  //    currentTexture.transformed(QTransform().rotate(textureRotation));
 
   hasCurrentTexture = true;
     //PASCAL: For some reason the image is flipped and rotated, so we flip adn rotate it back
   /*
-  currentTexture = currentTexture.transformed(QMatrix().scale(1, -1));
-  currentTexture = currentTexture.transformed(QMatrix().scale(-1, 1));
-  currentTexture = currentTexture.transformed(QMatrix().rotate(textureRotation));
+  currentTexture = currentTexture.transformed(QTransform().scale(1, -1));
+  currentTexture = currentTexture.transformed(QTransform().scale(-1, 1));
+  currentTexture = currentTexture.transformed(QTransform().rotate(textureRotation));
   */
-  QImage texture = QGLWidget::convertToGLFormat(currentTexture);
+  QImage texture = currentTexture.convertToFormat(QImage::Format_RGBA8888);
   glBindTexture(GL_TEXTURE_2D, tex);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.width(), texture.height(), 0,
                GL_RGBA, GL_UNSIGNED_BYTE, texture.bits());
@@ -1361,7 +1372,7 @@ void BezierEditor::updateTexture(QImage image) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
 }
 
 // Updates the saved texture name to match the texture editor
@@ -1408,7 +1419,7 @@ void BezierEditor::setSymmetricalEditing(bool axis14, bool axisX, bool value) {
     else
       symmetrical113Y = value;
   }
-  updateGL();
+  update();
 }
 
 // Clears the surface filename so that the program won't save over anything
@@ -1444,7 +1455,7 @@ void BezierEditor::setContactPoint(Point point) {
   if (centerContact)
     centerAtContact(true); // Recenter the contact if it was moved
   changed();
-  updateGL();
+  update();
 }
 
 // Set the value of the surface's endpoint to the given value and indicate a
@@ -1455,7 +1466,7 @@ void BezierEditor::setEndPoint(Point point) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
 }
 
 // Set the value of the surface's heading vector to the given value and indicate
@@ -1467,7 +1478,7 @@ void BezierEditor::setHeading(Vector3 vector) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
 }
 
 // Set the value of the surface's up vector to the given value and indicate a
@@ -1479,7 +1490,7 @@ void BezierEditor::setUp(Vector3 vector) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
 }
 
 // Set the value of the surface's size to the given value and indicate a change
@@ -1490,7 +1501,7 @@ void BezierEditor::setSize(double value) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
 }
 
 // Flip all the control points in the surface horizontally about the YZ plane
@@ -1503,7 +1514,7 @@ void BezierEditor::flipPatchHorizontal() {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
   if (contactSelected) {
     emit(selectedPointX(
         surface.getContactPoint().X())); // Tell the combo boxes what the
@@ -1527,7 +1538,7 @@ void BezierEditor::flipPatchVertical() {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
   if (contactSelected) {
     emit(selectedPointX(
         surface.getContactPoint().X())); // Tell the combo boxes what the
@@ -1551,7 +1562,7 @@ void BezierEditor::flipPatchDepth() {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
   if (contactSelected) {
     emit(selectedPointX(
         surface.getContactPoint().X())); // Tell the combo boxes what the
@@ -1573,7 +1584,7 @@ int BezierEditor::getSelectedPointJ() { return surface.getSelectedPointJ(); }
 
 // Sets the patch with the given index to be the selected patch in the surface
 void BezierEditor::selectPatch(int index) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   surface.setSelectedPatch(index);
   if (contactSelected) {
     emit(selectedPointX(
@@ -1586,7 +1597,7 @@ void BezierEditor::selectPatch(int index) {
     emit(selectedPointY(surface.getSelectedPoint()->Y()));
     emit(selectedPointZ(surface.getSelectedPoint()->Z()));
   }
-  updateGL();
+  update();
 }
 
 // Changes the name of the patch at the given index to the name provided
@@ -1600,12 +1611,12 @@ void BezierEditor::changePatchVisibility(bool visibility, int index) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
 }
 
 // Adds a new patch to the surface
 void BezierEditor::addNewPatch(int shape) {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   saveUndoState();
   changed();
 
@@ -1627,7 +1638,7 @@ void BezierEditor::addNewPatch(int shape) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
   if (surface.numPatches() ==
       1) { // If this is the first patch to be added, take some extra steps...
     surface.setSelectedPatch(0);
@@ -1650,7 +1661,7 @@ void BezierEditor::addNewPatch(int shape) {
 
 // Deletes the currently selected patch from the surface
 void BezierEditor::deleteSelectedPatch() {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   saveUndoState();
   changed();
   surface.deletePatch(surface.getSelectedPatch());
@@ -1658,12 +1669,12 @@ void BezierEditor::deleteSelectedPatch() {
     emit continuousSave();
 
   if (surface.numPatches() == 0)
-    updateGL();
+    update();
 }
 
 // Duplicates the selected patch in the bezier editor
 void BezierEditor::duplicateSelectedPatch() {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   saveUndoState();
   changed();
 
@@ -1745,7 +1756,7 @@ void BezierEditor::translate(Vector3 translation) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
   if (contactSelected) {
     emit(selectedPointX(
         surface.getContactPoint().X())); // Tell the combo boxes what the
@@ -1781,7 +1792,7 @@ void BezierEditor::rotate(Vector3 axis, double angle) {
     if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
       emit continuousSave();
     
-    updateGL();
+    update();
     if (contactSelected) {
       emit(selectedPointX(surface.getContactPoint()
                               .X())); // Tell the combo boxes what the coordinates
@@ -1810,7 +1821,7 @@ void BezierEditor::scale(Vector3 factor) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
   if (contactSelected) {
     emit(selectedPointX(
         surface.getContactPoint().X())); // Tell the combo boxes what the
@@ -1846,7 +1857,7 @@ void BezierEditor::setRotationLocked(bool value) {
 // changed, not after
 void BezierEditor::boxEdited() {
   saveUndoState();
-  updateGL();
+  update();
 }
 
 // Gets a pointer to the surface
@@ -1858,7 +1869,7 @@ void BezierEditor::setEnforceAdjacency(bool value) {
 }
 
 void BezierEditor::updateAdjacencies() {
-  QGLWidget::makeCurrent();
+  QOpenGLWidget::makeCurrent();
   if (enforceAdjacency) {
     surface.updateAdjacentEdges(
         surface.getSelectedPatch()); // Update the selected patch first
@@ -1870,7 +1881,7 @@ void BezierEditor::updateAdjacencies() {
     if  (_savingMode == CONTINUOUS)
       emit continuousSave();
 
-    updateGL();
+    update();
   }
 }
 
@@ -1882,7 +1893,7 @@ void BezierEditor::setLinearInterpolation(bool value) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
 }
 
 void BezierEditor::setProjection(bool value) {
@@ -1916,7 +1927,7 @@ void BezierEditor::rotateTextureCW() {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
 }
 
 void BezierEditor::rotateTextureCCW() {
@@ -1928,7 +1939,7 @@ void BezierEditor::rotateTextureCCW() {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
 }
 
 void BezierEditor::flipTextureH(bool value) {
@@ -1939,7 +1950,7 @@ void BezierEditor::flipTextureH(bool value) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
 }
 
 void BezierEditor::flipTextureV(bool value) {
@@ -1950,5 +1961,5 @@ void BezierEditor::flipTextureV(bool value) {
   if ((_savingMode == TRIGGERED) || (_savingMode == CONTINUOUS))
     emit continuousSave();
 
-  updateGL();
+  update();
 }

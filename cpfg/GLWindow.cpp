@@ -42,6 +42,9 @@
 #include <QDialogButtonBox>
 #include <iostream>
 
+#include <QPushButton>
+#include <QDialog>
+
 extern COMLINEPARAM clp;
 
 
@@ -149,7 +152,7 @@ void GLWindow::quickHelp(){
   msgBox->setModal(false);
   QDialogButtonBox* bb = new QDialogButtonBox(QDialogButtonBox::Ok);
   QPushButton* okBtn = bb->button(QDialogButtonBox::Ok);
-  connect(okBtn, SIGNAL(clicked()),msgBox,SLOT(close()));
+  connect(okBtn, &QPushButton::clicked, msgBox, &QDialog::close);
   QVBoxLayout *layout = new QVBoxLayout;
   layout->addWidget(tb);
   layout->addWidget(bb);

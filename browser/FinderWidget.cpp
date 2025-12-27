@@ -30,14 +30,14 @@ FinderWidget::FinderWidget(QWidget *parent, const char *)
     : QLineEdit(parent) {
   QColor backgroundColor(QColor(255, 222, 187));
   QPalette pal(palette());
-  pal.setColor(QPalette::Background, backgroundColor);
+  pal.setColor(QPalette::Window, backgroundColor);
   setAutoFillBackground(true);
   setPalette(pal);
 
 
   QColor foregroundColor(QColor(0, 0, 0));
   pal = palette();
-  pal.setColor(QPalette::Foreground, foregroundColor);
+  pal.setColor(QPalette::WindowText, foregroundColor);
   setPalette(pal);
   setFrame(true);
   setText("Search text");
@@ -50,14 +50,14 @@ FinderWidget::FinderWidget(QWidget *parent, const char *)
 void FinderWidget::activate() {
   QColor backgroundColor(QColor(255, 222, 187));
   QPalette pal(palette());
-  pal.setColor(QPalette::Background, backgroundColor);
+  pal.setColor(QPalette::Window, backgroundColor);
   setAutoFillBackground(true);
   setPalette(pal);
 
 
   QColor foregroundColor(QColor(0, 0, 0));
   pal = palette();
-  pal.setColor(QPalette::Foreground, foregroundColor);
+  pal.setColor(QPalette::WindowText, foregroundColor);
   setPalette(pal);
   setEnabled(true);
   show();
@@ -72,14 +72,14 @@ void FinderWidget::doSearching() {
     in_progress = true;
     QColor backgroundColor(QColor(255, 222, 187));
     QPalette pal(palette());
-    pal.setColor(QPalette::Background, backgroundColor);
+    pal.setColor(QPalette::Window, backgroundColor);
     setAutoFillBackground(true);
     setPalette(pal);
 
 
     QColor foregroundColor(QColor(0, 0, 0));
     pal = palette();
-    pal.setColor(QPalette::Foreground, foregroundColor);
+    pal.setColor(QPalette::WindowText, foregroundColor);
     setPalette(pal);
     RA::searchBegin(sysInfo.connection,
                     sysInfo.oofs_dir_rp,  // oofs directory
@@ -90,15 +90,15 @@ void FinderWidget::doSearching() {
     );
   }
 
-  QTime lastProgressUpdate;
-  lastProgressUpdate.restart();
+  QElapsedTimer lastProgressUpdate;
+  lastProgressUpdate.start();
   QProgressDialog progress("Searching", "Cancel", 0, 1000, this);
   progress.setModal(true);
   int count = 0;
   while (1) {
     count++;
     if (lastProgressUpdate.elapsed() > 100) {
-      lastProgressUpdate.restart();
+      lastProgressUpdate.start();
       progress.setValue(1);
       progress.setLabelText(QString("Processed %1 objects").arg(count));
     }
@@ -112,14 +112,14 @@ void FinderWidget::doSearching() {
       QApplication::beep();
       QColor backgroundColor(QColor(255, 0, 0));
       QPalette pal(palette());
-      pal.setColor(QPalette::Background, backgroundColor);
+      pal.setColor(QPalette::Window, backgroundColor);
       setAutoFillBackground(true);
       setPalette(pal);
 
 
       QColor foregroundColor(QColor(255, 255, 255));
       pal = palette();
-      pal.setColor(QPalette::Foreground, foregroundColor);
+      pal.setColor(QPalette::WindowText, foregroundColor);
       setAutoFillBackground(true);
       setPalette(pal);
       return;
@@ -164,14 +164,14 @@ void FinderWidget::focusOutEvent(QFocusEvent *) {
 void FinderWidget::textChanged_cb() {
   QColor backgroundColor(QColor(255, 222, 187));
   QPalette pal(palette());
-  pal.setColor(QPalette::Background, backgroundColor);
+  pal.setColor(QPalette::Window, backgroundColor);
   setAutoFillBackground(true);
   setPalette(pal);
 
 
   QColor foregroundColor(QColor(0, 0, 0));
   pal = palette();
-  pal.setColor(QPalette::Foreground, foregroundColor);
+  pal.setColor(QPalette::WindowText, foregroundColor);
   in_progress = false;
   RA::searchEnd(sysInfo.connection);
 }

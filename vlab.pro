@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 CONFIG += ordered
-QT += widgets
+QT += widgets openglwidgets
 QT_DISABLE_DEPRECATED_BEFORE=0x000000
 SUBDIRS = \
 libs \

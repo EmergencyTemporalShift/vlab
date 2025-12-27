@@ -34,7 +34,7 @@
 #define _GLIBCXX_PARALLEL_LIST_PARTITION_H 1
 
 #include <parallel/parallel.h>
-#include <vector>
+#include <QVector>
 
 namespace __gnu_parallel
 {

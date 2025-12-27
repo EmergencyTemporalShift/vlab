@@ -1,3 +1,5 @@
+#include <GL/glew.h>
+#include <GL/glew.h>
 // to avoid GLu Warning due to deprecated function on MacOs
 #define GL_SILENCE_DEPRECATION
 

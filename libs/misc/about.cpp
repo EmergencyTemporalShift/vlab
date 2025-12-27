@@ -21,8 +21,8 @@
 #include "version.h"
 #include "resources.h"
 #include <iostream>
-#include <qmessagebox.h>
-#include <qpixmap.h>
+#include <QMessageBox>
+#include <QPixmap>
 #include <QFile>
 #include <QTextStream>
 #include <QTextBrowser>

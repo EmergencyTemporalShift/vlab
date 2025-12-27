@@ -21,7 +21,7 @@
 #define __VLAB_VERSION_H__
 
 #include <sstream>
-#include <string>
+#include <QString>
 
 namespace vlab {
 

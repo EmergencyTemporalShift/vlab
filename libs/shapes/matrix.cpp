@@ -19,7 +19,7 @@
 
 #include "matrix.h"
 #include <cmath>
-#include <vector>
+#include <QVector>
 using std::vector;
 #define TwentySeventh 0.037037037
 #define Third 0.3333333333333

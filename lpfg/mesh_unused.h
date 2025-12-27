@@ -26,7 +26,7 @@
 #pragma warning(disable : 4786)
 #endif
 
-#include <list>
+#include <QList>
 
 #include "vector3d.h"
 

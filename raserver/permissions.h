@@ -19,9 +19,9 @@
 
 #ifndef PERMISSIONS_H
 #define PERMISSIONS_H
-#include <string>
-#include <vector>
-#include <map>
+#include <QString>
+#include <QVector>
+#include <QMap>
 #include "raserver.h"
 
 class Permissions {

@@ -19,7 +19,7 @@
 
 #include "xstring.h"
 #include "xmemory.h"
-#include <string>
+#include <QString>
 
 /*****************************************************************************
  *

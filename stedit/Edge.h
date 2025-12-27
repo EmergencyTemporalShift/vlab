@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <string>
+#include <QString>
 #include "Point.h"
 #include <math.h>
 using namespace std;

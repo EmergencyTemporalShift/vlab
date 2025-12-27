@@ -31,7 +31,7 @@
 #ifndef _RANDOM_H
 #define _RANDOM_H 1
 
-#include <vector>
+#include <QVector>
 
 namespace std _GLIBCXX_VISIBILITY(default)
 {

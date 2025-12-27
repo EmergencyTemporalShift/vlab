@@ -20,7 +20,7 @@
 #include "ctrl.h"
 #include "mainwindow.h"
 #include <QtCore/QTimer>
-#include <qapplication.h>
+#include <QApplication>
 
 void delayedShow(QWidget *wnd) {
   // This timer ensure Qt has the time to create the OpenGL context before

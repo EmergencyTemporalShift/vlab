@@ -1,4 +1,4 @@
-#include <string>
+#include <QString>
 #include <cassert>
 
 #include <tchar.h>

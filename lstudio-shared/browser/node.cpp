@@ -1,6 +1,6 @@
-#include <locale>
-#include <string>
-#include <vector>
+#include <QLocale>
+#include <QString>
+#include <QVector>
 
 #include <fw.h>
 

@@ -47,12 +47,12 @@
 #define _THROW_ALLOCATOR_H 1
 
 #include <cmath>
-#include <ctime>
-#include <map>
-#include <string>
-#include <ostream>
-#include <stdexcept>
-#include <utility>
+#include <QElapsedTimer>
+#include <QMap>
+#include <QString>
+#include <QOstream>
+#include <QStdexcept>
+#include <QUtility>
 #include <bits/functexcept.h>
 #include <bits/move.h>
 #if __cplusplus >= 201103L

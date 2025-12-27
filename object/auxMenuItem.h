@@ -18,10 +18,10 @@
 
 
 
-#include <qlabel.h>
-#include <qstring.h>
-#include <qfont.h>
-#include <qpainter.h>
+#include <QLabel>
+#include <QString>
+#include <QFont>
+#include <QPainter>
 
 #ifndef __AUXMENUITEM_H
 #define __AUXMENUITEM_H

@@ -12,7 +12,7 @@
 #include <QFileDialog>
 #include <QImage>
 #include <QTimer>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QCloseEvent>
 #include <QKeyEvent>
 #include <QPicture>
@@ -34,7 +34,7 @@
 
 #include <algorithm>
 #include <iostream>
-#include <iterator>
+#include <QIterator>
 
 #include "sgiFormat.h"
 #include "about.h"
@@ -480,7 +480,7 @@ void VVPApp::rec_frame() {
 #else
   QString name = QString("/scratch/f%1.png").arg(frame_counter, 7);
 #endif
-  name = name.replace(QRegExp(" "), "0");
+  name = name.replace(QRegularExpression(" "), "0");
   saveImage(name.toStdString(), "png");
 }
 

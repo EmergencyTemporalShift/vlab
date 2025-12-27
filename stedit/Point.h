@@ -31,7 +31,8 @@ public:
   Point();
   Point(double x, double y);
   Point(double x, double y, double z);
-  Point(const Point &p){
+  // This is the Copy Constructor
+  Point(const Point &p) {
     x = p.X();
     y = p.Y();
     z = p.Z();

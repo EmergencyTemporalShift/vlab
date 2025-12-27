@@ -1,5 +1,5 @@
 TEMPLATE = app
-QT += widgets
+QT += widgets openglwidgets
 
 HEADERS +=  mainwindow.h rubberband.h Preferences.h resources.h SaveAs.h
 SOURCES +=  mainwindow.cpp  main.cpp rubberband.cpp Preferences.cpp resources.cpp SaveAs.cpp
@@ -11,7 +11,7 @@ macx: {
   LIBS += -framework Carbon
 }
 
-QT += opengl # qt3support 
+QT += opengl # qt3support  widgets openglwidgets
 
 MY_BASE  = ..
 MY_LIBS  = misc platform

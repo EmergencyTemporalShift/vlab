@@ -33,7 +33,7 @@
 #include <iostream>
 #include <cmath>
 
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 
 #ifdef __APPLE__
 #  include <GLUT/glut.h>
@@ -41,15 +41,15 @@
 #  include <GL/glut.h>
 #endif
 
-#include <qwidget.h>
-#include <qdialog.h>
-#include <qlayout.h>
-#include <qslider.h>
-#include <qspinbox.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qstatusbar.h>
-#include <qlineedit.h>
+#include <QWidget>
+#include <QDialog>
+#include <QLayout>
+#include <QSlider>
+#include <QSpinBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QStatusBar>
+#include <QLineEdit>
 #include <QMouseEvent>
 #include <QCloseEvent>
 
@@ -70,7 +70,7 @@ class ColourPick:public QWidget{
   //
   // new ColourPick MUST have a parent, the rest of the args may be default
   // if fixsize is true, ColourPick is minimum size and cannot be resized (default false)
-  // if multiple contexts and display lists involved, set QGLWidget* globj
+  // if multiple contexts and display lists involved, set QOpenGLWidget* globj
   // don't toy with WindowFlags !!!!!!
 
   ColourPick(QWidget* parent, const char* name=0, QOpenGLWidget* globj=0,bool fixsize=false, Qt::WindowFlags=Qt::Window);

@@ -21,7 +21,7 @@
 #ifndef __VIEWTASK_H__
 #define __VIEWTASK_H__
 #define GL_SILENCE_DEPRECATION
-#include <qevent.h>
+#include <QEvent>
 #include "scrpnt.h"
 #include "geometry.h"
 #include "model.h"

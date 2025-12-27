@@ -44,7 +44,7 @@
 
 #include <bits/c++config.h>
 #include <cstdlib>
-#include <new>
+#include <QNew>
 #include <bits/functexcept.h>
 #include <ext/atomicity.h>
 #include <ext/concurrence.h>

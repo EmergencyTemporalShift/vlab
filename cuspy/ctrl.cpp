@@ -44,10 +44,11 @@
 #include <QCloseEvent>
 #include <QMouseEvent>
 #include <QMenu>
-#include <QDesktopWidget>
+#include <QScreen>
+#include <QGuiApplication>
 #include <QApplication>
 #include <QPainter>
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include "about.h"
 
 using namespace Qt;
@@ -74,17 +75,17 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
   _contextmenu = new QMenu();
 
   QAction *save_act =
-      _contextmenu->addAction("&Save", this, SLOT(Save()), CTRL + Key_S);
+_contextmenu->addAction("&Save", QKeySequence(Qt::CTRL | Qt::Key_S), this, SLOT(Save()));
   mw->addAction(save_act);
   QAction *saveas_act = _contextmenu->addAction(
-      "Save as ...", this, SLOT(SaveAs()), CTRL + SHIFT + Key_S);
+      "Save as ...", QKeySequence("Ctrl+Shift+S"), this, SLOT(SaveAs()));
   mw->addAction(saveas_act);
-  QAction *reload_act = _contextmenu->addAction("Revert to saved", this,
-                                                SLOT(Reload()), CTRL + Key_R);
+  QAction *reload_act = _contextmenu->addAction("Revert to saved", QKeySequence(Qt::CTRL | Qt::Key_R), this,
+      SLOT(Reload()));
   mw->addAction(reload_act);
   _contextmenu->addSeparator();
 
-  QAction *loadBackGrdImage_act = _contextmenu->addAction("Load background image", this, SLOT(LoadBackGrdImage()), QKeySequence("Ctrl+L"));
+  QAction *loadBackGrdImage_act = _contextmenu->addAction("Load background image", QKeySequence("Ctrl+L"), this, SLOT(LoadBackGrdImage()));
   mw->addAction(loadBackGrdImage_act);
   
   _contextmenu->addSeparator();
@@ -147,8 +148,7 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
 
   _contextmenu->addSeparator();
 
-  QAction *exit_act = _contextmenu->addAction("Exit", _topLevel, SLOT(close()),
-                                              QKeySequence("Ctrl+Q"));
+  QAction *exit_act = _contextmenu->addAction("Exit", QKeySequence("Ctrl+Q"), _topLevel, SLOT(close()));
 
 #ifdef __APPLE__
 
@@ -182,8 +182,8 @@ Ctrl::Ctrl(QWidget *parent, int argc, char **argv)
   int ypos = 100;
   int xsize = 300;
   int ysize = 240;
-  QDesktopWidget widget;
-  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
+  QScreen *screen = QGuiApplication::primaryScreen();
+  QRect mainScreenSize = screen->availableGeometry();
   SetScale(0.55);
 
   int wscr = mainScreenSize.width();
@@ -322,6 +322,7 @@ void Ctrl::closeEvent(QCloseEvent *pEv) {
 
   switch (ret) {
   case QMessageBox::Yes:
+    [[fallthrough]];
     Save();
   case QMessageBox::No:
     pEv->accept();
@@ -551,9 +552,9 @@ void Ctrl::mousePressEvent(QMouseEvent *pEv) {
   if (topWidget != nullptr)
     topWidget->raise();
 
-  if (pEv->button() == RightButton) {
+  if (pEv->button() == Qt::RightButton) {
     _contextmenu->exec(QCursor::pos());
-  } else if (pEv->button() == LeftButton) {
+  } else if (pEv->button() == Qt::LeftButton) {
     if (pEv->modifiers() == Qt::ShiftModifier) {
       _pTask = &_TranslateTask;
     } else if (pEv->modifiers() == AltModifier) {
@@ -562,7 +563,7 @@ void Ctrl::mousePressEvent(QMouseEvent *pEv) {
       _pTask = &_DragPointTask;
     }
   }
-  if (pEv->button() == Qt::MidButton) {
+  if (pEv->button() == Qt::MiddleButton) {
     _pTask = &_ZoomTask;
   }
   bool addRemove = false;
@@ -594,7 +595,7 @@ void Ctrl::mousePressEvent(QMouseEvent *pEv) {
 void Ctrl::mouseDoubleClickEvent(QMouseEvent *pEv) {
   const int retinaScale = devicePixelRatio();
 
-  if (pEv->button() == LeftButton) {
+  if (pEv->button() == Qt::LeftButton) {
     _pTask = &_IncMultiplicityTask;
     _pTask->ButtonDown(pEv,retinaScale);
     update();
@@ -637,10 +638,22 @@ void Ctrl::mouseMoveEvent(QMouseEvent *pEv) {
 void Ctrl::wheelEvent(QWheelEvent *pEv) {
   const int retinaScale = devicePixelRatio();
 
+  // In Qt 6, angleDelta() returns a QPoint representing the
+  // rotation distance in eighths of a degree.
+  QPoint numPixels = pEv->pixelDelta();
+  QPoint numDegrees = pEv->angleDelta() / 8;
+
   makeCurrent();
-  if (pEv->orientation() == Qt::Vertical) {
-    float d = pEv->delta();
-    Zoom(-d*retinaScale);
+
+  // Check the vertical component (y)
+  if (!numDegrees.isNull() && numDegrees.y() != 0) {
+    // angleDelta().y() replaces orientation() == Qt::Vertical
+    // and delta() simultaneously.
+    float d = static_cast<float>(numDegrees.y());
+
+    // Note: In Qt 6, scrolling "up/away" is positive,
+    // same as the old delta() behavior.
+    Zoom(-d * retinaScale);
     update();
   }
 }
@@ -648,16 +661,16 @@ void Ctrl::wheelEvent(QWheelEvent *pEv) {
 void Ctrl::Help() {
   char msg[] = "Mouse Commands:\n"
                "  Pan - Shift + Left Button\n"
-               "  Zoom - MidButton\n"
+               "  Zoom - Qt::MiddleButton\n"
                "  Add/Remove Point - Command + Left Button\n"
                "  Increment Muliplicity - Double click on point\n"
                "Keyboard Commands:\n"
                "  Translate Background Image - Arrow keys\n"
                "  Translate all - Command + Arrow keys\n"
                "  (Hold Shift for larger steps)\n";
-
   QMessageBox *mb =
-      new QMessageBox("Help", QString(msg), QMessageBox::Information, 1, 0, 0);
+      new QMessageBox(QMessageBox::Information, "Help", QString(msg), QMessageBox::Ok, this);
+      QMessageBox::information(this, "Help", QString(msg));
   QPixmap icon(":icon.png");
   mb->setIconPixmap(icon.scaled(icon.width() / 2, icon.height() / 2,
                                 Qt::IgnoreAspectRatio,
@@ -820,17 +833,16 @@ void Ctrl::renderText(double x, double y, double z, const QString &str,
 
   int fontSize = font.pointSize()*retinaScale;
   QFontMetrics metrics(font);
-  int text_width = metrics.width(QString(str)) + 10;
+  int text_width = metrics.horizontalAdvance(QString(str)) + 10;
 
   int text_height = fontSize;
   QPixmap textimg(text_width, text_height + text_height / 3 + 1);
   textimg.fill(Qt::transparent);
 
   QPainter painter(&textimg);
-  painter.setRenderHints(QPainter::HighQualityAntialiasing |
-                         QPainter::TextAntialiasing |
-                         QPainter::NonCosmeticDefaultPen);
-  painter.setBrush(color);
+  painter.setRenderHints(QPainter::Antialiasing |
+                         QPainter::TextAntialiasing);
+ // Syntax error removed
   painter.setPen(color);
   painter.setFont(font);
   painter.drawText(5, text_height, str);

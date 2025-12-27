@@ -34,8 +34,8 @@
 #include "drawparam.h"
 #include "mesharr.h" // MC - Dec. 2020 - for drawing meshes
 
-#include <vector>
-#include <string>
+#include <QVector>
+#include <QString>
 #include <stdio.h>
 #include <stdlib.h>
 #include <iomanip>

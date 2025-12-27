@@ -1,7 +1,7 @@
 #ifndef __OBJFGVGALLERY_H__
 #define __OBJFGVGALLERY_H__
 
-#include <memory>
+#include <QMemory>
 
 class EditableObject;
 class ObjectEdit;

@@ -27,7 +27,7 @@
 #include <QCursor>
 #include <sys/types.h>
 #include <unistd.h>
-#include <vector>
+#include <QVector>
 #include "MessageBox.h"
 #include "Preferences.h"
 #include "objectMessageBox.h"
@@ -44,9 +44,10 @@
 #include <QMouseEvent>
 #include <QOpenGLFunctions_1_1>
 #include <QPushButton>
-#include <QTime>
+#include <QElapsedTimer>
 #include <QUrl>
 #include <QtOpenGL>
+#include <QElapsedTimer>
 #include <qtFontUtils.cpp>
 #include <stdio.h>    // perror(), printf()
 #include <stdlib.h>   // exit(), EXIT_FAILURE
@@ -314,7 +315,7 @@ QTGLObject::QTGLObject(QWidget *parent, Qt::WindowFlags f)
   oldMenu = NULL;
 
   // Set error window
-  errWin = new QWidget(NULL);
+  errWin = new QWidget(nullptr);
   errWin->resize(60, 60);
   imgLabel = new QLabel("", errWin);
   imgLabel->setGeometry(5, 20, 50, 20);
@@ -723,7 +724,7 @@ void QTGLObject::mousePressEvent(QMouseEvent *ev)
 
   findTopLevel();
   _topLevel->raise();
-  if (ev->button() == RightButton) {
+  if (ev->button() == Qt::RightButton) {
 
     menu->exec(QCursor::pos());
 
@@ -1825,16 +1826,16 @@ void QTGLObject::renderText(double x, double y, double z, const QString &str,
   int fontSize = font.pointSize();
 
   QFontMetrics metrics(font);
-  int text_width = metrics.width(QString(str)) + 10;
+  int text_width = metrics.horizontalAdvance(QString(str)) + 10;
   int text_height = fontSize + 5;
   QPixmap textimg(text_width, text_height);
   textimg.fill(Qt::transparent);
 
   QPainter painter(&textimg);
   QColor backgroundColor(0,0,0);
-  painter.setRenderHints(QPainter::HighQualityAntialiasing |
+  painter.setRenderHints(QPainter::Antialiasing |
                          QPainter::TextAntialiasing |
-                         QPainter::NonCosmeticDefaultPen);
+                         );
 
   painter.setBrush(color);
   painter.setPen(color);

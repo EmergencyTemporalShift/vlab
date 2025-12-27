@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include <float.h>
-#include <string>
+#include <QString>
 #include <string.h>
 
-#include <vector>
+#include <QVector>
 
 #include <QMouseEvent>
 #include <QPainter>
@@ -50,7 +50,7 @@ public:
   void setMode(int mode){
     _mode = mode;
     loadConfig();
-    for (int i = 0; i<events.size(); ++i)
+    for (size_t i = 0; i < events.size(); ++i)
       events[i]->update();
   }
 

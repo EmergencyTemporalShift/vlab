@@ -24,9 +24,9 @@
 #pragma warning(disable : 4786)
 #endif
 
-#include <map>
-#include <string>
-#include <vector>
+#include <QMap>
+#include <QString>
+#include <QVector>
 
 struct ParametersList {
   char Params[__lc_eMaxIdentifierLength + 1][__lc_eMaxParams];

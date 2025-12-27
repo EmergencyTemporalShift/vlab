@@ -226,7 +226,7 @@ QString SaveAs::getImageBaseName() {
 void SaveAs::setImageFormat(int f) {
   this->setNodeName();
   comboBox->setCurrentIndex(f);
-  previousPixFormat = f;
+  previousPixFormat = QString::number(f);
   getExtension();
   this->setLineEdit();
 }

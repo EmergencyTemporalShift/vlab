@@ -20,7 +20,7 @@
 #ifndef __QTTEXTDIALOG_H
 #define __QTTEXTDIALOG_H
 
-#include <qdialog.h>
+#include <QDialog>
 
 class QTtextDialog : public QDialog {
 public:

@@ -89,7 +89,7 @@ void Item::mousePressEvent(QMouseEvent *pEv) {
   std::cerr<<"Selected Item set to Gallery"<<std::endl;
 
   switch (pEv->button()) {
-  case RightButton:
+  case Qt::RightButton:
     pNameTxt->setStyleSheet(
         "QLabel { background-color : none; color : black; }");
     pGallery->activateMenu();

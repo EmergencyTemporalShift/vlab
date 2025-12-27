@@ -2,8 +2,8 @@
 #define MESH_H
 
 // Mostly wrapper for md2.h and OpenGL interplay
-#include <vector>
-#include <string>
+#include <QVector>
+#include <QString>
 #include <stdexcept>
 #include <algorithm>
 #include <cstddef>

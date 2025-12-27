@@ -7,4 +7,5 @@ TARGET = vlabcpp
 MY_BASE  = ..
 MY_LIBS  =
 include( $${MY_BASE}/common.pri )
-QT += widgets
+QT += widgets openglwidgets
+QMAKE_CFLAGS += -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types

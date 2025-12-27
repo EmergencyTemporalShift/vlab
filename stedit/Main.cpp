@@ -7,7 +7,8 @@
  * ********************************************************************/
 
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QScreen>
+#include <QGuiApplication>
 #include <QDebug>
 #include "BezierWindow.h"
 #include "Globals.h"

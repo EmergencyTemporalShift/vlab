@@ -1,5 +1,5 @@
 TEMPLATE = lib
-CONFIG  += staticlib opengl
+CONFIG  += staticlib opengl openglwidgets
 TARGET   = shapes
 SOURCES  = bsurface.cpp matrix.cpp
 HEADERS  = bsurface.h matrix.h point.h
@@ -10,4 +10,4 @@ MY_LIBS  =
 include( $${MY_BASE}/common.pri )
 
 
-QT +=  opengl
+QT +=  opengl widgets openglwidgets

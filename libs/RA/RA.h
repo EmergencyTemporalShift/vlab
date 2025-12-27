@@ -25,8 +25,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <string>
-#include <list>
+#include <QString>
+#include <QList>
 
 // QT includes
 #include "quuid.h"

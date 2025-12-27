@@ -31,8 +31,7 @@ class SampleDlg : public QDialog {
   Q_OBJECT
 
 public:
-  SampleDlg(QWidget *parent = 0, const int sample = 0, Qt::WindowFlags f = 0);
-
+  SampleDlg(QWidget *parent = nullptr, const int sample = 0, Qt::WindowFlags f = {});
   void setModel(Model *pModel);
 
   int getSample() { return pSample->text().toInt(); }

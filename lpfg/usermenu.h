@@ -9,9 +9,9 @@
 #ifndef __USERMENU_H__
 #define __USERMENU_H__
 
-#include <map>
+#include <QMap>
 using std::multimap;
-#include <string>
+#include <QString>
 using std::string;
 
 struct UserMenu {

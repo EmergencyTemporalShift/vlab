@@ -15,4 +15,4 @@ LIBS += -lm -L/usr/X11/lib -Wl,--start-group ../../.libraries/librayimage.a ../.
 MY_BASE  = ../..
 MY_LIBS  = rayimage raycommon raysurf raytext rayobj raylight lshade
 include( $${MY_BASE}/common.pri )
-#QT = core
+#QT = core widgets openglwidgets

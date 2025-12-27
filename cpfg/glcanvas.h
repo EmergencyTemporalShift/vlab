@@ -19,7 +19,7 @@
 
 #ifndef GLCANVAS_H
 #define GLCANVAS_H
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QOpenGLFunctions_4_3_Core>
 

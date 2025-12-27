@@ -19,7 +19,7 @@
 
 #ifndef __FILE_H__
 #define __FILE_H__
-#include <string>
+#include <QString>
 class File {
 protected:
   File(const char *fname, const char *mode);

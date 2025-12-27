@@ -13,7 +13,7 @@
 #include <cassert>
 #include <cstdio>
 
-#include <string>
+#include <QString>
 
 #include <windows.h>
 #include <tchar.h>

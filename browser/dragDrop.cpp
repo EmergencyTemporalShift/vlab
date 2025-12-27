@@ -23,7 +23,7 @@
 #include <QPoint>
 #include <QString>
 #include <sstream>
-#include <string>
+#include <QString>
 #include "buildTree.h"
 #include "dragDrop.h"
 #include "dsprintf.h"
@@ -36,7 +36,7 @@
 #include <QPixmap>
 #include <QString>
 #include <cassert>
-#include <qpainter.h>
+#include <QPainter>
 #include "QTGLbrowser.h"
 #include "graphics.h"
 #include "nodeinfo.h"
@@ -74,7 +74,7 @@ void startDrag(NODE *node)
     .get(BrowserSettings::TextFont)
     .value<QFont>();
   QFontMetrics fm(font);
-  int w = fm.width(txt);
+  int w = fm.horizontalAdvance(txt);
   int h = fm.height();
   if (node->iconShow) {
     h += text_to_icon_distance + node->iconHeight;

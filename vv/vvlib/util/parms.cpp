@@ -2,12 +2,12 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <map>
+#include <QMap>
 #include <cctype>
 #include <algorithm>
-#include <iterator>
+#include <QIterator>
 #include "parms.hpp"
-#include <qdir.h>
+#include <QDir>
 
 namespace util
 {

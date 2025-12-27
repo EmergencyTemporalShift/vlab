@@ -62,8 +62,8 @@
 #include <bits/stl_tempbuf.h>  // for _Temporary_buffer
 
 #if __cplusplus >= 201103L
-#include <random>     // for std::uniform_int_distribution
-#include <functional> // for std::bind
+#include <QRandom>     // for std::uniform_int_distribution
+#include <QFunctional> // for std::bind
 #endif
 
 // See concept_check.h for the __glibcxx_*_requires macros.

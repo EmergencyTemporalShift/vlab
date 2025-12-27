@@ -21,9 +21,9 @@
 #ifndef __VLAB_BROSER_BROWSER_SETTINGS_H__
 #define __VLAB_BROSER_BROWSER_SETTINGS_H__
 
-#include <qvariant.h>
-#include <qcolor.h>
-#include <qstring.h>
+#include <QVariant>
+#include <QColor>
+#include <QString>
 #include "SettingsStorage.h"
 
 class BrowserSettings

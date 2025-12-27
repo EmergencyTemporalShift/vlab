@@ -19,7 +19,7 @@
 
 #include <cstdio>
 
-#include <vector>
+#include <QVector>
 
 #include <lparams.h>
 

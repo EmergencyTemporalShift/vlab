@@ -1,6 +1,6 @@
 #include <warningset.h>
 
-#include <memory>
+#include <QMemory>
 #include <fw.h>
 
 

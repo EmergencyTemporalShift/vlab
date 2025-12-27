@@ -20,7 +20,8 @@
 #ifndef ITEMDIALOGS_H
 #define ITEMDIALOGS_H
 
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 #include <QDialog>
 #include <QWidget>
 #include <QLayout>

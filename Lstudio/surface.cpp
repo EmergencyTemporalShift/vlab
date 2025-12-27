@@ -1,5 +1,5 @@
-#include <memory>
-#include <vector>
+#include <QMemory>
+#include <QVector>
 
 #include <fw.h>
 #include <glfw.h>

@@ -23,9 +23,9 @@
 #include <QDir>
 #include <QImage>
 #include <cassert>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qstring.h>
+#include <QPainter>
+#include <QPixmap>
+#include <QString>
 
 #include <QImageReader>
 #include <iostream>

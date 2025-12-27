@@ -38,7 +38,7 @@
 
 #include <bits/c++config.h>
 #include <bits/c++io.h>  // for __c_lock and __c_file
-#include <ios>
+#include <QIos>
 
 namespace std _GLIBCXX_VISIBILITY(default)
 {

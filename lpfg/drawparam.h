@@ -20,8 +20,8 @@
 #ifndef __DRAWPARAM_H__
 #define __DRAWPARAM_H__
 
-#include <vector>
-#include <string>
+#include <QVector>
+#include <QString>
 #include <sstream>
 
 #ifndef WIN32

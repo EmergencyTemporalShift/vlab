@@ -17,7 +17,7 @@
 
 
 
-#include <qapplication.h>
+#include <QApplication>
 #include "ctrl.h"
 #include <QtCore/QTimer>
 #include <QIcon>

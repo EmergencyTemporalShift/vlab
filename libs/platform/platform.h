@@ -21,8 +21,8 @@
 #ifndef __VLAB_PLATFORM_H__
 #define __VLAB_PLATFORM_H__
 
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 #include <QString>
 #include "Report.h"
 

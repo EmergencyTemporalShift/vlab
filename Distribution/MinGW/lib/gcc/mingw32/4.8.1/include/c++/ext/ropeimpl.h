@@ -41,7 +41,7 @@
  */
 
 #include <cstdio>
-#include <ostream>
+#include <QOstream>
 #include <bits/functexcept.h>
 
 #include <ext/algorithm> // For copy_n and lexicographical_compare_3way
@@ -1009,7 +1009,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     operator<<(basic_ostream<_CharT, _Traits>& __o,
 	       const rope<_CharT, _Alloc>& __r)
     {
-      size_t __w = __o.width();
+      size_t __w = __o.horizontalAdvance();
       bool __left = bool(__o.flags() & std::ios::left);
       size_t __pad_len;
       size_t __rope_len = __r.size();
@@ -1022,7 +1022,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	__pad_len = 0;
 
       if (!__is_simple)
-	__o.width(__w / __rope_len);
+	__o.horizontalAdvance(__w / __rope_len);
       __try
 	{
 	  if (__is_simple && !__left && __pad_len > 0)
@@ -1031,12 +1031,12 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 	  if (__is_simple && __left && __pad_len > 0)
 	    _Rope_fill(__o, __pad_len);
 	  if (!__is_simple)
-	    __o.width(__w);
+	    __o.horizontalAdvance(__w);
 	}
       __catch(...)
 	{
 	  if (!__is_simple)
-	    __o.width(__w);
+	    __o.horizontalAdvance(__w);
 	  __throw_exception_again;
 	}
       return __o;

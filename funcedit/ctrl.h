@@ -21,7 +21,7 @@
 #ifndef __CTRL_H__
 #define __CTRL_H__
 
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #include <QOpenGLFunctions>
 
 #include <QString>

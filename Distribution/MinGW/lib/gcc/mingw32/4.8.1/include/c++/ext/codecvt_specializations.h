@@ -36,7 +36,7 @@
 #define _EXT_CODECVT_SPECIALIZATIONS_H 1
 
 #include <bits/c++config.h>
-#include <locale>
+#include <QLocale>
 #include <iconv.h>
 
 namespace __gnu_cxx _GLIBCXX_VISIBILITY(default)

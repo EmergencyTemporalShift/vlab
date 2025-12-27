@@ -21,7 +21,7 @@
 #ifndef __LIB_RA_SEARCH_H_VLAB__
 #define __LIB_RA_SEARCH_H_VLAB__
 
-#include <string>
+#include <QString>
 
 void searchBegin(
     const std::string & oofs,

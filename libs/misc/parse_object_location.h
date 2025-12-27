@@ -20,7 +20,7 @@
 #ifndef __PARSE_OBJECT_LOCATION_H__
 #define __PARSE_OBJECT_LOCATION_H__
 
-#include <string>
+#include <QString>
 const std::string LOCAL_HOST_STR = "localhost";
 
 // Class for parsing an object location

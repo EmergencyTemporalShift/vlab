@@ -6,4 +6,4 @@ TARGET   = vlabd
 MY_BASE  = ..
 MY_LIBS  = misc vlabd
 include( $${MY_BASE}/common.pri )
-QT += widgets opengl 
+QT += widgets opengl  widgets openglwidgets

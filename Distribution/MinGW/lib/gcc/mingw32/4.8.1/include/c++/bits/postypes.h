@@ -37,7 +37,7 @@
 
 #pragma GCC system_header
 
-#include <cwchar> // For mbstate_t
+#include <QCwchar> // For mbstate_t
 
 // XXX If <stdint.h> is really needed, make sure to define the macros
 // before including it, in order not to break <tr1/cstdint> (and <cstdint>

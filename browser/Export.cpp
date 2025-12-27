@@ -1,3 +1,4 @@
+#include <QStandardPaths>
 /* ******************************************************************** *
    Copyright (C) 1990-2022 University of Calgary
   
@@ -116,7 +117,7 @@ void Export::loadSettings() {
   }
   if ((keyList.size() == 0))
     ui->directory_2->addItem(
-        QStandardPaths::standardLocations(QStandardPaths::DesktopLocation)[0]);
+      QStandardPaths::standardLocations(QStandardPaths::DesktopLocation).value(0));
 }
 
 void Export::writeSettings() {

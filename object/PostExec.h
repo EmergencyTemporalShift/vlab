@@ -21,8 +21,8 @@
 #ifndef __POST_EXEC_H__
 #define __POST_EXEC_H__
 
-#include <qobject.h>
-#include <qtimer.h>
+#include <QObject>
+#include <QTimer>
 
 class PostExec : public QObject
 {

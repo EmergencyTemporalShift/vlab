@@ -21,7 +21,7 @@
 #define __TROPISMARR_H__
 
 #include <cstddef>
-#include <vector>
+#include <QVector>
 
 #include "tropism.h"
 

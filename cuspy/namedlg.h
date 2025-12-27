@@ -30,7 +30,7 @@ class NameDlg : public QDialog {
   Q_OBJECT
 
 public:
-  NameDlg(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags f = 0);
+  NameDlg(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags f = {});
 
   void setModel( Model *pModel);
 

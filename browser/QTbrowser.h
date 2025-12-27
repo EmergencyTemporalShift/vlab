@@ -29,6 +29,7 @@
 #include <QMenu>
 #include <QMainWindow>
 #include <QSocketNotifier>
+#include <QElapsedTimer>
 
 #include <QPixmap>
 #include <QResizeEvent>
@@ -39,14 +40,14 @@
 
 #include <QMainWindow>
 #include <QByteArray>
-#include <QTime>
+#include <QElapsedTimer>
 
 #ifdef USE_PLUGINS
 #include <QFileSystemWatcher>
-#include <QTimer>
+#include <QElapsedTimer>
 #endif
 
-class QTimer;
+class QElapsedTimer;
 class QTGLbrowser;
 class CustomizeDialog;
 class QPixmap;
@@ -158,13 +159,13 @@ private:
     char* genName(NODE* node);
 #ifdef USE_PLUGINS
     QFileSystemWatcher fs_watcher;
-    QTimer fs_timer;
+    QElapsedTimer fs_timer;
 #endif
 
     QTGLbrowser* globj;
     QSocketNotifier* notifier;  //Network socket handler
 
-    QTime lastIconLoaded;
+    QElapsedTimer lastIconLoaded;
 
     QString exportPath;
     int exportArchiveType;

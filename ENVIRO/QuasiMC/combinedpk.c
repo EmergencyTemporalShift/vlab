@@ -53,7 +53,7 @@ static int compute_Ck(unsigned int poly);
 static int compute_Cm(unsigned int poly);
 static int *compute_Cq(unsigned int poly, int k, int m);
 static unsigned int compute_Cc(int k);
-static unsigned int compute_Cz();
+static unsigned int compute_Cz(int k, int *q);
 static void compute_Cu(struct pk_generator *gen);
 static unsigned int compute_pkorobov_points(unsigned int poly);
 

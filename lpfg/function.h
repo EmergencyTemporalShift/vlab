@@ -21,8 +21,8 @@
 #define __FUNCTION_H__
 
 #include <fstream>
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 #include <iostream>
 
 #include "asrt.h"

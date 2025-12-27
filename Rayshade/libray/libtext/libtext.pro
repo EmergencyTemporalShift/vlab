@@ -13,7 +13,7 @@ QMAKE_LINK = $$QMAKE_LINK_C
 DEPENDPATH = ../../../.librairies
 
 
-#QT = core
+#QT = core widgets openglwidgets
 macx {
   DEFINES += MACX_OPENGL_HEADERS
   LIBS += -framework Carbon

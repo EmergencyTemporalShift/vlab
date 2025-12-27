@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <vector>
+#include <QVector>
 
 #include <lparams.h>
 

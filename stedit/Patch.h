@@ -25,8 +25,8 @@
 #endif
 
 #include "Colour.h"
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 using namespace std;
 #include "Point.h"
 

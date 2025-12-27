@@ -35,7 +35,7 @@
 
 
 #include <QMimeData>
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #ifdef __APPLE__
 #  include <OpenGL/glu.h>
 #  include <GLUT/glut.h>
@@ -73,7 +73,7 @@ void matprint(Material);
 class MWViewer:public QOpenGLWidget{
   Q_OBJECT
     public:
-  MWViewer(QWidget* parent, const char* name=0,Qt::WindowFlags f=0);
+  MWViewer(QWidget* parent, const char* name=nullptr, Qt::WindowFlags f = {});
 
   void getselect(int*,Material*);
   void selectOff(bool);

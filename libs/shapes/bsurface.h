@@ -21,8 +21,8 @@
 #ifndef __BSURFACE_H__
 #define __BSURFACE_H__
 
-#include <vector>
-#include <string>
+#include <QVector>
+#include <QString>
 #include <stdio.h>
 #include <sstream>
 

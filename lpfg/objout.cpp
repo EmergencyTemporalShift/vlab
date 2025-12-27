@@ -22,7 +22,7 @@
 #include "texturearr.h"
 
 #include <iomanip>
-#include <string>
+#include <QString>
 
 const float epsilon = 0.0001f;
 

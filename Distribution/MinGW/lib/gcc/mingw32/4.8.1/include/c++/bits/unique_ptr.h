@@ -33,8 +33,8 @@
 #include <bits/c++config.h>
 #include <debug/debug.h>
 #include <type_traits>
-#include <utility>
-#include <tuple>
+#include <QUtility>
+#include <QTuple>
 
 namespace std _GLIBCXX_VISIBILITY(default)
 {

@@ -132,5 +132,5 @@ PRE_TARGETDEPS += copyhelp
 
 RESOURCES = browser.qrc ../libs/misc/about.qrc
 CONFIG += debug
-QT += widgets opengl 
+QT += widgets opengl  widgets openglwidgets
 

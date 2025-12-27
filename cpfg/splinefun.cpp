@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <vector>
+#include <QVector>
 #include <sstream>
 
 #ifdef LINUX
@@ -51,7 +51,7 @@
 #include "utils.h"
 
 #ifdef LINUX
-#include <qvalidator.h>
+#include <QValidator>
 #include <iostream>
 #endif // LINUX
 

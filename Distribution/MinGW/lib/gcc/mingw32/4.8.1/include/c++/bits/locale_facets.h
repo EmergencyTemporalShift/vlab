@@ -36,12 +36,12 @@
 
 #pragma GCC system_header
 
-#include <cwctype>	// For wctype_t
+#include <QCwctype>	// For wctype_t
 #include <cctype>
 #include <bits/ctype_base.h>
-#include <iosfwd>
+#include <QIosfwd>
 #include <bits/ios_base.h>  // For ios_base, ios_base::iostate
-#include <streambuf>
+#include <QStreambuf>
 #include <bits/cpp_type_traits.h>
 #include <ext/type_traits.h>
 #include <ext/numeric_traits.h>
@@ -2318,7 +2318,7 @@ _GLIBCXX_BEGIN_NAMESPACE_LDBL
        *  Thousands separators are inserted according to
        *  numpunct::grouping() and numpunct::thousands_sep().
        *
-       *  If io.width() is non-zero, enough @a fill characters are inserted to
+       *  If io.horizontalAdvance() is non-zero, enough @a fill characters are inserted to
        *  make the result at least that wide.  If
        *  (io.flags() & ios_base::adjustfield) == ios_base::left, result is
        *  padded at the end.  If ios_base::internal, then padding occurs
@@ -2381,7 +2381,7 @@ _GLIBCXX_BEGIN_NAMESPACE_LDBL
        *  Thousands separators are inserted according to
        *  numpunct::grouping() and numpunct::thousands_sep().
        *
-       *  If io.width() is non-zero, enough @a fill characters are inserted to
+       *  If io.horizontalAdvance() is non-zero, enough @a fill characters are inserted to
        *  make the result at least that wide.  If
        *  (io.flags() & ios_base::adjustfield) == ios_base::left, result is
        *  padded at the end.  If ios_base::internal, then padding occurs

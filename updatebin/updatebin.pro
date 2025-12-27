@@ -2,7 +2,7 @@ TEMPLATE = app
 message( config = $$CONFIG)
 SOURCES = main.cpp
 TARGET = updatebin
-QT += widgets
+QT += widgets openglwidgets
 MY_BASE = ..
 MY_LIBS = platform misc
 include( $${MY_BASE}/common.pri )

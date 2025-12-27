@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QMouseEvent>
 #include <QImage>
 #include "Globals.h"
@@ -20,14 +20,14 @@
 #include "QImageFormatStrings.h"
 #include <stdlib.h>
 #include <math.h>
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 #include <iostream>
 using namespace std;
 
 class BezierWindow;
 
-class BezierEditor : public QGLWidget {
+class BezierEditor : public QOpenGLWidget {
   Q_OBJECT
 public:
   BezierEditor(QWidget *parent = 0);
@@ -283,6 +283,6 @@ private:
 
   SavingMode _savingMode;
 
-  //QGLFramebufferObject *fbo;
+  //QOpenGLFramebufferObject *fbo;
 
 };

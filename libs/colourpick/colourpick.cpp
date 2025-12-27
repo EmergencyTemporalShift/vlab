@@ -20,14 +20,14 @@ ColourPick::ColourPick(QWidget *parent, const char *name, bool fixsize,
   slidermode = "no";
 
   QBoxLayout *top = new QVBoxLayout(this);
-  top->setMargin(3);
+  top->setContentsMargins(3, 3, 3, 3);
 
   QBoxLayout *upper = new QHBoxLayout(top, 5);
-  upper->setMargin(3);
+  upper->setContentsMargins(3, 3, 3, 3);
 
   // sliders
   QGridLayout *slides = new QGridLayout(upper, 6, 4, 3);
-  slides->setMargin(3);
+  slides->setContentsMargins(3, 3, 3, 3);
   slides->addColSpacing(1, 150);
   slides->addColSpacing(2, 75);
 
@@ -100,7 +100,7 @@ ColourPick::ColourPick(QWidget *parent, const char *name, bool fixsize,
 
   // colour stuff
   QBoxLayout *display = new QVBoxLayout(upper, 1);
-  display->setMargin(3);
+  display->setContentsMargins(3, 3, 3, 3);
   colourWheel = new ColourWheel(this, "colourwheel");
 
   status = new QStatusBar(this, "s");
@@ -463,7 +463,7 @@ void ColourPick::editBlue() {
 // ==================== Class: ColourWheel =========================
 // -------------------- Construction/Destruction ------------------------
 ColourWheel::ColourWheel(QWidget *parent, const char *name)
-    : QGLWidget(parent, name) {
+    : QOpenGLWidget(parent, name) {
   selectObject = 0;
   selectColour = new Colour();
   revertColour = new Colour();

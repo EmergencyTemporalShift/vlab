@@ -42,7 +42,7 @@
 #ifndef _DEBUG_ALLOCATOR_H
 #define _DEBUG_ALLOCATOR_H 1
 
-#include <stdexcept>
+#include <QStdexcept>
 
 namespace __gnu_cxx _GLIBCXX_VISIBILITY(default)
 {

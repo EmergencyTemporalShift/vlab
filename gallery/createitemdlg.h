@@ -38,7 +38,7 @@ class CreateItemDlg : public QDialog {
     NONE
   };
 
-  CreateItemDlg(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags = 0,SELECTION sel=NONE);
+  CreateItemDlg(QWidget* parent = nullptr, const char* name = nullptr, bool modal = false, Qt::WindowFlags f = {}, SELECTION sel=NONE);
  
 
   SELECTION getSelection() {return selection;}

@@ -28,7 +28,7 @@
 #ifndef _GLIBCXX_PROFILE_MAP_H
 #define _GLIBCXX_PROFILE_MAP_H 1
 
-#include <utility>
+#include <QUtility>
 #include <profile/base.h>
 
 namespace std _GLIBCXX_VISIBILITY(default)

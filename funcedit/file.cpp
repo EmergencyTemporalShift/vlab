@@ -20,7 +20,7 @@
 #include <cassert>
 #include <cstdarg>
 #include <cstdio>
-#include <string>
+#include <QString>
 #include <iostream>
 #include <regex>
 #include <iterator>

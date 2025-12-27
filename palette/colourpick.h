@@ -32,7 +32,7 @@
 #include <cmath>
 #include <iostream>
 
-#include <QOpenGLWidget>
+#include <QtOpenGLWidgets/QOpenGLWidget>
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #include <OpenGL/glu.h>
@@ -70,7 +70,7 @@ public:
   // new ColourPick MUST have a parent, the rest of the args may be default
   // if fixsize is true, ColourPick is minimum size and cannot be resized
   // (default false) if multiple contexts and display lists involved, set
-  // QGLWidget* globj don't toy with WFlags !!!!!!
+  // QOpenGLWidget* globj don't toy with WFlags !!!!!!
 
   ColourPick(QWidget *parent, const char *name = 0, QOpenGLWidget *globj = 0,
              bool fixsize = false, Qt::WindowFlags = Qt::Window);

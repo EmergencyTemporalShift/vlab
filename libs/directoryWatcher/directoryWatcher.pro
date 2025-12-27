@@ -11,7 +11,7 @@ HEADERS += qvlabfilesystemwatcher.h
 
 QT  += widgets opengl core 
 
-#QT = core
+#QT = core widgets openglwidgets
 
 MY_BASE  = ../..
 MY_LIBS = message misc

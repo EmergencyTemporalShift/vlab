@@ -21,7 +21,7 @@
 #ifndef __EDITOR_H__
 #define __EDITOR_H__
 
-#include <string>
+#include <QString>
 #include <QProcess>
 
 enum SavingMode {CONTINUOUS,TRIGGERED, OFF};

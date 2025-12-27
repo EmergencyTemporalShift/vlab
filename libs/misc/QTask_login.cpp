@@ -17,8 +17,8 @@
 
 
 
-#include <qlabel.h>
-#include <qpushbutton.h>
+#include <QLabel>
+#include <QPushButton>
 
 #include "QTask_login.h"
 #include "xmemory.h"

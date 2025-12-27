@@ -27,7 +27,6 @@
 
 int main(int argc, char **argv) {
   // Initialize QT application
-  // QApplication::setColorSpec(QApplication::CustomColor);
   QApplication::setApplicationName("snapicon");
   QApplication::setOrganizationDomain("algorithmicbotany.org");
   QApplication::setOrganizationName("Algorithmic Botany");

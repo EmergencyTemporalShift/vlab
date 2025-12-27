@@ -21,7 +21,7 @@
 #ifndef __CON_H__
 #define __CON_H__
 
-#include <vector>
+#include <QVector>
 #include <fstream>
 #include <iostream>
 #include "item.h"
@@ -32,7 +32,7 @@ class ConItem : public Item {
 
  public:
 
-  ConItem(Gallery* pGal, std::string filename, QWidget* parent, const char* name = 0, Qt::WindowFlags f = 0);
+  ConItem(Gallery* pGal, std::string filename, QWidget* parent, const char* name = nullptr, Qt::WindowFlags f = {});
     ConItem(Gallery* pGal, std::string filename,std::string name);
 
 

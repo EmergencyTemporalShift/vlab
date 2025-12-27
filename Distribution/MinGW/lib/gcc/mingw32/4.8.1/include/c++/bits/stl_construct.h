@@ -56,7 +56,7 @@
 #ifndef _STL_CONSTRUCT_H
 #define _STL_CONSTRUCT_H 1
 
-#include <new>
+#include <QNew>
 #include <bits/move.h>
 #include <ext/alloc_traits.h>
 

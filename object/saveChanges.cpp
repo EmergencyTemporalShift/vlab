@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <vector>
+#include <QVector>
 
 #include <QCursor>
 

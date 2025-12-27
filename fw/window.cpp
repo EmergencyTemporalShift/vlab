@@ -12,7 +12,7 @@
 
 #include <assert.h>
 #include <stdio.h>
-#include <string>
+#include <QString>
 
 
 #include <windows.h>

@@ -31,7 +31,7 @@
 #  define _GLIBCXX_ERROR_CONSTANTS
 
 #include <bits/c++config.h>
-#include <cerrno>
+#include <QCerrno>
 
 namespace std _GLIBCXX_VISIBILITY(default)
 {

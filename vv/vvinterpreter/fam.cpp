@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <iostream>
-#include <qapplication.h>
+#include <QApplication>
 #include <util/forall.hpp>
 #include <QMutex>
 

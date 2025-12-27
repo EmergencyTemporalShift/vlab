@@ -20,7 +20,7 @@
 #ifndef __ENVPARAMS_H__
 #define __ENVPARAMS_H__
 
-#include <string>
+#include <QString>
 
 #include "configfile.h"
 

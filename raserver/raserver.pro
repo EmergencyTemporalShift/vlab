@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG  -= qt
+CONFIG += qt
 LIBS     = -lreadline
 SOURCES  = raserver.cpp confirm_login.cpp edit_passwords.cpp  permissions.cpp
 TARGET   = raserver
@@ -11,5 +11,5 @@ include( $${MY_BASE}/common.pri )
 unix:!macx {
    LIBS += -ltermcap -lcrypt
 }
-#QT = core
+QT += core widgets openglwidgets
 

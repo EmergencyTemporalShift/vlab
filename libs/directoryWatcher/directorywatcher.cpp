@@ -1,9 +1,10 @@
 #include "directorywatcher.h"
 #include <QFileSystemWatcher>
-#include <QString>
+#include <string>
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+#include <algorithm>
 
 namespace {
 QStringList setDifference(const QStringList &first, const QStringList &second) {
@@ -73,7 +74,7 @@ QStringList DirectoryWatcher::filter(const QStringList &input) const {
 DirectoryWatcher::DirectoryChange DirectoryWatcher::poll() const {
   QStringList curFiles = filter(dir_.entryList(QDir::Files, QDir::Name));
   QStringList prevFiles = watcher_->files();
-  qSort(prevFiles);
+  std::sort(prevFiles.begin(), prevFiles.end());
   QStringList addedFiles = setDifference(curFiles, prevFiles);
 
   QStringList removedFiles = setDifference(prevFiles, curFiles);

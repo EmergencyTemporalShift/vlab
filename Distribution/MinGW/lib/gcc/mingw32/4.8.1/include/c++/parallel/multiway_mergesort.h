@@ -32,7 +32,7 @@
 #ifndef _GLIBCXX_PARALLEL_MULTIWAY_MERGESORT_H
 #define _GLIBCXX_PARALLEL_MULTIWAY_MERGESORT_H 1
 
-#include <vector>
+#include <QVector>
 
 #include <parallel/basic_iterator.h>
 #include <bits/stl_algo.h>

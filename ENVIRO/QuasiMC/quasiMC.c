@@ -356,7 +356,7 @@ void DetermineResponse(void)
   double light_flux[MAX_SPECTRUM_SAMPLES];
   double sunlit_area[MAX_SPECTRUM_SAMPLES];
   int i, j, k, spectrum;
-  float area, polygon_area, polygon_mean_angle, polygon_num;
+  float area, polygon_area = 0.0f, polygon_mean_angle = 0.0f, polygon_num = 0.0f;
   float normal[3];
   FILE *output = NULL;
   int over_estimate_issue = 0; // number of times the results for a primitive

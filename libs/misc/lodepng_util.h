@@ -31,8 +31,8 @@ Not part of the stable API of lodepng, more loose separate utils.
 #ifndef LODEPNG_UTIL_H
 #define LODEPNG_UTIL_H
 
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 #include "lodepng.h"
 
 namespace lodepng {

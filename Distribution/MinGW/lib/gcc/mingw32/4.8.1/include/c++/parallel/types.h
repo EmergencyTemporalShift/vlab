@@ -33,7 +33,7 @@
 #define _GLIBCXX_PARALLEL_TYPES_H 1
 
 #include <cstdlib>
-#include <limits>
+#include <QLimits>
 #include <tr1/cstdint>
 
 namespace __gnu_parallel

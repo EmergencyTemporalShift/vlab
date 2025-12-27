@@ -13,7 +13,7 @@
 #ifndef __LOGFONT_H__
 #define __LOGFONT_H__
 
-#include <string>
+#include <QString>
 
 class LogFont : public LOGFONT
 {

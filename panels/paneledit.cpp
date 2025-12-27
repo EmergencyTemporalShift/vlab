@@ -28,7 +28,7 @@
 #include <QCloseEvent>
 using namespace Qt;
 
-PanelEdit::PanelEdit(Panel *editMe) : QWidget(0, 0) {
+PanelEdit::PanelEdit(Panel *editMe) : QWidget(nullptr, Qt::WindowFlags()) {
   // This attribute will make this window close when the main window is closed
   setAttribute(Qt::WA_QuitOnClose, false);
 

@@ -21,7 +21,7 @@
 #define __ANIMPARAM_H__
 
 #include "configfile.h"
-#include <string>
+#include <QString>
 #include <iostream>
 
 class AnimParam : public ConfigFile {

@@ -21,7 +21,7 @@
 #ifndef __ITEM_H__
 #define __ITEM_H__
 
-#include <string>
+#include <QString>
 
 #include <QWidget>
 #include <QLineEdit>
@@ -85,7 +85,7 @@ class Item : public QWidget {
   Item(){}
   Item(const Item& ) {std::cerr<<"NOT YET IMPLEMENTED"<<std::endl;};
   
-  Item(Gallery* pGal, std::string filename, QWidget* parent, const char* name = 0, Qt::WindowFlags f = 0);
+  Item(Gallery* pGal, std::string filename, QWidget* parent, const char* name = nullptr, Qt::WindowFlags f = {});
   virtual ~Item();
 
   virtual bool load() = 0;

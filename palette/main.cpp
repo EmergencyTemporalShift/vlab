@@ -54,7 +54,6 @@ int main(int argc, char **argv) {
   pagelist = new page[16];
   initPages(pagelist);
 
-  QApplication::setColorSpec(QApplication::CustomColor);
   QApplication app(argc, argv);
 
   bool ok;

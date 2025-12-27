@@ -19,7 +19,7 @@
 
 #include "bundle.h"
 
-#include <string>
+#include <QString>
 #include "CoreFoundation/CFBundle.h"
 #include "CoreFoundation/CFURL.h"
 

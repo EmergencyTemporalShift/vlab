@@ -1,3 +1,5 @@
+#include <QScreen>
+#include <QGuiApplication>
 /* ******************************************************************** *
    Copyright (C) 1990-2022 University of Calgary
   
@@ -28,8 +30,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sstream>
-#include <string>
-#include <vector>
+#include <QString>
+#include <QVector>
 
 #include <QApplication>
 #include <QPainter>
@@ -45,13 +47,15 @@
 #include "animparam.h"
 #include "sgiFormat.h"
 
-#include <QDesktopWidget>
+#include <QScreen>
+#include <QGuiApplication>
 
 #ifdef TEST_MALLOC
 #include "test_malloc.h"
 #endif
 
-#include <qgl.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
 
 using namespace std;
 QApplication *app = 0;
@@ -193,7 +197,6 @@ void my_swapbuffers(void) { swap_buffers(); }
 
 GLWindow *win_gl = NULL;
 int InitializeGraphics(int argc, char **argv) {
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   app = new QApplication(argc, argv);
 
 
@@ -435,8 +438,8 @@ int first_run = FALSE;
 /*************************************************************************/
 #ifdef LINUX
 void GetWindowSize(int *width, int *height) {
-  QDesktopWidget widget;
-  QRect mainScreenSize = widget.availableGeometry(widget.primaryScreen());
+  
+  QRect mainScreenSize = QGuiApplication::primaryScreen()->availableGeometry();
 
   *width = mainScreenSize.width();
   *height = mainScreenSize.height();

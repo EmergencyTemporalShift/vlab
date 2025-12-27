@@ -19,7 +19,7 @@
 
 
 #include <iostream>
-#include <string> 
+#include <QString> 
 #include "version.h"
 
 using namespace std;

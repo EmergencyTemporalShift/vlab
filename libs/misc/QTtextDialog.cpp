@@ -18,7 +18,7 @@
 
 
 #include "QTtextDialog.h"
-#include <qlabel.h>
+#include <QLabel>
 
 QTtextDialog::QTtextDialog(int x, int y, char *title, char *message,
                            QWidget *parent, const char *name, bool modal)

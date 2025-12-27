@@ -21,7 +21,7 @@
 #define __ARCHIVE_CLASS_H__
 
 #include "ProgressReporter.h"
-#include <string>
+#include <QString>
 #include <sys/types.h>
 
 class Archive {

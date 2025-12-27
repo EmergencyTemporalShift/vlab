@@ -27,7 +27,7 @@
 #include <QTextStream>
 #include <QColorDialog>
 #include <QFontDialog>
-#include <regex>
+#include <QRegularExpression>
 #include <fstream>
 
 Preferences::Preferences(QWidget *parent, QString fileName)
@@ -220,61 +220,58 @@ void Preferences::WriteColors(std::string fileName) {
 }
 
 void Preferences::loadConfig() {
-  // 1s read colors
-  // ReadColors(_fileName);
-
-  // 2nd read other options
   std::string line;
-
   const char *bf = _fileName.toStdString().c_str();
-
   std::ifstream myfile(bf);
-  // Attempt to open and parse the config file
 
   if (myfile.is_open()) {
-    // Set up regexes to parse lines of the config file
-    std::regex borderWidthRegex("border width: [+-]?([[:digit:]]+)");
-    std::regex background_colorRegex(
-        "background color: [+-]?([[:digit:]]+) [+-]?([[:digit:]]+) "
-        "[+-]?([[:digit:]]+) [+-]?([[:digit:]]+)");
-    std::regex colorRegex(
-        "border color: [+-]?([[:digit:]]+) [+-]?([[:digit:]]+) "
-        "[+-]?([[:digit:]]+) [+-]?([[:digit:]]+)");
-    // When matches are found, set the config values
+    QRegularExpression borderWidthRegex("border width: [+-]?([[:digit:]]+)");
+    QRegularExpression background_colorRegex(
+      "background color: [+-]?([[:digit:]]+) [+-]?([[:digit:]]+) "
+      "[+-]?([[:digit:]]+) [+-]?([[:digit:]]+)");
+    QRegularExpression colorRegex(
+      "border color: [+-]?([[:digit:]]+) [+-]?([[:digit:]]+) "
+      "[+-]?([[:digit:]]+) [+-]?([[:digit:]]+)");
+
     while (getline(myfile, line)) {
-      std::smatch matches;
-      if (std::regex_match(line, matches, borderWidthRegex)) {
-        _borderWidth = std::stoi(matches[1]);
-      } else if (std::regex_match(line, matches, colorRegex)) {
+      QRegularExpressionMatch match;
+
+      // Check Border Width
+      match = borderWidthRegex.match(QString::fromStdString(line));
+      if (match.hasMatch()) {
+        _borderWidth = match.captured(1).toInt();
+      }
+      // Check Border Color
+      else if (colorRegex.match(QString::fromStdString(line)).hasMatch()) {
         int r = 0, g = 0, b = 0, alpha = 0;
-        char bf[40];
+        char bf_tmp[40];
         char buffer[40];
-        sscanf(line.c_str(), "%[^':']:%[^'\n']\n", bf, buffer);
+        sscanf(line.c_str(), "%[^':']:%[^'\n']\n", bf_tmp, buffer);
         sscanf(buffer, "%d %d %d %d\n", &r, &g, &b, &alpha);
         _color = QColor(r, g, b, alpha);
-      } else if (std::regex_match(line, matches, background_colorRegex)) {
+      }
+      // Check Background Color
+      else if (background_colorRegex.match(QString::fromStdString(line)).hasMatch()) {
         int r = 0, g = 0, b = 0, alpha = 0;
-        char bf[40];
+        char bf_tmp[40];
         char buffer[40];
-        sscanf(line.c_str(), "%[^':']:%[^'\n']\n", bf, buffer);
+        sscanf(line.c_str(), "%[^':']:%[^'\n']\n", bf_tmp, buffer);
         sscanf(buffer, "%d %d %d %d\n", &r, &g, &b, &alpha);
         _backgroundColor = QColor(r, g, b, alpha);
       }
-    }
+    } // End of while
     myfile.close();
   } else {
-    std::cerr << "Unable to open config file, using default configuration"
-              << std::endl;
+    std::cerr << "Unable to open config file, using default configuration" << std::endl;
     _color = QColor(200, 0, 0);
     _borderWidth = FRAME_BORDER;
     _backgroundColor = QColor(128, 128, 128, 50);
   }
 
-  // set Buttons
+  // Set UI elements
   setButtonColor(border_color_button, _color);
   setButtonColor(background_color_button, _backgroundColor);
 
-  // set spinBoxes
   borderWidth_spinBox->setMaximum(250);
   borderWidth_spinBox->setValue(_borderWidth);
 }

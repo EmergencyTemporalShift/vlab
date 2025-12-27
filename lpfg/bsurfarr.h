@@ -11,7 +11,7 @@
 
 #include "b_wrapper.h"
 
-#include <vector>
+#include <QVector>
 
 class BSurfaceArray {
 public:

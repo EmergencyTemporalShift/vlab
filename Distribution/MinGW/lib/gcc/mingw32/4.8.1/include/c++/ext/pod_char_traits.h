@@ -34,7 +34,7 @@
 
 #pragma GCC system_header
 
-#include <string>
+#include <QString>
 
 namespace __gnu_cxx _GLIBCXX_VISIBILITY(default)
 {

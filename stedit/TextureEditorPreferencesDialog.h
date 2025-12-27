@@ -9,7 +9,7 @@
 #pragma once
 
 #include <stdlib.h>
-#include <string>
+#include <QString>
 #include <fstream>
 #include "Globals.h"
 #ifdef __APPLE__

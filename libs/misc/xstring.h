@@ -21,7 +21,7 @@
 #define __XSTRING_H__
 
 #include <string.h>
-#include <string>
+#include <QString>
 
 size_t xstrlen(const char *s);
 int xstrcmp(const char *s1, const char *s2);

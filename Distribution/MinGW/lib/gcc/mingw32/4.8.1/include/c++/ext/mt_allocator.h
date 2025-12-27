@@ -29,7 +29,7 @@
 #ifndef _MT_ALLOCATOR_H
 #define _MT_ALLOCATOR_H 1
 
-#include <new>
+#include <QNew>
 #include <cstdlib>
 #include <bits/functexcept.h>
 #include <ext/atomicity.h>

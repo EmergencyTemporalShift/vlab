@@ -26,8 +26,8 @@ class QTask_login : public QDialog {
   Q_OBJECT
 
 public:
-  QTask_login(const QString &username = QString::null,
-              const QString &password = QString::null, QWidget *parent = NULL,
+  QTask_login(const QString &username = QString(),
+              const QString &password = QString(), QWidget *parent = NULL,
               const char *name = NULL, bool modal = true);
   ~QTask_login();
   // returns the contents of username & password (should be called only if exec

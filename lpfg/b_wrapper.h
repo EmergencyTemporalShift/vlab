@@ -21,7 +21,7 @@
 #define B_WRAPPER_H
 
 #ifdef LINUX
-#include <qiodevice.h>
+#include <QIODevice>
 #endif // LINUX
 
 #include "bsurface.h"

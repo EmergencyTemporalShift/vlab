@@ -23,7 +23,7 @@
 #include <iostream>
 #include <signal.h>
 #include <stdlib.h>
-#include <string>
+#include <QString>
 
 struct Search {
   std::ifstream _stdProcess;

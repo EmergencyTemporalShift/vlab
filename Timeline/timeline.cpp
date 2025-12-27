@@ -336,8 +336,8 @@ void Timeline::createEvent(float startTime, float endTime,
   Event *e = new Event;
   emit change();
   if (color.compare("") != 0){
-    QRegExp rx("[, ]");// match a comma or a space
-    QStringList list = color.split(rx, QString::SkipEmptyParts);
+    QRegularExpression rx("[, ]");// match a comma or a space
+    QStringList list = color.split(rx, Qt::SkipEmptyParts);
     int r = list.at(0).toInt();
     int g = list.at(1).toInt();
     int b = list.at(2).toInt();
@@ -820,8 +820,8 @@ void Timeline::editEvent(int index, float startTime, float endTime,
     
   if (color.compare("") != 0){
     
-    QRegExp rx("[, ]");// match a comma or a space
-    QStringList list = color.split(rx, QString::SkipEmptyParts);
+    QRegularExpression rx("[, ]");// match a comma or a space
+    QStringList list = color.split(rx, Qt::SkipEmptyParts);
     int r = list.at(0).toInt();
     int g = list.at(1).toInt();
     int b = list.at(2).toInt();

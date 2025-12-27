@@ -25,7 +25,7 @@
    On Date:
 */
 
-#include <qcursor.h>
+#include <QCursor>
 #include "mweditor.h"
 #include <QBoxLayout>
 #include <QCloseEvent>
@@ -48,15 +48,15 @@ MWEditor::MWEditor(QWidget *parent, const char *, Qt::WindowFlags f)
   CP = new ColourPick(this, "cp");
 
   QBoxLayout *top = new QVBoxLayout(this); // top level layout
-  top->setMargin(3);
+  top->setContentsMargins(3, 3, 3, 3);
   QBoxLayout *panel = new QHBoxLayout();
   top->addLayout(panel);
   panel->setSpacing(8);
-  panel->setMargin(3);
+  panel->setContentsMargins(3, 3, 3, 3);
   QBoxLayout *button = new QHBoxLayout();
   top->addLayout(button);
   button->setSpacing(1);
-  button->setMargin(3);
+  button->setContentsMargins(3, 3, 3, 3);
   QBoxLayout *display = new QVBoxLayout();
   panel->addLayout(display);
   display->setSpacing(1);
@@ -1164,7 +1164,7 @@ void ColourSwatch::mousePressEvent(QMouseEvent *me) {
   if (enabled) {
     if (me->button() == Qt::LeftButton)
       emit edit();
-    else if (me->button() == RightButton)
+    else if (me->button() == Qt::RightButton)
       menu->exec(QCursor::pos());
   }
 }

@@ -38,7 +38,7 @@
 
 #include <bits/stl_algobase.h>  // std::copy, std::fill_n
 #include <bits/postypes.h>      // For streampos
-#include <cwchar>               // For WEOF, wmemmove, wmemset, etc.
+#include <QCwchar>               // For WEOF, wmemmove, wmemset, etc.
 
 namespace __gnu_cxx _GLIBCXX_VISIBILITY(default)
 {
@@ -373,7 +373,7 @@ _GLIBCXX_END_NAMESPACE_VERSION
 #if ((__cplusplus >= 201103L) \
      && defined(_GLIBCXX_USE_C99_STDINT_TR1))
 
-#include <cstdint>
+#include <QCstdint>
 
 namespace std _GLIBCXX_VISIBILITY(default)
 {

@@ -30,7 +30,7 @@
 #define _ARRAY_ALLOCATOR_H 1
 
 #include <bits/c++config.h>
-#include <new>
+#include <QNew>
 #include <bits/functexcept.h>
 #include <tr1/array>
 #include <bits/move.h>

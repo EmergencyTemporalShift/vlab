@@ -13,16 +13,17 @@
 #include <iostream>
 #include <cmath>
 
-#include <qgl.h>
-#include <qwidget.h>
-#include <qdialog.h>
-#include <qlayout.h>
-#include <qslider.h>
-#include <qspinbox.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qstatusbar.h>
-#include <qlineedit.h>
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#include <QOpenGLFunctions>
+#include <QWidget>
+#include <QDialog>
+#include <QLayout>
+#include <QSlider>
+#include <QSpinbox>
+#include <QLabel>
+#include <QPushButton>
+#include <QStatusBar>
+#include <QLineEdit>
 
 #include "colour.h"
 
@@ -104,7 +105,7 @@ class ColourPick:public QWidget{
   QString slidermode;
 };
 
-class ColourWheel:public QGLWidget{
+class ColourWheel:public QOpenGLWidget{
   Q_OBJECT
     public:
   ColourWheel(QWidget* parent, const char* name );

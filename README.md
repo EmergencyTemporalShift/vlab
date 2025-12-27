@@ -1,6 +1,9 @@
 # vlab
 ## The virtual laboratory
 
+Curently broken and stuck on the libray stuff because it's old code and I do not want to update old pointer arithmitic
+Plenty of bugs from Gemini in translation probably, but we've made good progress on updating stuff I think.
+
 ## Developer Getting Started Guide
 
 Note: our current version has been developed using QT 5.15.16.

@@ -19,24 +19,23 @@
 #define ATMOSPHERE_H
 
 #include "libcommon/common.h"
-#include "libcommon/color.h"
-#include "libcommon/vector.h"
 
-typedef struct Atmosphere {
-  char *data;			/* Method-specific data */
-  void (*method)();		/* Atmosphere method */
-  struct Atmosphere *next;	/* Next in list */
-} Atmosphere;
+typedef char *AtmosRef;
 
 typedef struct Medium {
-  Float index, statten;
+  Float index, /* Index of refraction */
+      statten; /* specular transmission attenuation */
   struct Medium *next;
 } Medium;
 
-/* Legacy 1989-style declarations */
+typedef struct Atmosphere {
+  AtmosRef data;           /* Effect info */
+  void (*method)();        /* Atmosphere method */
+  struct Atmosphere *next; /* Next effect */
+} Atmosphere;
+
 extern Medium *MediumPush();
 extern Atmosphere *AtmosCreate(), *AtmosphereCopy();
 extern void Atmospherics();
-extern Float ExpAtten();
 
-#endif
+#endif /* ATMOSPHERE_H */

@@ -13,10 +13,10 @@ namespace util
 #define DO_JOIN( X, Y ) DO_JOIN2(X,Y)
 #define DO_JOIN2( X, Y ) X##Y
 
-//#define STATIC_ASSERT( B ) \
-   typedef util::static_assert_test<\
-      sizeof(util::STATIC_ASSERTION_FAILURE< (bool)( B ) >)>\
-         JOIN(static_assert_typedef_, __LINE__)
+// #define STATIC_ASSERT( B )
+//    typedef util::static_assert_test<
+//       sizeof(util::STATIC_ASSERTION_FAILURE< (bool)( B ) >)>
+//          JOIN(static_assert_typedef_, __LINE__)
 
 
 #define STATIC_ASSERT( B ) \

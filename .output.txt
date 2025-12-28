@@ -1,0 +1,228 @@
+cd libray/ && ( test -e Makefile || /usr/bin/qmake -o Makefile /home/rodin/Apps/vlab-main/Rayshade/libray/libray.pro ) && make -f Makefile
+make[1]: Entering directory '/home/rodin/Apps/vlab-main/Rayshade/libray'
+cd libimage/ && ( test -e Makefile || /usr/bin/qmake -o Makefile /home/rodin/Apps/vlab-main/Rayshade/libray/libimage/libimage.pro ) && make -f Makefile
+make[2]: Entering directory '/home/rodin/Apps/vlab-main/Rayshade/libray/libimage'
+gcc -c -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/local/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/image.o image.c
+image.c: In function ‘ImageRead’:
+image.c:175:16: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  175 |   for(i = 0; i < image->chan ; i++)
+      |                ^
+image.c:183:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  183 |   for(y = 0 , idx = 0 ; y < image->height ; y++)
+      |                           ^
+image.c:184:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  184 |     for(x = 0 , i = 0 ; x < image->width ; x++ , idx++)
+      |                           ^
+image.c:185:27: warning: comparison of integer expressions of different signedness: ‘unsigned int’ and ‘int’ [-Wsign-compare]
+  185 |       for(chan = 0 ; chan < image->totalchan ; chan++ , i++){
+      |                           ^
+image.c:145:7: warning: unused variable ‘mipmapImageAllocSize’ [-Wunused-variable]
+  145 |   int mipmapImageAllocSize;
+      |       ^~~~~~~~~~~~~~~~~~~~
+rm -f ../../../.libraries/librayimage.a
+ar cqs ../../../.libraries/librayimage.a .obj/image.o .obj/lodepng.o
+make[2]: Leaving directory '/home/rodin/Apps/vlab-main/Rayshade/libray/libimage'
+cd libobj/ && ( test -e Makefile || /usr/bin/qmake -o Makefile /home/rodin/Apps/vlab-main/Rayshade/libray/libobj/libobj.pro ) && make -f Makefile
+make[2]: Entering directory '/home/rodin/Apps/vlab-main/Rayshade/libray/libobj'
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/blob.o blob.c
+blob.c: In function ‘BlobBounds’:
+blob.c:607:27: warning: ‘maxx’ may be used uninitialized [-Wmaybe-uninitialized]
+  607 |   Float minx, miny, minz, maxx, maxy, maxz;
+      |                           ^~~~
+blob.c:607:33: warning: ‘maxy’ may be used uninitialized [-Wmaybe-uninitialized]
+  607 |   Float minx, miny, minz, maxx, maxy, maxz;
+      |                                 ^~~~
+blob.c:607:9: warning: ‘minx’ may be used uninitialized [-Wmaybe-uninitialized]
+  607 |   Float minx, miny, minz, maxx, maxy, maxz;
+      |         ^~~~
+blob.c:607:15: warning: ‘miny’ may be used uninitialized [-Wmaybe-uninitialized]
+  607 |   Float minx, miny, minz, maxx, maxy, maxz;
+      |               ^~~~
+blob.c:650:18: warning: ‘minz’ may be used uninitialized [-Wmaybe-uninitialized]
+  650 |   bounds[LOW][Z] = minz;
+      |   ~~~~~~~~~~~~~~~^~~~~~
+blob.c:607:21: note: ‘minz’ was declared here
+  607 |   Float minx, miny, minz, maxx, maxy, maxz;
+      |                     ^~~~
+blob.c:651:19: warning: ‘maxz’ may be used uninitialized [-Wmaybe-uninitialized]
+  651 |   bounds[HIGH][Z] = maxz;
+      |   ~~~~~~~~~~~~~~~~^~~~~~
+blob.c:607:39: note: ‘maxz’ was declared here
+  607 |   Float minx, miny, minz, maxx, maxy, maxz;
+      |                                       ^~~~
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/bounds.o bounds.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/box.o box.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/cone.o cone.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/csg.o csg.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/cylinder.o cylinder.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/disc.o disc.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/grid.o grid.c
+grid.c: In function ‘GridIntersect’:
+grid.c:193:9: warning: ‘stepX’ may be used uninitialized [-Wmaybe-uninitialized]
+  193 |       x += stepX;
+      |       ~~^~~~~~~~
+grid.c:61:7: note: ‘stepX’ was declared here
+   61 |   int stepX, stepY, stepZ, outX, outY, outZ, x, y, z;
+      |       ^~~~~
+grid.c:194:28: warning: ‘outX’ may be used uninitialized [-Wmaybe-uninitialized]
+  194 |       if (*maxdist < tMaxX || x == outX)
+      |           ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+grid.c:61:28: note: ‘outX’ was declared here
+   61 |   int stepX, stepY, stepZ, outX, outY, outZ, x, y, z;
+      |                            ^~~~
+grid.c:221:9: warning: ‘stepY’ may be used uninitialized [-Wmaybe-uninitialized]
+  221 |       y += stepY;
+      |       ~~^~~~~~~~
+grid.c:61:14: note: ‘stepY’ was declared here
+   61 |   int stepX, stepY, stepZ, outX, outY, outZ, x, y, z;
+      |              ^~~~~
+grid.c:222:28: warning: ‘outY’ may be used uninitialized [-Wmaybe-uninitialized]
+  222 |       if (*maxdist < tMaxY || y == outY)
+      |           ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+grid.c:61:34: note: ‘outY’ was declared here
+   61 |   int stepX, stepY, stepZ, outX, outY, outZ, x, y, z;
+      |                                  ^~~~
+grid.c:207:9: warning: ‘stepZ’ may be used uninitialized [-Wmaybe-uninitialized]
+  207 |       z += stepZ;
+      |       ~~^~~~~~~~
+grid.c:61:21: note: ‘stepZ’ was declared here
+   61 |   int stepX, stepY, stepZ, outX, outY, outZ, x, y, z;
+      |                     ^~~~~
+grid.c:208:28: warning: ‘outZ’ may be used uninitialized [-Wmaybe-uninitialized]
+  208 |       if (*maxdist < tMaxZ || z == outZ)
+      |           ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+grid.c:61:40: note: ‘outZ’ was declared here
+   61 |   int stepX, stepY, stepZ, outX, outY, outZ, x, y, z;
+      |                                        ^~~~
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/hf.o hf.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/instance.o instance.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/list.o list.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/intersect.o intersect.c
+intersect.c: In function ‘intersect’:
+intersect.c:116:25: warning: ‘distfact’ may be used uninitialized [-Wmaybe-uninitialized]
+  116 |     *maxdist = nmaxdist / distfact;
+      |                ~~~~~~~~~^~~~~~~~~~
+intersect.c:39:9: note: ‘distfact’ was declared here
+   39 |   Float distfact, nmindist, nmaxdist;
+      |         ^~~~~~~~
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/geom.o geom.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/plane.o plane.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/poly.o poly.c
+poly.c: In function ‘PolygonIntersect’:
+poly.c:142:40: warning: ‘last.u’ may be used uninitialized [-Wmaybe-uninitialized]
+  142 |   ((p.u < c.u) ? ((p.v < c.v) ? 2 : 1) : ((p.v < c.v) ? 3 : 0))
+      |   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+poly.c:209:14: note: in expansion of macro ‘quadrant’
+  209 |   lastquad = quadrant(last, center);
+      |              ^~~~~~~~
+poly.c:155:22: note: ‘last.u’ was declared here
+  155 |   Vec2d center, cur, last;
+      |                      ^~~~
+poly.c:142:59: warning: ‘last.v’ may be used uninitialized [-Wmaybe-uninitialized]
+  142 |   ((p.u < c.u) ? ((p.v < c.v) ? 2 : 1) : ((p.v < c.v) ? 3 : 0))
+      |                                          ~~~~~~~~~~~~~~~~~^~~~
+poly.c:209:14: note: in expansion of macro ‘quadrant’
+  209 |   lastquad = quadrant(last, center);
+      |              ^~~~~~~~
+poly.c:155:22: note: ‘last.v’ was declared here
+  155 |   Vec2d center, cur, last;
+      |                      ^~~~
+poly.c:142:40: warning: ‘cur.u’ may be used uninitialized [-Wmaybe-uninitialized]
+  142 |   ((p.u < c.u) ? ((p.v < c.v) ? 2 : 1) : ((p.v < c.v) ? 3 : 0))
+      |   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+poly.c:212:12: note: in expansion of macro ‘quadrant’
+  212 |     quad = quadrant(cur, center);
+      |            ^~~~~~~~
+poly.c:155:17: note: ‘cur.u’ was declared here
+  155 |   Vec2d center, cur, last;
+      |                 ^~~
+poly.c:142:59: warning: ‘cur.v’ may be used uninitialized [-Wmaybe-uninitialized]
+  142 |   ((p.u < c.u) ? ((p.v < c.v) ? 2 : 1) : ((p.v < c.v) ? 3 : 0))
+      |                                          ~~~~~~~~~~~~~~~~~^~~~
+poly.c:212:12: note: in expansion of macro ‘quadrant’
+  212 |     quad = quadrant(cur, center);
+      |            ^~~~~~~~
+poly.c:155:17: note: ‘cur.v’ was declared here
+  155 |   Vec2d center, cur, last;
+      |                 ^~~
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/roots.o roots.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/sphere.o sphere.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/torus.o torus.c
+gcc -c -std=gnu89 -fpermissive -Wno-error=incompatible-pointer-types -Wno-old-style-definition -pipe -O2 -fPIC -Wall -Wextra -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/triangle.o triangle.c
+rm -f ../../../.libraries/librayobj.a
+ar cqs ../../../.libraries/librayobj.a .obj/blob.o .obj/bounds.o .obj/box.o .obj/cone.o .obj/csg.o .obj/cylinder.o .obj/disc.o .obj/grid.o .obj/hf.o .obj/instance.o .obj/list.o .obj/intersect.o .obj/geom.o .obj/plane.o .obj/poly.o .obj/roots.o .obj/sphere.o .obj/torus.o .obj/triangle.o
+make[2]: Leaving directory '/home/rodin/Apps/vlab-main/Rayshade/libray/libobj'
+cd libsurf/ && ( test -e Makefile || /usr/bin/qmake -o Makefile /home/rodin/Apps/vlab-main/Rayshade/libray/libsurf/libsurf.pro ) && make -f Makefile
+make[2]: Entering directory '/home/rodin/Apps/vlab-main/Rayshade/libray/libsurf'
+gcc -c -pipe -O2 -fPIC -Wall -Wextra -DHUGE=3.40282347e+38f -DEPSILON=0.00001 -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/atmosphere.o atmosphere.c
+In file included from atmosphere.h:21,
+                 from atmosphere.c:18:
+../libcommon/common.h:59:9: warning: ‘EPSILON’ redefined
+   59 | #define EPSILON (Float)0.00001
+      |         ^~~~~~~
+<command-line>: note: this is the location of the previous definition
+gcc -c -pipe -O2 -fPIC -Wall -Wextra -DHUGE=3.40282347e+38f -DEPSILON=0.00001 -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/fog.o fog.c
+In file included from atmosphere.h:21,
+                 from fog.c:18:
+../libcommon/common.h:59:9: warning: ‘EPSILON’ redefined
+   59 | #define EPSILON (Float)0.00001
+      |         ^~~~~~~
+<command-line>: note: this is the location of the previous definition
+fog.c: In function ‘FogApply’:
+fog.c:44:33: warning: unused parameter ‘ray’ [-Wunused-parameter]
+   44 | void FogApply(void *p_fog, Ray *ray, Vector *pos, Float dist, Color *color) {
+      |                            ~~~~~^~~
+fog.c:44:46: warning: unused parameter ‘pos’ [-Wunused-parameter]
+   44 | void FogApply(void *p_fog, Ray *ray, Vector *pos, Float dist, Color *color) {
+      |                                      ~~~~~~~~^~~
+gcc -c -pipe -O2 -fPIC -Wall -Wextra -DHUGE=3.40282347e+38f -DEPSILON=0.00001 -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/fogdeck.o fogdeck.c
+In file included from atmosphere.h:21,
+                 from fogdeck.c:18:
+../libcommon/common.h:59:9: warning: ‘EPSILON’ redefined
+   59 | #define EPSILON (Float)0.00001
+      |         ^~~~~~~
+<command-line>: note: this is the location of the previous definition
+gcc -c -pipe -O2 -fPIC -Wall -Wextra -DHUGE=3.40282347e+38f -DEPSILON=0.00001 -DQT_CLEAN_NAMESPACE -DVLAB_LINUX -I. -I.. -I../.. -I/usr/X11/include -I/usr/lib64/qt6/mkspecs/linux-g++ -o .obj/mist.o mist.c
+In file included from atmosphere.h:21,
+                 from mist.c:18:
+../libcommon/common.h:59:9: warning: ‘EPSILON’ redefined
+   59 | #define EPSILON (Float)0.00001
+      |         ^~~~~~~
+<command-line>: note: this is the location of the previous definition
+mist.c: In function ‘MistCreate’:
+mist.c:21:7: warning: old-style function definition [-Wold-style-definition]
+   21 | Mist *MistCreate(color, trans, zero, scale) Color *color, *trans;
+      |       ^~~~~~~~~~
+mist.c: In function ‘MistApply’:
+mist.c:37:6: warning: old-style function definition [-Wold-style-definition]
+   37 | void MistApply(p_mist, ray, pos, dist, color) void *p_mist;
+      |      ^~~~~~~~~
+mist.c:44:16: error: conflicting types for ‘ExpAtten’; have ‘Float(void)’ {aka ‘double(void)’}
+   44 |   extern Float ExpAtten();
+      |                ^~~~~~~~
+atmosphere.h:42:14: note: previous declaration of ‘ExpAtten’ with type ‘Float(Float,  Float)’ {aka ‘double(double,  double)’}
+   42 | extern Float ExpAtten(Float dist, Float trans);
+      |              ^~~~~~~~
+mist.c:56:11: error: too many arguments to function ‘ExpAtten’; expected 0, have 2
+   56 |   atten = ExpAtten(dist, mist->trans.r);
+      |           ^~~~~~~~ ~~~~
+mist.c:44:16: note: declared here
+   44 |   extern Float ExpAtten();
+      |                ^~~~~~~~
+mist.c:59:11: error: too many arguments to function ‘ExpAtten’; expected 0, have 2
+   59 |   atten = ExpAtten(dist, mist->trans.g);
+      |           ^~~~~~~~ ~~~~
+mist.c:44:16: note: declared here
+   44 |   extern Float ExpAtten();
+      |                ^~~~~~~~
+mist.c:62:11: error: too many arguments to function ‘ExpAtten’; expected 0, have 2
+   62 |   atten = ExpAtten(dist, mist->trans.b);
+      |           ^~~~~~~~ ~~~~
+mist.c:44:16: note: declared here
+   44 |   extern Float ExpAtten();
+      |                ^~~~~~~~
+make[2]: *** [Makefile:373: .obj/mist.o] Error 1
+make[2]: Leaving directory '/home/rodin/Apps/vlab-main/Rayshade/libray/libsurf'
+make[1]: *** [Makefile:102: sub-libsurf-make_first] Error 2
+make[1]: Leaving directory '/home/rodin/Apps/vlab-main/Rayshade/libray'
+make: *** [Makefile:47: sub-libray] Error 2
